@@ -136,11 +136,10 @@ public class Login extends javax.swing.JFrame {
             }
     }//GEN-LAST:event_loginActionPerformed
     private String authenticate(String username, String password) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user_management", "root", "");
-            String query = "SELECT * FROM users WHERE username=? AND password=?";
-            PreparedStatement pst = conn.prepareStatement(query);
+        String query = "SELECT * FROM users WHERE username=? AND password=?";
+        try (Connection conn = dbconnection.getConnection();
+             PreparedStatement pst = conn.prepareStatement(query)){
+   
             pst.setString(1, username);
             pst.setString(2, password);
             ResultSet rs = pst.executeQuery();
