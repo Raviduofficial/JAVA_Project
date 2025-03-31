@@ -10,7 +10,7 @@ CREATE TABLE users (
 );
 
 INSERT INTO users (username, password, role) VALUES
-('admin', '1234', 'Admin'),
+('admin_user', '1234', 'Admin'),
 ('lec1', 'abcd', 'Lecturer'),
 ('TG1344', 'pass123', 'Undergraduate'),
 ('to', 'to12345', 'To'),
