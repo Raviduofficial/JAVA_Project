@@ -1,0 +1,127 @@
+create database javaMiniProject;
+use javaMiniProject;
+
+create table user 
+(
+user_id char(6) primary key,
+user_password varchar(15),
+user_name varchar(50),
+user_email varchar(50),
+user_phone int(10),
+user_role ENUM('admin','lecturer','undergraduate','tech_officer') NOT NULL
+
+);
+
+create table admin
+(
+admin_id char(6) primary key
+);
+
+create table lecturer
+(
+lec_id char(6) primary key
+);
+
+create table undergraduate
+(
+ug_id char(6) primary key,
+ug_batch int(1)
+);
+
+create table tech_officer
+(
+to_id char(6) primary key,
+to_department varchar(3)
+);
+
+create table notice
+(
+notice_id varchar(10) primary key,
+notice_title varchar(30),
+notice_content varchar(500),
+notice_date DATE
+);
+
+create table time_table
+(
+time_table_id varchar(6) primary key,
+department varchar(3),
+lec_id char(6),
+course_id char(7),
+admin_id char(6),
+day varchar(10),
+time varchar(20),
+session_type ENUM('theory','practical')
+);
+
+
+create table marks
+(
+mark_id varchar(8) primary key,
+lec_id char(6),
+ug_id char(6),
+course_id char(7),
+quiz_1 float,
+quiz_2 float,
+quiz_3 float,
+quiz_4 float,
+assesment float,
+mid_term float,
+final_theory float,
+final_practical float
+);
+
+create table course
+(
+course_id char(7) primary key,
+course_name varchar(50),
+lec_id char(6),
+credit int(1),
+course_content varchar(200)
+);
+
+create table attendance
+(
+atten_id varchar(10) primary key,
+to_id char(6),
+ug_id char(6),
+course_id char(7),
+atten_date DATE,
+session_type ENUM('theory','practical') NOT NULL,
+atten_status ENUM('present','absent','medical') NOT NULL,
+medical_id varchar(6)
+);
+
+create table medical
+(
+medical_id varchar(6) primary key,
+ug_id char(6),
+course_id char(7),
+reason varchar(200),
+medical_date DATE,
+medical_status ENUM('pending','approved','rejected') default 'pending',
+to_id char(6)
+);
+
+alter table admin add foreign key(admin_id) references user(user_id) on update cascade;
+alter table undergraduate add foreign key(ug_id) references user(user_id) on update cascade;
+alter table lecturer add foreign key(lec_id) references user(user_id) on update cascade;
+alter table tech_officer add foreign key(to_id) references user(user_id) on update cascade;
+
+alter table attendance add foreign key(ug_id) references undergraduate(ug_id) on update cascade;
+alter table attendance add foreign key(course_id) references course(course_id) on update cascade;
+alter table attendance add foreign key(to_id) references tech_officer(to_id) on update cascade;
+alter table attendance add foreign key(medical_id) references medical(medical_id) on update cascade;
+
+alter table medical add foreign key(ug_id) references undergraduate(ug_id) on update cascade;
+alter table medical add foreign key(course_id) references course(course_id) on update cascade;
+
+alter table course add foreign key(lec_id) references lecturer(lec_id) on update cascade;
+
+alter table marks add foreign key(lec_id) references lecturer(lec_id) on update cascade;
+alter table marks add foreign key(ug_id) references undergraduate(ug_id) on update cascade;
+alter table marks add foreign key(course_id) references course(course_id) on update cascade;
+
+alter table time_table add foreign key(lec_id) references lecturer(lec_id) on update cascade;
+alter table time_table add foreign key(course_id) references course(course_id) on update cascade;
+
