@@ -62,6 +62,7 @@ public class admin_user extends javax.swing.JFrame {
         loader = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         u_serach = new javax.swing.JTextField();
+        back = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -146,6 +147,13 @@ public class admin_user extends javax.swing.JFrame {
             }
         });
 
+        back.setText("BACK");
+        back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -183,7 +191,9 @@ public class admin_user extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addGap(30, 30, 30)
                 .addComponent(u_serach, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(190, 190, 190))
+                .addGap(109, 109, 109)
+                .addComponent(back)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,10 +223,15 @@ public class admin_user extends javax.swing.JFrame {
                             .addComponent(u_delete)
                             .addComponent(u_serch)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(u_serach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(u_serach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(back)))
                         .addGap(23, 23, 23)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(85, Short.MAX_VALUE))
@@ -254,7 +269,7 @@ public class admin_user extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_u_roleActionPerformed
 
-    private void u_serchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_u_serchActionPerformed
+    private void u_serchActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         String userID = u_id.getText();
 
@@ -280,7 +295,7 @@ public class admin_user extends javax.swing.JFrame {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }//GEN-LAST:event_u_serchActionPerformed
+    }                                       
 
     private void u_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_u_saveActionPerformed
         // Retrieve user inputs
@@ -370,6 +385,13 @@ public class admin_user extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_u_serachActionPerformed
 
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        admin add = new admin();
+        add.setVisible(true);
+    }//GEN-LAST:event_backActionPerformed
+
 
 
     
@@ -383,6 +405,7 @@ public class admin_user extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton back;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

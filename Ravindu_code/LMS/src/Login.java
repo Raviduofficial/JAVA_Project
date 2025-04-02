@@ -164,6 +164,7 @@ public class Login extends javax.swing.JFrame {
             case "Admin":
                 //new AdminWindow(); // Open Admin window
                 //JOptionPane.showMessageDialog(null, "Hello admin");
+                this.dispose();
                 admin add = new admin();
                 add.setVisible(true);
                 break;

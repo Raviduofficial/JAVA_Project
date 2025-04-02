@@ -113,18 +113,21 @@ public class admin extends javax.swing.JFrame {
 
     private void userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userActionPerformed
         // TODO add your handling code here:
+        this.dispose();
         admin_user add = new admin_user();
         add.setVisible(true);
     }//GEN-LAST:event_userActionPerformed
 
     private void courcesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courcesActionPerformed
         // TODO add your handling code here:
+        this.dispose();
         admin_course add = new admin_course();
         add.setVisible(true);
     }//GEN-LAST:event_courcesActionPerformed
 
     private void noticeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noticeActionPerformed
         // TODO add your handling code here:
+        this.dispose();
         admin_notice add = new admin_notice();
         add.setVisible(true);
     }//GEN-LAST:event_noticeActionPerformed
