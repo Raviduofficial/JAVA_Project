@@ -8,6 +8,7 @@ user_password varchar(15),
 user_name varchar(50),
 user_email varchar(50),
 user_phone int(10),
+user_pro_pic varchar(200),
 user_role ENUM('admin','lecturer','undergraduate','tech_officer') NOT NULL
 
 );
@@ -36,7 +37,7 @@ to_department varchar(3)
 
 create table notice
 (
-notice_id varchar(10) primary key,
+notice_id int AUTO_INCREMENT primary key ,
 notice_title varchar(30),
 notice_content varchar(500),
 notice_date DATE
@@ -57,7 +58,7 @@ session_type ENUM('theory','practical')
 
 create table marks
 (
-mark_id varchar(8) primary key,
+mark_id int AUTO_INCREMENT primary key,
 lec_id char(6),
 ug_id char(6),
 course_id char(7),
@@ -82,7 +83,7 @@ course_content varchar(200)
 
 create table attendance
 (
-atten_id varchar(10) primary key,
+atten_id int AUTO_INCREMENT primary key,
 to_id char(6),
 ug_id char(6),
 course_id char(7),
@@ -94,7 +95,7 @@ medical_id varchar(6)
 
 create table medical
 (
-medical_id varchar(6) primary key,
+medical_id int AUTO_INCREMENT primary key,
 ug_id char(6),
 course_id char(7),
 reason varchar(200),
