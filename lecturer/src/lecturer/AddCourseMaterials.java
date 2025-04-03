@@ -1,25 +1,65 @@
 package lecturer;
 
-//import student.Login;
-
+import java.awt.Color;
+import java.awt.geom.RoundRectangle2D;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
-
-//import javax.swing.table.DefaultTableModel;
-
+//import student.Login;
 
 public class AddCourseMaterials extends javax.swing.JFrame {
     
-//    Course course = new Course();
-//    private int rowIndex;
-//    int xx, xy;
-//    private DefaultTableModel model;
-    String bookName,author;
-    int bookId,quantity;
-    DefaultTableModel model;
+    Course course = new Course();
+    private int rowIndex;
+    int xx, xy;
+    private DefaultTableModel model;
+    
 
     public AddCourseMaterials() {
         initComponents();
+        init();
+    }
+    
+    public  void init(){
+        setShape(new RoundRectangle2D.Double(0,0,getWidth(),getHeight(),20,20));
+        tableviewLecturer();
+    }
+    
+    private void tableviewLecturer(){
+        course.getCourseValue(course_table, "");
+        model = (DefaultTableModel) course_table.getModel();
+        course_table.setRowHeight(30);
+        course_table.setShowGrid(true);
+        course_table.setGridColor(Color.gray);
+        course_table.setBackground(Color.white);
+    }
+    
+    private void clearCourseMaterials(){
+        txt_course_Id.setText(null);
+        txt_Credit.setText(null);
+        jComboBox_course_type.setSelectedIndex(0);
+        txt_LecID.setText(null);
+        txt_CourseName.setText(null);
+        course_table.clearSelection();
+    }
+    
+    public boolean isEmptyCourse(){
+        if(txt_course_Id.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Course Code is missing");
+            return false;
+        }
+        if(txt_CourseName.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Course Name is missing");
+            return false;
+        }
+        if(txt_LecID.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Course Lecture ID is missing");
+            return false;
+        }
+        if(txt_Credit.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Course Credit is missing");
+            return false;
+        }
+        return true;
     }
 
     @SuppressWarnings("unchecked")
@@ -28,27 +68,24 @@ public class AddCourseMaterials extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         lbl_back = new javax.swing.JLabel();
-        txt_courseCode = new javax.swing.JTextField();
+        txt_course_Id = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txt_CourseName = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txt_Credit = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        txt_week = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
-        txt_theory = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
-        txt_Practical = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         txt_LecID = new javax.swing.JTextField();
         Add_Button = new rojerusan.RSMaterialButtonCircle();
         Update_Button = new rojerusan.RSMaterialButtonCircle();
-        Delete_Button = new rojerusan.RSMaterialButtonCircle();
+        clear_button = new rojerusan.RSMaterialButtonCircle();
         jLabel3 = new javax.swing.JLabel();
+        jComboBox_course_type = new javax.swing.JComboBox<>();
+        Delete_Button1 = new rojerusan.RSMaterialButtonCircle();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        rSTableMetro1 = new rojeru_san.complementos.RSTableMetro();
+        course_table = new rojeru_san.complementos.RSTableMetro();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,15 +95,20 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         lbl_back.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lbl_back.setForeground(new java.awt.Color(255, 255, 255));
         lbl_back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SystemImages/back.png"))); // NOI18N
-        jPanel1.add(lbl_back, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 60));
-
-        txt_courseCode.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        txt_courseCode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_courseCodeActionPerformed(evt);
+        lbl_back.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_backMouseClicked(evt);
             }
         });
-        jPanel1.add(txt_courseCode, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 320, 20));
+        jPanel1.add(lbl_back, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 60));
+
+        txt_course_Id.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        txt_course_Id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_course_IdActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txt_course_Id, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 320, 20));
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
@@ -79,42 +121,23 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Credit");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 110, 20));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 110, 20));
 
         txt_Credit.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel1.add(txt_Credit, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 320, 20));
+        jPanel1.add(txt_Credit, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, 320, 20));
 
         jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Week");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 100, 20));
-
-        txt_week.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel1.add(txt_week, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, 320, 20));
-
-        jLabel14.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("Theory");
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 100, 20));
-
-        txt_theory.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel1.add(txt_theory, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 320, 20));
-
-        jLabel15.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Practical");
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 100, 20));
-
-        txt_Practical.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel1.add(txt_Practical, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 410, 320, 20));
+        jLabel10.setText("Course Type");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 100, 20));
 
         jLabel16.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Lecture ID");
-        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 100, 20));
+        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 100, 20));
 
         txt_LecID.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel1.add(txt_LecID, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 480, 320, 20));
+        jPanel1.add(txt_LecID, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 320, 20));
 
         Add_Button.setText("ADD");
         Add_Button.addActionListener(new java.awt.event.ActionListener() {
@@ -122,7 +145,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 Add_ButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(Add_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 540, 150, 60));
+        jPanel1.add(Add_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 150, 60));
 
         Update_Button.setText("UPDATE");
         Update_Button.addActionListener(new java.awt.event.ActionListener() {
@@ -130,47 +153,63 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 Update_ButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(Update_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 540, 150, 60));
+        jPanel1.add(Update_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 430, 150, 60));
 
-        Delete_Button.setText("DELETE");
-        Delete_Button.addActionListener(new java.awt.event.ActionListener() {
+        clear_button.setText("Clear");
+        clear_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Delete_ButtonActionPerformed(evt);
+                clear_buttonActionPerformed(evt);
             }
         });
-        jPanel1.add(Delete_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 540, 150, 60));
+        jPanel1.add(clear_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 150, 60));
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Course Code");
+        jLabel3.setText("Course Id");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 120, 20));
+
+        jComboBox_course_type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Theroy", "Practical", "Theory/Practical" }));
+        jPanel1.add(jComboBox_course_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 320, -1));
+
+        Delete_Button1.setText("DELETE");
+        Delete_Button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Delete_Button1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Delete_Button1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 430, 150, 60));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Add Courses");
 
-        rSTableMetro1.setModel(new javax.swing.table.DefaultTableModel(
+        course_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Course Code", "Course Name", "Credit", "Week", "Theory", "Practical", "Lecture ID"
+                "Course Code", "Course Name", "Lecture ID", "Credit", "Course Type"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true, true
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        rSTableMetro1.setColorFilasBackgound2(new java.awt.Color(255, 255, 255));
-        rSTableMetro1.setFuenteHead(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jScrollPane1.setViewportView(rSTableMetro1);
+        course_table.setColorFilasBackgound2(new java.awt.Color(255, 255, 255));
+        course_table.setFuenteHead(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        course_table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                course_tableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(course_table);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -217,38 +256,30 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_courseCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_courseCodeActionPerformed
+    private void txt_course_IdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_course_IdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_courseCodeActionPerformed
+    }//GEN-LAST:event_txt_course_IdActionPerformed
 
-    private void Delete_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Delete_ButtonActionPerformed
-        // TODO add your handling code here:
-//        if(deleteBook() == true){
-//            JOptionPane.showMessageDialog(this, "Book Deleted Successfully!!");
-//            clearTable();
-//            setBookDetailsToTable();
-//            txt_bookId.setText("");
-//            txt_bookName.setText("");
-//            txt_author.setText("");
-//            txt_quantity.setText("");
-//        }else{
-//            JOptionPane.showMessageDialog(this, "Book Deleted Failed!!");
-//        }
-    }//GEN-LAST:event_Delete_ButtonActionPerformed
+    private void clear_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clear_buttonActionPerformed
+        clearCourseMaterials();
+    }//GEN-LAST:event_clear_buttonActionPerformed
 
     private void Add_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add_ButtonActionPerformed
-        // TODO add your handling code here: for add button
-//        if(addBook() == true){
-//            JOptionPane.showMessageDialog(this, "Book Added Successfully!!");
-//            clearTable();
-//            setBookDetailsToTable();
-//            txt_bookId.setText("");
-//            txt_bookName.setText("");
-//            txt_author.setText("");
-//            txt_quantity.setText("");
-//        }else{
-//            JOptionPane.showMessageDialog(this, "Book Added Failed!!");
-//        }
+        if(isEmptyCourse()){
+            if(!course.isCourseCodeExist(txt_course_Id.getText())){
+                String courseId = txt_course_Id.getText();
+                String courseName = txt_CourseName.getText();
+                String lecId = txt_LecID.getText();
+                int credit = Integer.parseInt(txt_Credit.getText());
+                String course_type = jComboBox_course_type.getSelectedItem().toString();
+                
+                course.insert(courseId, courseName, lecId, credit, course_type);
+                course_table.setModel(new DefaultTableModel(null,new Object[]{"courseId", "courseName", "lecId", "credit", "course_type"}));
+                course.getCourseValue(course_table, "");
+            }else{
+                JOptionPane.showMessageDialog(this, "Course code Already Exist !!!");
+            }
+        }
     }//GEN-LAST:event_Add_ButtonActionPerformed
 
     private void Update_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Update_ButtonActionPerformed
@@ -276,6 +307,20 @@ public class AddCourseMaterials extends javax.swing.JFrame {
 //        txt_author.setText(model.getValueAt(rowNo, 2).toString());
 //        txt_quantity.setText(model.getValueAt(rowNo, 3).toString());
     }//GEN-LAST:event_tbl_bookDetailsMouseClicked
+
+    private void Delete_Button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Delete_Button1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Delete_Button1ActionPerformed
+
+    private void lbl_backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_backMouseClicked
+        LectureDashboard dash = new LectureDashboard();
+        dash.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_lbl_backMouseClicked
+
+    private void course_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_course_tableMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_course_tableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -314,11 +359,12 @@ public class AddCourseMaterials extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rojerusan.RSMaterialButtonCircle Add_Button;
-    private rojerusan.RSMaterialButtonCircle Delete_Button;
+    private rojerusan.RSMaterialButtonCircle Delete_Button1;
     private rojerusan.RSMaterialButtonCircle Update_Button;
+    private rojerusan.RSMaterialButtonCircle clear_button;
+    private rojeru_san.complementos.RSTableMetro course_table;
+    private javax.swing.JComboBox<String> jComboBox_course_type;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -328,13 +374,9 @@ public class AddCourseMaterials extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_back;
-    private rojeru_san.complementos.RSTableMetro rSTableMetro1;
     private javax.swing.JTextField txt_CourseName;
     private javax.swing.JTextField txt_Credit;
     private javax.swing.JTextField txt_LecID;
-    private javax.swing.JTextField txt_Practical;
-    private javax.swing.JTextField txt_courseCode;
-    private javax.swing.JTextField txt_theory;
-    private javax.swing.JTextField txt_week;
+    private javax.swing.JTextField txt_course_Id;
     // End of variables declaration//GEN-END:variables
 }

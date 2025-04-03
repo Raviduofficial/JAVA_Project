@@ -1,7 +1,7 @@
 package lecturer;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 //import lecturer.StudentDetails.Login;
 //import technicalOfficer.Notices;
