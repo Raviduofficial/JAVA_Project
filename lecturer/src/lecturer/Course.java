@@ -1,44 +1,49 @@
 package lecturer;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
 import connection.dbConnection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import rojeru_san.complementos.RSTableMetro;
 
-
-
 public class Course {
-    Connection con = dbConnection.connect();
-    PreparedStatement ps;
     
-    public String getMax(){
+    private Connection getConnection() throws SQLException {
+        Connection conn = dbConnection.connect();
+        if (conn == null) {
+            throw new SQLException("Failed to establish database connection");
+        }
+        return conn;
+    }
+
+    public String getMaxUserId() {
         String id = "";
-        Statement st;
+        String sql = "SELECT MAX(user_id) FROM user";
         
-        try{
-           st = (Statement) con.createStatement();
-           ResultSet result =  st.executeQuery("select max(userId) from User");
-           while(result.next()){
-               id = result.getString("userId");
-           }             
+        try (Connection con = getConnection();
+             Statement st = con.createStatement();
+             ResultSet result = st.executeQuery(sql)) {
+            
+            if (result.next()) {
+                id = result.getString(1);
+            }
         } catch (SQLException ex) {
-            Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Course.class.getName()).log(Level.SEVERE, "Error getting max user ID", ex);
+            JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage(), 
+                "Error", JOptionPane.ERROR_MESSAGE);
         }
         return id;
     }
-    //insert data into course table
-    
-    public void insert(String course_id,String course_name,String lec_id,int credit,String course_type){
-        String sql = "insert into course values(?,?,?,?,?)";
-        try{
-            ps = (PreparedStatement) con.prepareStatement(sql);
+
+    public boolean insert(String course_id, String course_name, String lec_id, int credit, String course_type) {
+        String sql = "INSERT INTO course VALUES(?,?,?,?,?)";
+        boolean success = false;
+        
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            
             ps.setString(1, course_id);
             ps.setString(2, course_name);
             ps.setString(3, lec_id);
@@ -46,69 +51,106 @@ public class Course {
             ps.setString(5, course_type);
             
             if (ps.executeUpdate() > 0) {
-                JOptionPane.showMessageDialog(null, "New course Material added Successfully");
+                JOptionPane.showMessageDialog(null, "Course added successfully!");
+                success = true;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Course.class.getName()).log(Level.SEVERE, "Error inserting course", ex);
+            JOptionPane.showMessageDialog(null, "Error adding course: " + ex.getMessage(), 
+                "Database Error", JOptionPane.ERROR_MESSAGE);
         }
+        return success;
     }
-    
-    public boolean isCourseCodeExist(String course_id){
-        try{
-            ps = (PreparedStatement) con.prepareStatement("select * from course where course_id = ?");
+
+    public boolean isCourseCodeExist(String course_id) {
+        String sql = "SELECT course_id FROM course WHERE course_id = ?";
+        
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            
             ps.setString(1, course_id);
-            ResultSet result = ps.executeQuery();
-            if(result.next()){
-                return true;
+            try (ResultSet result = ps.executeQuery()) {
+                return result.next();
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Course.class.getName()).log(Level.SEVERE, "Error checking course existence", ex);
+            JOptionPane.showMessageDialog(null, "Database error while checking course", 
+                "Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
-    
-    //get all data course table
-    public void getCourseValue(RSTableMetro table,String searchValue){
-        String sql = "select * from course where CONCAT(course_id,course_name,lec_id,credit,course_type) like ? order by course_id desc";
+
+    public void getCourseValue(RSTableMetro table, String searchValue) {
+        String sql = "SELECT * FROM course WHERE CONCAT(course_id, course_name, lec_id, credit, course_type) LIKE ?";
         
-        try{
-            ps = (PreparedStatement) con.prepareStatement(sql);
-            ps.setString(1,"%" + searchValue + "%" );
-            ResultSet result = ps.executeQuery();
-            DefaultTableModel model = (DefaultTableModel) table.getModel();
-            Object[] row;
-            while(result.next()){
-                row = new Object[7];
-                row[0] = result.getString(1);
-                row[1] = result.getString(2);
-                row[2] = result.getString(3);
-                row[3] = result.getString(4);
-                row[4] = result.getString(5);
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            
+            ps.setString(1, "%" + searchValue + "%");
+            try (ResultSet result = ps.executeQuery()) {
+                DefaultTableModel model = (DefaultTableModel) table.getModel();
+                model.setRowCount(0); 
                 
-                model.addRow(row);
+                while (result.next()) {
+                    model.addRow(new Object[]{
+                        result.getString("course_id"),
+                        result.getString("course_name"),
+                        result.getString("lec_id"),
+                        result.getInt("credit"),
+                        result.getString("course_type")
+                    });
+                }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Course.class.getName()).log(Level.SEVERE, "Error loading course data", ex);
+            JOptionPane.showMessageDialog(null, "Error loading courses: " + ex.getMessage(), 
+                "Database Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    //update course table
-    public void update(String course_id,String course_name,String lec_id,int credit,String course_type){
-        String sql = "update course set course_name = ?, lec_id = ?, credit = ?, course_type = ? where course_id = ?";
+
+    public boolean update(String course_id, String course_name, String lec_id, int credit, String course_type) {
+        String sql = "UPDATE course SET course_name=?, lec_id=?, credit=?, course_type=? WHERE course_id=?";
+        boolean success = false;
         
-        try {
-            ps = (PreparedStatement) con.prepareStatement(sql);
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            
             ps.setString(1, course_name);
             ps.setString(2, lec_id);
             ps.setInt(3, credit);
             ps.setString(4, course_type);
             ps.setString(5, course_id);
             
-            if(ps.executeUpdate() > 0){
-                JOptionPane.showMessageDialog(null, "Student data updated Successfully");
+            if (ps.executeUpdate() > 0) {
+                JOptionPane.showMessageDialog(null, "Course updated successfully!");
+                success = true;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+            Logger.getLogger(Course.class.getName()).log(Level.SEVERE, "Error updating course", ex);
+            JOptionPane.showMessageDialog(null, "Error updating course: " + ex.getMessage(), 
+                "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return success;
+    }
+
+    public boolean delete(String course_id) {
+        String sql = "DELETE FROM course WHERE course_id = ?";
+        boolean success = false;
+        
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            
+            ps.setString(1, course_id);
+            
+            if (ps.executeUpdate() > 0) {
+                JOptionPane.showMessageDialog(null, "Course deleted successfully!");
+                success = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Course.class.getName()).log(Level.SEVERE, "Error deleting course", ex);
+            JOptionPane.showMessageDialog(null, "Error deleting course: " + ex.getMessage(), 
+                "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return success;
     }
 }
