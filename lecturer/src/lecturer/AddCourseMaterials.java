@@ -3,6 +3,7 @@ package lecturer;
 //import student.Login;
 
 import java.awt.Color;
+import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -20,7 +21,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
     }
     
     public  void init(){
-        setShape(new RoundRectangle2D.Double(0,0,getWidth(),getHeight(),20,20));
+//        setShape(new RoundRectangle2D.Double(0,0,getWidth(),getHeight(),20,20));
         tableviewLecturer();
     }
     
@@ -76,12 +77,12 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         txt_credit = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        Refresh_Button = new rojerusan.RSMaterialButtonCircle();
         Update_Button = new rojerusan.RSMaterialButtonCircle();
         Clear_Button = new rojerusan.RSMaterialButtonCircle();
         jLabel3 = new javax.swing.JLabel();
         Add_Button = new rojerusan.RSMaterialButtonCircle();
         ComboBox_course_type = new javax.swing.JComboBox<>();
+        Delete_Button = new rojerusan.RSMaterialButtonCircle();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -139,14 +140,6 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         jLabel14.setText("CourseType");
         jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 100, 20));
 
-        Refresh_Button.setText("Refresh");
-        Refresh_Button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Refresh_ButtonActionPerformed(evt);
-            }
-        });
-        jPanel1.add(Refresh_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, 150, 60));
-
         Update_Button.setText("UPDATE");
         Update_Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -161,7 +154,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 Clear_ButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(Clear_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 400, 150, 60));
+        jPanel1.add(Clear_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 460, 150, 60));
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -178,6 +171,14 @@ public class AddCourseMaterials extends javax.swing.JFrame {
 
         ComboBox_course_type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Theory", "Practical", "Theory/Practical", " " }));
         jPanel1.add(ComboBox_course_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 320, 30));
+
+        Delete_Button.setText("Delete");
+        Delete_Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Delete_ButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Delete_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 400, 150, 60));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -234,7 +235,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(187, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -250,11 +251,10 @@ public class AddCourseMaterials extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
@@ -264,23 +264,24 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         clearCourseMaterials();
     }//GEN-LAST:event_Clear_ButtonActionPerformed
 
-    private void Refresh_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Refresh_ButtonActionPerformed
-        
-    }//GEN-LAST:event_Refresh_ButtonActionPerformed
-
     private void Update_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Update_ButtonActionPerformed
-        
+        if(isEmptyCourse()){
+                String courseId = txt_course_Id.getText();
+                String courseName = txt_CourseName.getText();
+                String lecId = txt_LecId.getText();
+                int credit = Integer.parseInt(txt_credit.getText());
+                String course_type = ComboBox_course_type.getSelectedItem().toString();
+                
+                course.update(courseId, courseName, lecId, credit, course_type);
+                clearCourseMaterials();
+//                course_table.setModel(new DefaultTableModel(null, new Object[]{"courseId,courseName,lecId,credit,course_type"}));
+                course.getCourseValue(course_table, "");
+                
+        }
     }//GEN-LAST:event_Update_ButtonActionPerformed
 
     private void tbl_bookDetailsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_bookDetailsMouseClicked
-        // TODO add your handling code here:
-//        int rowNo = tbl_bookDetails.getSelectedRow();
-//        TableModel model = tbl_bookDetails.getModel();
-//
-//        txt_bookId.setText(model.getValueAt(rowNo, 0).toString());
-//        txt_bookName.setText(model.getValueAt(rowNo, 1).toString());
-//        txt_author.setText(model.getValueAt(rowNo, 2).toString());
-//        txt_quantity.setText(model.getValueAt(rowNo, 3).toString());
+
     }//GEN-LAST:event_tbl_bookDetailsMouseClicked
 
     private void Add_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add_ButtonActionPerformed
@@ -319,9 +320,33 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         rowIndex = course_table.getSelectedRow();
         txt_course_Id.setText(model.getValueAt(rowIndex, 0).toString());
         txt_CourseName.setText(model.getValueAt(rowIndex, 1).toString());
-        String credit = model.getValueAt(rowIndex, 2).toString();
-        
+        txt_LecId.setText(model.getValueAt(rowIndex, 2).toString());
+        txt_credit.setText(model.getValueAt(rowIndex, 3).toString());
+        String ct = model.getValueAt(rowIndex, 4).toString();
+        switch (ct) {
+            case "Theory":
+                ComboBox_course_type.setSelectedIndex(0);
+                break;
+            case "Practical":
+                ComboBox_course_type.setSelectedIndex(1);
+                break;
+            default:
+                ComboBox_course_type.setSelectedIndex(2);
+                break;
+        }
     }//GEN-LAST:event_course_tableMouseClicked
+
+    private void Delete_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Delete_ButtonActionPerformed
+        // TODO add your handling code here:
+        
+        if(course.delete(txt_course_Id.getText()) == true ){
+            JOptionPane.showMessageDialog(this, "Course Deleted Successfully..");
+            clearCourseMaterials();
+            course.getCourseValue(course_table, "");
+        }else{
+            JOptionPane.showMessageDialog(this, "Course Deleted Failed!!");
+        }
+    }//GEN-LAST:event_Delete_ButtonActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -359,7 +384,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
     private rojerusan.RSMaterialButtonCircle Add_Button;
     private rojerusan.RSMaterialButtonCircle Clear_Button;
     private javax.swing.JComboBox<String> ComboBox_course_type;
-    private rojerusan.RSMaterialButtonCircle Refresh_Button;
+    private rojerusan.RSMaterialButtonCircle Delete_Button;
     private rojerusan.RSMaterialButtonCircle Update_Button;
     private rojeru_san.complementos.RSTableMetro course_table;
     private javax.swing.JLabel jLabel10;
