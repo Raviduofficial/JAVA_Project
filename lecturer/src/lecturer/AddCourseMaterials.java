@@ -11,8 +11,8 @@ import javax.swing.table.DefaultTableModel;
 public class AddCourseMaterials extends javax.swing.JFrame {
     
 //    Course course = new Course();
-//    private int rowIndex;
-//    int xx, xy;
+    private int rowIndex;
+    int xx, xy;
 //    private DefaultTableModel model;
     String bookName,author;
     int bookId,quantity;
