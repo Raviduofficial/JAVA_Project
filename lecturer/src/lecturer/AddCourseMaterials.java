@@ -68,7 +68,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        lbl_back = new javax.swing.JLabel();
+        back = new javax.swing.JLabel();
         txt_course_Id = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txt_CourseName = new javax.swing.JTextField();
@@ -93,15 +93,15 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lbl_back.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lbl_back.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SystemImages/back.png"))); // NOI18N
-        lbl_back.addMouseListener(new java.awt.event.MouseAdapter() {
+        back.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        back.setForeground(new java.awt.Color(255, 255, 255));
+        back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/SystemImages/back.png"))); // NOI18N
+        back.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbl_backMouseClicked(evt);
+                backMouseClicked(evt);
             }
         });
-        jPanel1.add(lbl_back, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 60));
+        jPanel1.add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 60));
 
         txt_course_Id.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         txt_course_Id.addActionListener(new java.awt.event.ActionListener() {
@@ -307,12 +307,12 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_course_IdActionPerformed
 
-    private void lbl_backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_backMouseClicked
+    private void backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseClicked
         // TODO add your handling code here:
         LectureDashboard dash = new LectureDashboard();
         dash.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_lbl_backMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_backMouseClicked
 
     private void course_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_course_tableMouseClicked
         // TODO add your handling code here:
@@ -386,6 +386,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> ComboBox_course_type;
     private rojerusan.RSMaterialButtonCircle Delete_Button;
     private rojerusan.RSMaterialButtonCircle Update_Button;
+    private javax.swing.JLabel back;
     private rojeru_san.complementos.RSTableMetro course_table;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel14;
@@ -396,7 +397,6 @@ public class AddCourseMaterials extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lbl_back;
     private javax.swing.JTextField txt_CourseName;
     private javax.swing.JTextField txt_LecId;
     private javax.swing.JTextField txt_course_Id;
