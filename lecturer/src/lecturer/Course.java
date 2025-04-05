@@ -41,6 +41,7 @@ public class Course {
         String sql = "INSERT INTO course VALUES(?,?,?,?,?)";
         boolean success = false;
         
+        //try-with-resources feature - con and ps automatically closed after block ends
         try (Connection con = getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             
@@ -79,7 +80,8 @@ public class Course {
         }
         return false;
     }
-
+    
+    //get all data course table
     public void getCourseValue(RSTableMetro table, String searchValue) {
         String sql = "SELECT * FROM course WHERE CONCAT(course_id, course_name, lec_id, credit, course_type) LIKE ?";
         

@@ -508,14 +508,13 @@ public class LectureDashboard extends javax.swing.JFrame {
     private void lblCourseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCourseMouseClicked
         AddCourseMaterials addCourseMaterials = new AddCourseMaterials();
         addCourseMaterials.setVisible(true);
-        addCourseMaterials.pack();
+        this.setVisible(false);
     }//GEN-LAST:event_lblCourseMouseClicked
 
     private void lblMarksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMarksMouseClicked
         UploadMarksExams uploadMarksExams = new UploadMarksExams();
         uploadMarksExams.setVisible(true);
-//        uploadMarksExams.pack();
-        this.dispose();
+        this.setVisible(false);
     }//GEN-LAST:event_lblMarksMouseClicked
 
     private void lblStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblStudentMouseClicked
