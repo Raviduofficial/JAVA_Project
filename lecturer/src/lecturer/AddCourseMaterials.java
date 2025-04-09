@@ -234,8 +234,8 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(187, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -297,6 +297,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 course.insert(courseId, courseName, lecId, credit, course_type);
                 course_table.setModel(new DefaultTableModel(null,new Object[]{"courseId", "courseName", "lecId", "credit", "course_type"}));
                 course.getCourseValue(course_table, "");
+                clearCourseMaterials();
             }else{
                 JOptionPane.showMessageDialog(this, "Course code Already Exist !!!");
             }
