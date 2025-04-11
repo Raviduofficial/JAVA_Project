@@ -90,6 +90,7 @@ public class Course {
             
             ps.setString(1, "%" + searchValue + "%");
             try (ResultSet result = ps.executeQuery()) {
+                
                 DefaultTableModel model = (DefaultTableModel) table.getModel();
                 model.setRowCount(0); 
                 
@@ -129,8 +130,7 @@ public class Course {
             }
         } catch (SQLException ex) {
             Logger.getLogger(Course.class.getName()).log(Level.SEVERE, "Error updating course", ex);
-            JOptionPane.showMessageDialog(null, "Error updating course: " + ex.getMessage(), 
-                "Database Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error updating course: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
         }
         return success;
     }
