@@ -1,11 +1,29 @@
 package Welcome;
 
 import Login.Login;
+import javax.swing.UIManager;
+import java.awt.*;
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+
+
 
 
 public class Welcome extends javax.swing.JFrame {
 
     public Welcome() {
+        try {
+            UIManager.setLookAndFeel(new FlatDarkLaf()); // or FlatDarkLaf, FlatIntelliJLaf
+            UIManager.put("Button.arc", 20); // Rounded corners (0 = square)
+            UIManager.put("Button.background", new Color(0x007BFF)); // Normal background color
+            UIManager.put("Button.foreground", Color.WHITE); // Text color
+            UIManager.put("Button.hoverBackground", new Color(0x0056b3)); // Hover color
+            UIManager.put("Button.pressedBackground", new Color(0x004085));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        FlatDarkLaf.setup();
         initComponents();
     }
     
@@ -82,7 +100,6 @@ public class Welcome extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public static void main(String args[]) {
-
 
           Welcome load = new Welcome();
           load.setVisible(true);

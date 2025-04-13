@@ -2,14 +2,24 @@ package Login;
 
 import Admin.admin;
 import Database.dbconnection;
+import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLaf;
+
 
 import javax.swing.*;
 import java.sql.*;
+import javax.swing.UIManager;
+import java.awt.*;
 
 public class Login extends javax.swing.JFrame {
     
     public Login() {
-        initComponents();
+        try {
+            initComponents();
+    }catch(Exception e){
+        System.out.println(e);
+    }
     }
 
  
@@ -126,7 +136,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelActionPerformed
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-        String username_new =  username.getText();
+        String username_new =  username.getText().toLowerCase();
         String password_new = new String(password.getPassword());
          
         String role = authenticate(username_new,password_new);
@@ -142,9 +152,11 @@ public class Login extends javax.swing.JFrame {
         String query = "SELECT * FROM users WHERE username=? AND password=?";
         try (Connection conn = dbconnection.getConnection();
              PreparedStatement pst = conn.prepareStatement(query)){
+            
+            String hashedPassword = Admin.encryption.hashpassword(new String(password));
    
             pst.setString(1, username);
-            pst.setString(2, password);
+            pst.setString(2, hashedPassword);
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
@@ -165,7 +177,7 @@ public class Login extends javax.swing.JFrame {
     private void openRoleWindow(String role) {
         // Based on the role, open the appropriate window
         switch (role) {
-            case "Admin":
+            case "admin":
                 //new AdminWindow(); // Open Admin window
                 //JOptionPane.showMessageDialog(null, "Hello Admin.admin");
                 this.dispose();
@@ -173,20 +185,20 @@ public class Login extends javax.swing.JFrame {
                 admin add = new admin();
                 add.setVisible(true);
                 break;
-            case "Lecturer":
+            case "lecturer":
                // new LecturerWindow(); // Open Lecturer window
                //JOptionPane.showMessageDialog(null, "Hello Admin.admin");
                 //lecture lec = new lecture ();
                 //lec.setVisible(true);
                 
                 break;
-            case "Undergraduate":
+            case "undergraduate":
                 //new UndergraduateWindow(); // Open Undergraduate window
                 //JOptionPane.showMessageDialog(null, "Hello boiya");
                 //undergraduate ug = new undergraduate();
                 //ug.setVisible(true);
                 break;
-            case "To":
+            case "to":
                 //new UndergraduateWindow(); // Open Undergraduate window
                 //JOptionPane.showMessageDialog(null, "Hello boiya");
                 //to t = new to();

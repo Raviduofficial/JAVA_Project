@@ -7,6 +7,10 @@ import javax.swing.table.DefaultTableModel;
 import java.util.Vector;
 import java.time.LocalDate;
 import java.sql.Date;
+import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import javax.imageio.ImageIO;
+import java.io.File;
 
 public class admin extends javax.swing.JFrame {
 
@@ -30,6 +34,8 @@ public class admin extends javax.swing.JFrame {
                         v.add(rs.getString(1));
                         v.add(rs.getString(2));
                         v.add(rs.getString(3));
+                        v.add(rs.getString(4));
+                        v.add(rs.getString(5));
           
 
                         dt.addRow(v);
@@ -80,9 +86,7 @@ public class admin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         u_name = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        u_pass = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        u_role = new javax.swing.JTextField();
         addUser = new javax.swing.JButton();
         updateUser = new javax.swing.JButton();
         DELETE = new javax.swing.JButton();
@@ -93,6 +97,8 @@ public class admin extends javax.swing.JFrame {
         u_email = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         u_phone = new javax.swing.JTextField();
+        u_pass = new javax.swing.JPasswordField();
+        u_role = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         noticeTable = new javax.swing.JTable();
@@ -126,6 +132,10 @@ public class admin extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         t_update = new javax.swing.JButton();
         t_find = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        profilePic = new javax.swing.JLabel();
+        updateProfile = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -160,13 +170,13 @@ public class admin extends javax.swing.JFrame {
 
         Table1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "USER NAME", "PASSWORD", "ROLE"
+                "USER NAME", "PASSWORD", "ROLE", "Email", "Phone Number"
             }
         ));
         Table1.setCellSelectionEnabled(true);
@@ -184,6 +194,8 @@ public class admin extends javax.swing.JFrame {
 
         jLabel10.setText("PHONE");
 
+        u_role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Undergraduate", "To", "Lecturer" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -193,30 +205,36 @@ public class admin extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(u_pass))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(u_name, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel3)
-                                        .addComponent(jLabel9))
-                                    .addGap(46, 46, 46)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(u_role)
-                                        .addComponent(u_email))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addGap(40, 40, 40)
-                                .addComponent(u_phone)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 341, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(154, 154, 154))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel2)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(u_pass))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel1)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(u_name, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel10)
+                                        .addGap(40, 40, 40)
+                                        .addComponent(u_phone, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)))
+                                .addGap(58, 58, 58))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel9))
+                                .addGap(46, 46, 46)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(u_email)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(u_role, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 704, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(175, 175, 175))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(addUser)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -236,15 +254,18 @@ public class admin extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(u_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(u_pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(jLabel2))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(u_pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(u_role, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(9, 9, 9)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
                             .addComponent(u_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -252,16 +273,14 @@ public class admin extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
                             .addComponent(u_phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(8, 8, 8)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addUser)
                     .addComponent(updateUser)
                     .addComponent(DELETE)
                     .addComponent(jButton1))
-                .addContainerGap(143, Short.MAX_VALUE))
+                .addContainerGap(113, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("User", jPanel1);
@@ -371,7 +390,7 @@ public class admin extends javax.swing.JFrame {
                             .addComponent(addNotice)
                             .addComponent(n_update)
                             .addComponent(n_DELETE))))
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Notice", jPanel2);
@@ -482,7 +501,6 @@ public class admin extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                                 .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(26, 26, 26)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(t_level_find, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(t_sess_select, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -542,28 +560,83 @@ public class admin extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Time Table", jPanel4);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1155, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 343, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Courses", jPanel3);
+
+        profilePic.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        profilePic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fOT.jpeg"))); // NOI18N
+        profilePic.setText("jLabel8");
+        profilePic.setPreferredSize(new java.awt.Dimension(150, 150));
+
+        updateProfile.setText("Update_Profile_Pic");
+        updateProfile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateProfileActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(214, 214, 214)
+                        .addComponent(profilePic, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(162, 162, 162)
+                        .addComponent(updateProfile)))
+                .addContainerGap(851, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addComponent(profilePic, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
+                .addComponent(updateProfile)
+                .addContainerGap(150, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Profile", jPanel5);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane1))
+                .addGap(17, 17, 17)
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1))
+                .addComponent(jTabbedPane1)
+                .addGap(30, 30, 30))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+
 
     private void n_DELETEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_n_DELETEActionPerformed
         // TODO add your handling code here:
@@ -663,9 +736,7 @@ public class admin extends javax.swing.JFrame {
     }//GEN-LAST:event_n_idActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        // TODO add your handling code here:
-        String username = u_name.getText();
+              String username = u_name.getText();
 
         String sql = "SELECT * FROM users WHERE username = ?";
 
@@ -674,9 +745,15 @@ public class admin extends javax.swing.JFrame {
             pst.setString(1, username);
             try(ResultSet rs = pst.executeQuery()){
                 if (rs.next()){
+                    
                     u_name.setText(rs.getString("username"));
                     u_pass.setText(rs.getString("password"));
-                    u_role.setText(rs.getString("role"));
+                    
+                    u_email.setText(rs.getString("email"));
+                    u_phone.setText(rs.getString("phone"));
+                     String roleFromDB = rs.getString("role");
+                    u_role.setSelectedItem(roleFromDB);
+                    tbload();
                 }else{
                     JOptionPane.showMessageDialog(null, "User not found");
                 }
@@ -693,13 +770,14 @@ public class admin extends javax.swing.JFrame {
     private void DELETEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DELETEActionPerformed
         String userID = u_name.getText();
 
-        String sql = "DELETE FROM users WHERE userID = ?";
+        String sql = "DELETE FROM users WHERE username = ?";
 
         try(Connection conn = dbconnection.getConnection();
             PreparedStatement pst = conn.prepareStatement(sql)){
 
             pst.setString(1, userID);
             int rowsInserted = pst.executeUpdate();
+            tbload();
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -707,25 +785,31 @@ public class admin extends javax.swing.JFrame {
     }//GEN-LAST:event_DELETEActionPerformed
 
     private void updateUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateUserActionPerformed
-        // TODO add your handling code here:
+        String username = u_name.getText().trim();
+        char[] password = u_pass.getPassword(); 
+        String role = u_role.getSelectedItem().toString().toLowerCase();
+        String email = u_email.getText();
+        String phone = u_phone.getText();
+        
+     
+        String hashedPassword = Admin.encryption.hashpassword(new String(password));
 
-        String username = u_name.getText();
-        String password = u_pass.getText();
-        String role = u_role.getText();
-
-        String sql = "UPDATE users SET password = ?, role = ? WHERE username = ?";
+        String sql = "UPDATE users SET password = ?, role = ?, email = ?, phone = ? WHERE username = ?";
 
         try (Connection conn = dbconnection.getConnection();
             PreparedStatement pst = conn.prepareStatement(sql)) {
 
-            pst.setString(1, password);
+            pst.setString(1, hashedPassword);
             pst.setString(2, role);
-            pst.setString(3, username);
+            pst.setString(3, email);
+            pst.setString(4, phone);
+             pst.setString(5, username);
 
             int rowsInserted = pst.executeUpdate();
 
             if (rowsInserted > 0) {
                 JOptionPane.showMessageDialog(this, "User updated successfully!");
+                tbload();
             }else{
                 JOptionPane.showMessageDialog(this, "User could not be updated.");
             }
@@ -737,28 +821,80 @@ public class admin extends javax.swing.JFrame {
 
     private void addUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserActionPerformed
         // Retrieve user inputs
-        String username = u_name.getText();
-        String password = u_pass.getText(); // Use getPassword() for security
-        String role = u_role.getText();
+        String username = u_name.getText().trim().toLowerCase();
+        char[] password = u_pass.getPassword(); 
+        String role = u_role.getSelectedItem().toString().toLowerCase();;
+        String email = u_email.getText();
+        String phone = u_phone.getText();
+        
+        if (username.isEmpty() || password.length == 0 || role.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "All fields are required!");
+        return;
+        }
+        
+         if (!email.isEmpty() && !email.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+        JOptionPane.showMessageDialog(this, "Please enter a valid email address!");
+        return;
+        }
+        
+        if (!phone.isEmpty() && !phone.matches("^[0-9]{10,13}$")) {
+        JOptionPane.showMessageDialog(this, "Please enter a valid phone number (10-13 digits)!");
+        return;
+        }
+        
+        if (password.length < 8 || !new String(password).matches("^(?=.*[A-Za-z])(?=.*\\d).+$")) {
+        JOptionPane.showMessageDialog(this, "Password must be at least 8 characters and contain both letters and numbers!");
+        return;
+        }
+        
+        try {
+            // Check if username exists
+            String checkSql = "SELECT username FROM users WHERE username = ?";
+            try (Connection conn = dbconnection.getConnection();
+                PreparedStatement checkPst = conn.prepareStatement(checkSql)){
+                checkPst.setString(1, username);
+                ResultSet rs = checkPst.executeQuery();
+                if (rs.next()) {
+                    JOptionPane.showMessageDialog(this, "Username already exists!");
+                    return;
+                }
+            }catch(Exception e){
+                         System.out.println(e);
+                }
+                        
+            }catch(Exception e){
+               System.out.println(e);
+            }
+            
+                        
+                
+            
+         
+        
+        String hashedPassword = Admin.encryption.hashpassword(new String(password));
 
         // Database connection and secure query execution
-        String sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO users VALUES (?, ?, ?, ? , ?)";
 
         try (Connection conn = dbconnection.getConnection();
             PreparedStatement pst = conn.prepareStatement(sql)) {
 
             // Set parameter values
             pst.setString(1, username);
-            pst.setString(2, password);
+            pst.setString(2, hashedPassword);
             pst.setString(3, role);
-
+            pst.setString(4, email);
+            pst.setString(5, phone);
             // Execute update
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
                 JOptionPane.showMessageDialog(this, "User saved successfully!");
                 u_name.setText("");
                 u_pass.setText("");
-                u_role.setText("");
+                //u_role.setItem(admin);
+                u_phone.setText("");
+                u_email.setText("");
+                tbload();
             } else {
                 JOptionPane.showMessageDialog(this, "User could not be saved.");
             }
@@ -832,6 +968,24 @@ public class admin extends javax.swing.JFrame {
     time_table.repaint();
     }//GEN-LAST:event_t_t_findActionPerformed
 
+    private void updateProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateProfileActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        int result = fileChooser.showOpenDialog(this);
+        
+        if (result == JFileChooser.APPROVE_OPTION) {
+    File selectedFile = fileChooser.getSelectedFile();
+    ImageIcon icon = new ImageIcon(selectedFile.getAbsolutePath());
+    Image image = icon.getImage().getScaledInstance(
+        profilePic.getWidth(), 
+        profilePic.getHeight(), 
+        Image.SCALE_SMOOTH
+    );
+    profilePic.setIcon(new ImageIcon(image));
+}
+    }//GEN-LAST:event_updateProfileActionPerformed
+    
+    
 
     public static void main(String args[]) {
         
@@ -864,7 +1018,9 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -877,6 +1033,7 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JTextField n_title;
     private javax.swing.JButton n_update;
     private javax.swing.JTable noticeTable;
+    private javax.swing.JLabel profilePic;
     private javax.swing.JButton t_add;
     private javax.swing.JComboBox<String> t_day_select;
     private javax.swing.JButton t_find;
@@ -890,9 +1047,10 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JTable time_table;
     private javax.swing.JTextField u_email;
     private javax.swing.JTextField u_name;
-    private javax.swing.JTextField u_pass;
+    private javax.swing.JPasswordField u_pass;
     private javax.swing.JTextField u_phone;
-    private javax.swing.JTextField u_role;
+    private javax.swing.JComboBox<String> u_role;
+    private javax.swing.JButton updateProfile;
     private javax.swing.JButton updateUser;
     // End of variables declaration//GEN-END:variables
 }
