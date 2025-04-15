@@ -14,10 +14,31 @@ import java.io.File;
 
 public class admin extends javax.swing.JFrame {
 
-    public admin() {
+    public admin(String username) {
         initComponents();
         tbload();
         notice_tbload();
+        time_table();
+        display_profile(username);
+    }
+    
+    private void display_profile(String username){
+        //jLabel7.setText(username);
+        String sql ="select * from users where username = ?";
+        try(Connection conn = dbconnection.getConnection();
+            PreparedStatement pst = conn.prepareStatement(sql)){
+            pst.setString(1,username);
+            ResultSet rs = pst.executeQuery();
+            while(rs.next()){
+                       out_username.setText(rs.getString("username"));
+                       out_email.setText(rs.getString("Email"));
+                       out_role.setText(rs.getString("role"));
+                       out_pnumber.setText(rs.getString("Phone"));
+                    }
+            
+        }catch(Exception e){
+            System.out.println(e);
+        }
     }
     
     public void tbload(){
@@ -63,9 +84,8 @@ public class admin extends javax.swing.JFrame {
                         v.add(rs.getString(1));
                         v.add(rs.getString(2));
                         v.add(rs.getString(3));
-                        v.add(rs.getString(4));
-          
-
+                        v.add(rs.getDate(4));
+                        
                         dt.addRow(v);
                     }
 
@@ -75,6 +95,37 @@ public class admin extends javax.swing.JFrame {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+    
+    public void time_table(){
+           try{
+               DefaultTableModel tt = (DefaultTableModel) time_table.getModel();
+               tt.setRowCount(0);
+               
+               try(Connection conn = dbconnection.getConnection();
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery("SELECT * FROM time_table");){
+
+                    while(rs.next()){
+                        Vector v = new Vector();
+                        v.add(rs.getInt(1));
+                        v.add(rs.getString(2));
+                        v.add(rs.getString(3));
+                        v.add(rs.getTime(4));
+                        v.add(rs.getTime(5));
+                        v.add(rs.getString(6));
+                        v.add(rs.getString(7));
+                        
+                        tt.addRow(v);
+                    }
+
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+               
+           }catch(Exception e){
+               System.out.println(e);
+           }
     }
 
     @SuppressWarnings("unchecked")
@@ -109,8 +160,14 @@ public class admin extends javax.swing.JFrame {
         n_content_adduser = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        profilePic = new javax.swing.JLabel();
-        updateProfile = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        out_username = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        out_email = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        out_role = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        out_pnumber = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -123,15 +180,31 @@ public class admin extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         t_sub_add = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        t_time_add = new javax.swing.JTextField();
+        t_time_add_st = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         t_sess_add = new javax.swing.JComboBox<>();
         jLabel17 = new javax.swing.JLabel();
         t_level_add = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
         t_add = new javax.swing.JButton();
+        t_time_add_end = new javax.swing.JTextField();
+        jLabel22 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         t_update = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        t_id_update = new javax.swing.JTextField();
+        t_day_update = new javax.swing.JComboBox<>();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        t_sub_update = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
+        t_time_update_st = new javax.swing.JTextField();
+        jLabel27 = new javax.swing.JLabel();
+        t_time_update_end = new javax.swing.JTextField();
+        jLabel28 = new javax.swing.JLabel();
+        t_sess_update = new javax.swing.JComboBox<>();
+        jLabel29 = new javax.swing.JLabel();
+        t_level_update = new javax.swing.JComboBox<>();
         jPanel12 = new javax.swing.JPanel();
         t_find = new javax.swing.JButton();
         jLabel21 = new javax.swing.JLabel();
@@ -280,7 +353,7 @@ public class admin extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(n_update))
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("UPDATE", jPanel7);
@@ -337,7 +410,7 @@ public class admin extends javax.swing.JFrame {
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(addNotice)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("ADD_Notice", jPanel8);
@@ -353,7 +426,7 @@ public class admin extends javax.swing.JFrame {
                 .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(687, Short.MAX_VALUE))
+                .addContainerGap(810, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -375,62 +448,81 @@ public class admin extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1717, Short.MAX_VALUE)
+            .addGap(0, 1840, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 453, Short.MAX_VALUE)
+            .addGap(0, 489, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Courses", jPanel3);
 
-        profilePic.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        profilePic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fOT.jpeg"))); // NOI18N
-        profilePic.setText("jLabel8");
-        profilePic.setPreferredSize(new java.awt.Dimension(150, 150));
+        jLabel6.setText("Profile Pic");
 
-        updateProfile.setText("Update_Profile_Pic");
-        updateProfile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateProfileActionPerformed(evt);
-            }
-        });
+        out_username.setText("out_username");
+
+        jLabel23.setText("Email Address");
+
+        out_email.setText("out_email");
+
+        jLabel31.setText("Role");
+
+        out_role.setText("out_role");
+
+        jLabel33.setText("Phone Number");
+
+        out_pnumber.setText("out_pnumber");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(43, 43, 43)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(214, 214, 214)
-                        .addComponent(profilePic, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(162, 162, 162)
-                        .addComponent(updateProfile)))
-                .addContainerGap(1413, Short.MAX_VALUE))
+                    .addComponent(out_pnumber)
+                    .addComponent(out_role)
+                    .addComponent(jLabel31)
+                    .addComponent(out_email)
+                    .addComponent(jLabel23)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(out_username, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(1715, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(profilePic, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
-                .addComponent(updateProfile)
-                .addContainerGap(260, Short.MAX_VALUE))
+                .addGap(23, 23, 23)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(out_username)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(out_email)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel31)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(out_role)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel33)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(out_pnumber)
+                .addContainerGap(201, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Profile", jPanel5);
 
         time_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Day", "Subject", "Time", "Session_type"
+                "ID", "Day", "Subject", "Session_type", "Start Time", "End Time", "Level"
             }
         ));
         jScrollPane5.setViewportView(time_table);
@@ -460,15 +552,21 @@ public class admin extends javax.swing.JFrame {
 
         jLabel14.setText("Subject ");
 
-        t_time_add.addActionListener(new java.awt.event.ActionListener() {
+        t_time_add_st.setText("00:00:00");
+        t_time_add_st.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                t_time_addActionPerformed(evt);
+                t_time_add_stActionPerformed(evt);
             }
         });
 
-        jLabel16.setText("Time");
+        jLabel16.setText("Start Time");
 
         t_sess_add.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "theory", "Patrical" }));
+        t_sess_add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                t_sess_addActionPerformed(evt);
+            }
+        });
 
         jLabel17.setText("Session Type");
 
@@ -483,6 +581,15 @@ public class admin extends javax.swing.JFrame {
             }
         });
 
+        t_time_add_end.setText("00:00:00");
+        t_time_add_end.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                t_time_add_endActionPerformed(evt);
+            }
+        });
+
+        jLabel22.setText("End Time");
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -494,15 +601,19 @@ public class admin extends javax.swing.JFrame {
                     .addComponent(jLabel16)
                     .addComponent(jLabel17)
                     .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14))
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel22))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(t_add)
-                    .addComponent(t_level_add, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(t_time_add_end, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(t_sess_add, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(t_time_add, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(t_level_add, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(t_time_add_st, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(t_sub_add, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(t_day_add, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(t_day_add, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(t_add)))
                 .addContainerGap(53, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
@@ -518,9 +629,13 @@ public class admin extends javax.swing.JFrame {
                     .addComponent(jLabel14))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(t_time_add, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(t_time_add_st, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(t_time_add_end, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel22))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(t_sess_add, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17))
@@ -530,7 +645,7 @@ public class admin extends javax.swing.JFrame {
                     .addComponent(jLabel18))
                 .addGap(18, 18, 18)
                 .addComponent(t_add)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(28, 28, 28))
         );
 
         jTabbedPane3.addTab("Add", jPanel10);
@@ -542,24 +657,137 @@ public class admin extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("ID");
+
+        t_id_update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                t_id_updateActionPerformed(evt);
+            }
+        });
+
+        t_day_update.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Monday", "Thuesdat", "Wenesday", "Thuresday", "Friday" }));
+        t_day_update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                t_day_updateActionPerformed(evt);
+            }
+        });
+
+        jLabel24.setText("Day");
+
+        jLabel25.setText("Subject ");
+
+        jLabel26.setText("Start Time");
+
+        t_time_update_st.setText("00:00:00");
+        t_time_update_st.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                t_time_update_stActionPerformed(evt);
+            }
+        });
+
+        jLabel27.setText("End Time");
+
+        t_time_update_end.setText("00:00:00");
+        t_time_update_end.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                t_time_update_endActionPerformed(evt);
+            }
+        });
+
+        jLabel28.setText("Session Type");
+
+        t_sess_update.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Theory", "Practical" }));
+        t_sess_update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                t_sess_updateActionPerformed(evt);
+            }
+        });
+
+        jLabel29.setText("Level");
+
+        t_level_update.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(t_update)
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel11Layout.createSequentialGroup()
+                                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel24)
+                                    .addComponent(jLabel5))
+                                .addGap(62, 62, 62)
+                                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(t_day_update, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(t_id_update, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel26)
+                            .addComponent(jLabel27)
+                            .addComponent(jLabel28)
+                            .addGroup(jPanel11Layout.createSequentialGroup()
+                                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel25))
+                                .addGap(40, 40, 40)
+                                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(t_sub_update, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(t_level_update, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(t_update)))
+                .addContainerGap(31, Short.MAX_VALUE))
+            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel11Layout.createSequentialGroup()
+                    .addGap(102, 102, 102)
+                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(t_time_update_end, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(t_sess_update, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(t_time_update_st, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(30, Short.MAX_VALUE)))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                .addContainerGap(144, Short.MAX_VALUE)
+                .addGap(12, 12, 12)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(t_id_update, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(t_day_update, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel25)
+                    .addComponent(t_sub_update, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel29)
+                    .addComponent(t_level_update, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addComponent(t_update)
-                .addGap(46, 46, 46))
+                .addContainerGap())
+            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel11Layout.createSequentialGroup()
+                    .addGap(99, 99, 99)
+                    .addComponent(t_time_update_st, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(t_time_update_end, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(t_sess_update, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(72, 72, 72)))
         );
 
-        jTabbedPane3.addTab("tab2", jPanel11);
+        jTabbedPane3.addTab("Update", jPanel11);
 
         t_find.setText("Find");
         t_find.addActionListener(new java.awt.event.ActionListener() {
@@ -582,10 +810,10 @@ public class admin extends javax.swing.JFrame {
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addGap(74, 74, 74)
                 .addComponent(t_find)
-                .addContainerGap(116, Short.MAX_VALUE))
+                .addContainerGap(152, Short.MAX_VALUE))
         );
 
-        jTabbedPane3.addTab("tab3", jPanel12);
+        jTabbedPane3.addTab("", jPanel12);
 
         jLabel21.setText("Level");
 
@@ -603,9 +831,9 @@ public class admin extends javax.swing.JFrame {
                         .addComponent(t_t_level, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(t_t_find)))
-                .addGap(80, 80, 80)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addGap(149, 149, 149))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -706,44 +934,41 @@ public class admin extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel9))
+                        .addGap(46, 46, 46)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel2)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(u_pass))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel1)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(u_name, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addGap(40, 40, 40)
-                                        .addComponent(u_phone, javax.swing.GroupLayout.DEFAULT_SIZE, 685, Short.MAX_VALUE)))
-                                .addGap(58, 58, 58))
+                                .addComponent(u_email, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE)
+                                .addGap(33, 33, 33))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel9))
-                                .addGap(46, 46, 46)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(u_email)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(u_role, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addComponent(u_role, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 343, Short.MAX_VALUE)))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 704, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(175, 175, 175))
+                        .addContainerGap(585, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(addUser)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(updateUser)
-                        .addGap(31, 31, 31)
-                        .addComponent(DELETE)
-                        .addGap(30, 30, 30)
-                        .addComponent(jButton1)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(u_pass))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(u_name, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addGap(40, 40, 40)
+                                .addComponent(u_phone, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(addUser)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(updateUser)
+                                .addGap(31, 31, 31)
+                                .addComponent(DELETE)
+                                .addGap(30, 30, 30)
+                                .addComponent(jButton1)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -781,7 +1006,7 @@ public class admin extends javax.swing.JFrame {
                     .addComponent(updateUser)
                     .addComponent(DELETE)
                     .addComponent(jButton1))
-                .addContainerGap(223, Short.MAX_VALUE))
+                .addContainerGap(259, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("User", jPanel1);
@@ -791,7 +1016,7 @@ public class admin extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 12, Short.MAX_VALUE)
+                .addGap(0, 40, Short.MAX_VALUE)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
@@ -1112,48 +1337,6 @@ public class admin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addUserActionPerformed
 
-    private void t_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_addActionPerformed
-        String day = t_day_add.getSelectedItem().toString();
-        String subject = t_sub_add.getText();
-        String time = t_time_add.getText();
-        String sess_type = t_sess_add.getSelectedItem().toString();
-        String level = t_level_add.getSelectedItem().toString();
-        
-        String sql = "insert into time_table (day,subject,time,session_type,level)values(?,?,?,?,?)";
-        
-        try(Connection conn = dbconnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)){
-            
-            stmt.setString(1,day);
-            stmt.setString(2,subject);
-            stmt.setString(3,time);
-            stmt.setString(4,sess_type);
-            stmt.setString(5,level);
-            stmt.executeUpdate();
-            
-            
-        
-        }catch(Exception e){
-            System.out.println(e);
-        }
-    }//GEN-LAST:event_t_addActionPerformed
-
-    private void t_day_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_day_addActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_t_day_addActionPerformed
-
-    private void t_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_updateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_t_updateActionPerformed
-
-    private void t_findActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_findActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_t_findActionPerformed
-
-    private void t_time_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_time_addActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_t_time_addActionPerformed
-
     private void t_t_findActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_t_findActionPerformed
          DefaultTableModel tt = (DefaultTableModel) time_table.getModel();
          tt.setRowCount(0); 
@@ -1166,7 +1349,7 @@ public class admin extends javax.swing.JFrame {
     String level = t_t_level.getSelectedItem().toString();
     
     
-    String sql = "SELECT id, day, subject, time, session_type FROM time_table WHERE level = ?";
+    String sql = "SELECT * FROM time_table WHERE level = ?";
     
     try (Connection conn = dbconnection.getConnection();
          PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -1180,8 +1363,10 @@ public class admin extends javax.swing.JFrame {
                 v.add(rs.getInt("id"));
                 v.add(rs.getString("day"));
                 v.add(rs.getString("subject"));
-                v.add(rs.getString("time"));
+                v.add(rs.getString("Start_time"));
+                v.add(rs.getString("End_time"));
                 v.add(rs.getString("session_type"));
+                v.add(rs.getString("Level"));
                 
                 tt.addRow(v);
             }
@@ -1197,23 +1382,6 @@ public class admin extends javax.swing.JFrame {
     time_table.repaint();
     }//GEN-LAST:event_t_t_findActionPerformed
 
-    private void updateProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateProfileActionPerformed
-        // TODO add your handling code here:
-        JFileChooser fileChooser = new JFileChooser();
-        int result = fileChooser.showOpenDialog(this);
-        
-        if (result == JFileChooser.APPROVE_OPTION) {
-    File selectedFile = fileChooser.getSelectedFile();
-    ImageIcon icon = new ImageIcon(selectedFile.getAbsolutePath());
-    Image image = icon.getImage().getScaledInstance(
-        profilePic.getWidth(), 
-        profilePic.getHeight(), 
-        Image.SCALE_SMOOTH
-    );
-    profilePic.setIcon(new ImageIcon(image));
-}
-    }//GEN-LAST:event_updateProfileActionPerformed
-
     private void n_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_n_idActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_n_idActionPerformed
@@ -1225,17 +1393,112 @@ public class admin extends javax.swing.JFrame {
     private void t_t_levelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_t_levelActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_t_t_levelActionPerformed
+
+    private void t_findActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_findActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_t_findActionPerformed
+
+    private void t_sess_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_sess_updateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_t_sess_updateActionPerformed
+
+    private void t_time_update_endActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_time_update_endActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_t_time_update_endActionPerformed
+
+    private void t_time_update_stActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_time_update_stActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_t_time_update_stActionPerformed
+
+    private void t_day_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_day_updateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_t_day_updateActionPerformed
+
+    private void t_id_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_id_updateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_t_id_updateActionPerformed
+
+    private void t_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_updateActionPerformed
+        int id = Integer.parseInt(t_id_update.getText());
+        String day = t_day_update.getSelectedItem().toString().toLowerCase();
+        String sub = t_sub_update.getText();
+        String st_time = t_time_update_st.getText();
+        String end_time = t_time_update_end.getText();
+        String Sesson_type = t_sess_update.getSelectedItem().toString().toLowerCase();
+        String level = t_level_update.getSelectedItem().toString();
+
+        String sql = "Update time_table set day = ?, subject = ?,Start_time = ?,End_time = ?,Session_type = ?, level = ? where id = ?";
+
+        try(Connection conn = dbconnection.getConnection();
+            PreparedStatement pst = conn.prepareStatement(sql) ){
+
+            pst.setString(1, day);
+            pst.setString(2, sub);
+            pst.setString(3,st_time);
+            pst.setString(4,end_time);
+            pst.setString(5,Sesson_type);
+            pst.setString(6,level);
+            pst.setInt(7,id);
+
+            pst.executeUpdate();
+
+        }catch(Exception e){
+
+        }
+    }//GEN-LAST:event_t_updateActionPerformed
+
+    private void t_time_add_endActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_time_add_endActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_t_time_add_endActionPerformed
+
+    private void t_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_addActionPerformed
+        String day = t_day_add.getSelectedItem().toString();
+        String subject = t_sub_add.getText();
+        String startTime = t_time_add_st.getText();
+        String endTime = t_time_add_end.getText();
+        String sess_type = t_sess_add.getSelectedItem().toString();
+        String level = t_level_add.getSelectedItem().toString();
+
+        String sql = "insert into time_table (day,subject,Start_time,End_time,session_type,level)values(?,?,?,?,?,?)";
+
+        try(Connection conn = dbconnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)){
+
+            stmt.setString(1,day);
+            stmt.setString(2,subject);
+            stmt.setString(3,startTime);
+            stmt.setString(4,endTime);
+            stmt.setString(5,sess_type);
+            stmt.setString(6,level);
+            stmt.executeUpdate();
+
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_t_addActionPerformed
+
+    private void t_sess_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_sess_addActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_t_sess_addActionPerformed
+
+    private void t_time_add_stActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_time_add_stActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_t_time_add_stActionPerformed
+
+    private void t_day_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_t_day_addActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_t_day_addActionPerformed
     
     
 
-    public static void main(String args[]) {
+    /*public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new admin().setVisible(true);
             }
         });
-    }
+    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton DELETE;
@@ -1257,8 +1520,20 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -1290,16 +1565,27 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JTextField n_title_update;
     private javax.swing.JButton n_update;
     private javax.swing.JTable noticeTable;
-    private javax.swing.JLabel profilePic;
+    private javax.swing.JLabel out_email;
+    private javax.swing.JLabel out_pnumber;
+    private javax.swing.JLabel out_role;
+    private javax.swing.JLabel out_username;
     private javax.swing.JButton t_add;
     private javax.swing.JComboBox<String> t_day_add;
+    private javax.swing.JComboBox<String> t_day_update;
     private javax.swing.JButton t_find;
+    private javax.swing.JTextField t_id_update;
     private javax.swing.JComboBox<String> t_level_add;
+    private javax.swing.JComboBox<String> t_level_update;
     private javax.swing.JComboBox<String> t_sess_add;
+    private javax.swing.JComboBox<String> t_sess_update;
     private javax.swing.JTextField t_sub_add;
+    private javax.swing.JTextField t_sub_update;
     private javax.swing.JButton t_t_find;
     private javax.swing.JComboBox<String> t_t_level;
-    private javax.swing.JTextField t_time_add;
+    private javax.swing.JTextField t_time_add_end;
+    private javax.swing.JTextField t_time_add_st;
+    private javax.swing.JTextField t_time_update_end;
+    private javax.swing.JTextField t_time_update_st;
     private javax.swing.JButton t_update;
     private javax.swing.JTable time_table;
     private javax.swing.JTextField u_email;
@@ -1307,7 +1593,6 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JPasswordField u_pass;
     private javax.swing.JTextField u_phone;
     private javax.swing.JComboBox<String> u_role;
-    private javax.swing.JButton updateProfile;
     private javax.swing.JButton updateUser;
     // End of variables declaration//GEN-END:variables
 }

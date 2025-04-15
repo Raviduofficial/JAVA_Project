@@ -182,7 +182,7 @@ public class Login extends javax.swing.JFrame {
                 //JOptionPane.showMessageDialog(null, "Hello Admin.admin");
                 this.dispose();
                 JOptionPane.showMessageDialog(null, "Hello Admin.admin");
-                admin add = new admin();
+                admin add = new admin(username.getText().toLowerCase());
                 add.setVisible(true);
                 break;
             case "lecturer":
