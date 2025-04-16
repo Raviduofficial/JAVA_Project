@@ -2,7 +2,6 @@ package lecturer;
 
 //import student.Login;
 
-import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,17 +17,12 @@ public class AddCourseMaterials extends javax.swing.JFrame {
     }
     
     public  void init(){
-//        setShape(new RoundRectangle2D.Double(0,0,getWidth(),getHeight(),20,20));
         tableviewLecturer();
     }
     
     private void tableviewLecturer(){
         course.getCourseValue(course_table, "");
         model = (DefaultTableModel) course_table.getModel();
-        course_table.setRowHeight(30);
-        course_table.setShowGrid(true);
-        course_table.setGridColor(Color.gray);
-        course_table.setBackground(Color.white);
     }
     
     private void clearCourseMaterials(){
@@ -37,6 +31,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         txt_LecId.setText(null);
         txt_credit.setText(null);
         ComboBox_course_type.setSelectedIndex(0);
+        txt_driverlink.setText(null);
         course_table.clearSelection();
     }
     
@@ -57,6 +52,10 @@ public class AddCourseMaterials extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Course Credit is missing");
             return false;
         }
+        if(txt_driverlink.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Course Material is missing");
+            return false;
+        }
         return true;
     }
 
@@ -64,6 +63,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFileChooser1 = new javax.swing.JFileChooser();
         jPanel1 = new javax.swing.JPanel();
         back = new javax.swing.JLabel();
         txt_course_Id = new javax.swing.JTextField();
@@ -80,6 +80,8 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         Add_Button = new rojerusan.RSMaterialButtonCircle();
         ComboBox_course_type = new javax.swing.JComboBox<>();
         Delete_Button = new rojerusan.RSMaterialButtonCircle();
+        jLabel11 = new javax.swing.JLabel();
+        txt_driverlink = new app.bolivia.swing.JCTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -106,36 +108,36 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 txt_course_IdActionPerformed(evt);
             }
         });
-        jPanel1.add(txt_course_Id, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 320, 20));
+        jPanel1.add(txt_course_Id, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 320, 35));
 
-        jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Course Name");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 140, 30));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 130, 30));
 
         txt_CourseName.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel1.add(txt_CourseName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, 320, 20));
+        jPanel1.add(txt_CourseName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, 320, 35));
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Lecture ID");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 110, 20));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 130, 30));
 
         txt_LecId.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel1.add(txt_LecId, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 320, 20));
+        jPanel1.add(txt_LecId, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 320, 35));
 
-        jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Credit");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 100, 20));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 90, 30));
 
         txt_credit.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel1.add(txt_credit, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, 320, 20));
+        jPanel1.add(txt_credit, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 300, 320, 35));
 
-        jLabel14.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("CourseType");
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 100, 20));
+        jLabel14.setText("Course Type");
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 120, 40));
 
         Update_Button.setText("UPDATE");
         Update_Button.addActionListener(new java.awt.event.ActionListener() {
@@ -143,7 +145,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 Update_ButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(Update_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 400, 150, 60));
+        jPanel1.add(Update_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 520, 150, 60));
 
         Clear_Button.setText("Clear");
         Clear_Button.addActionListener(new java.awt.event.ActionListener() {
@@ -151,12 +153,12 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 Clear_ButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(Clear_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 460, 150, 60));
+        jPanel1.add(Clear_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 580, 150, 60));
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Course Id");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 120, 20));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 120, 30));
 
         Add_Button.setText("ADD");
         Add_Button.addActionListener(new java.awt.event.ActionListener() {
@@ -164,10 +166,10 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 Add_ButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(Add_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 150, 60));
+        jPanel1.add(Add_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 520, 150, 60));
 
         ComboBox_course_type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Theory", "Practical", "Theory/Practical", " " }));
-        jPanel1.add(ComboBox_course_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 320, 30));
+        jPanel1.add(ComboBox_course_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 370, 320, 35));
 
         Delete_Button.setText("Delete");
         Delete_Button.addActionListener(new java.awt.event.ActionListener() {
@@ -175,7 +177,25 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 Delete_ButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(Delete_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 400, 150, 60));
+        jPanel1.add(Delete_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 520, 150, 60));
+
+        jLabel11.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Add Materials");
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 440, 130, 40));
+
+        txt_driverlink.setText("Enter your Driver Link");
+        txt_driverlink.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txt_driverlinkMouseClicked(evt);
+            }
+        });
+        txt_driverlink.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_driverlinkKeyPressed(evt);
+            }
+        });
+        jPanel1.add(txt_driverlink, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 440, 320, 35));
 
         jPanel3.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -184,20 +204,31 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Add Courses");
+        jLabel6.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         course_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Course Id", "Course Name", "Lecture ID", "Credit", "Course Type"
+                "Course Id", "Course Name", "Lecture ID", "Credit", "Course Type", "Lecture Materials"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -206,6 +237,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         });
         course_table.setColorFilasBackgound2(new java.awt.Color(255, 255, 255));
         course_table.setFuenteHead(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        course_table.setRowHeight(25);
         course_table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 course_tableMouseClicked(evt);
@@ -221,21 +253,22 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 647, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(181, 181, 181))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 873, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(288, 288, 288)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(9, 9, 9)
+                .addGap(26, 26, 26)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -244,18 +277,19 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, 0))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -272,10 +306,10 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 String lecId = txt_LecId.getText();
                 int credit = Integer.parseInt(txt_credit.getText());
                 String course_type = ComboBox_course_type.getSelectedItem().toString();
+                String lecture_materials = txt_driverlink.getText();
                 
-                course.update(courseId, courseName, lecId, credit, course_type);
+                course.update(courseId, courseName, lecId, credit, course_type, lecture_materials);
                 clearCourseMaterials();
-//                course_table.setModel(new DefaultTableModel(null, new Object[]{"courseId,courseName,lecId,credit,course_type"}));
                 course.getCourseValue(course_table, "");
                 
         }
@@ -294,9 +328,9 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 String lecId = txt_LecId.getText();
                 int credit = Integer.parseInt(txt_credit.getText());
                 String course_type = ComboBox_course_type.getSelectedItem().toString();
+                String lecture_materials = txt_driverlink.getText();
                 
-                course.insert(courseId, courseName, lecId, credit, course_type);
-                course_table.setModel(new DefaultTableModel(null,new Object[]{"courseId", "courseName", "lecId", "credit", "course_type"}));
+                course.insert(courseId, courseName, lecId, credit, course_type, lecture_materials);
                 course.getCourseValue(course_table, "");
                 clearCourseMaterials();
             }else{
@@ -336,6 +370,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 ComboBox_course_type.setSelectedIndex(2);
                 break;
         }
+        txt_driverlink.setText(model.getValueAt(rowIndex, 5).toString());
     }//GEN-LAST:event_course_tableMouseClicked
 
     private void Delete_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Delete_ButtonActionPerformed
@@ -347,6 +382,15 @@ public class AddCourseMaterials extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Course Deleted Failed!!");
         }
     }//GEN-LAST:event_Delete_ButtonActionPerformed
+
+    private void txt_driverlinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_driverlinkMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_driverlinkMouseClicked
+
+    private void txt_driverlinkKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_driverlinkKeyPressed
+        // TODO add your handling code here:
+        txt_driverlink.setText("");
+    }//GEN-LAST:event_txt_driverlinkKeyPressed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -388,7 +432,9 @@ public class AddCourseMaterials extends javax.swing.JFrame {
     private rojerusan.RSMaterialButtonCircle Update_Button;
     private javax.swing.JLabel back;
     private rojeru_san.complementos.RSTableMetro course_table;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -401,5 +447,6 @@ public class AddCourseMaterials extends javax.swing.JFrame {
     private javax.swing.JTextField txt_LecId;
     private javax.swing.JTextField txt_course_Id;
     private javax.swing.JTextField txt_credit;
+    private app.bolivia.swing.JCTextField txt_driverlink;
     // End of variables declaration//GEN-END:variables
 }

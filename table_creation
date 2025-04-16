@@ -126,3 +126,19 @@ alter table marks add foreign key(course_id) references course(course_id) on upd
 alter table time_table add foreign key(lec_id) references lecturer(lec_id) on update cascade;
 alter table time_table add foreign key(course_id) references course(course_id) on update cascade;
 
+create view attendance_eligibility as
+select ug_id,course_id,session_type,count(atten_status) / 15 * 100 as "Percentage" , if((count(atten_status) / 15 * 100) >= 80 , "Eligible" , "Not Eligible") as "Eligibility"
+from attendance
+where atten_status = "present"
+group by ug_id,course_id,session_type; 
+
+create view GradeCreditMulSGPA as
+select x.ug_id,x.course_id,x.grade,x.grade_point, y.credit, concat(grade_point * credit) as "creditMulSGPA"
+from studentGradePoint as x
+inner join course as y on x.course_id = y.course_id;
+
+create view StudentSGPA as 
+select ug_id , round(sum(creditMulSGPA) / 16 , 2) as "SGPA"
+from GradeCreditMulSGPA
+group by ug_id
+order by round(sum(creditMulSGPA) / 16 ,2);

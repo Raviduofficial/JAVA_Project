@@ -400,7 +400,7 @@ public class UploadMarksExams extends javax.swing.JFrame {
             float mid = Float.parseFloat(Mid_term.getText());
             float f_t = Float.parseFloat(final_T.getText());
             float f_p = Float.parseFloat(final_P.getText());
-            String m_id = Lecture_ID.getText();
+            String m_id = Mark_ID.getText();
             String lid = Lecture_ID.getText();
             String sid = Student_ID.getText();
             String cid = Course_ID.getText();
@@ -427,19 +427,20 @@ public class UploadMarksExams extends javax.swing.JFrame {
         // TODO add your handling code here:
         model = (DefaultTableModel) Marks_table.getModel();
         rowIndex = Marks_table.getSelectedRow();
-        Mark_ID.setText(model.getValueAt(rowIndex, 0).toString());
-        Lecture_ID.setText(model.getValueAt(rowIndex, 1).toString());
-        Student_ID.setText(model.getValueAt(rowIndex, 2).toString());
-        Course_ID.setText(model.getValueAt(rowIndex, 3).toString());
-        Quiz_1.setText(model.getValueAt(rowIndex, 4).toString());
-        Quiz_2.setText(model.getValueAt(rowIndex, 5).toString());
-        Quiz_3.setText(model.getValueAt(rowIndex, 6).toString());
-        Quiz_4.setText(model.getValueAt(rowIndex, 7).toString());
-        Assesmnent.setText(model.getValueAt(rowIndex, 8).toString());
-        Mid_term.setText(model.getValueAt(rowIndex, 9).toString());
-        final_T.setText(model.getValueAt(rowIndex, 10).toString());
-        final_P.setText(model.getValueAt(rowIndex, 11).toString());
-        
+        if(rowIndex >= 0){
+            Mark_ID.setText(model.getValueAt(rowIndex, 0).toString());
+            Lecture_ID.setText(model.getValueAt(rowIndex, 1).toString());
+            Student_ID.setText(model.getValueAt(rowIndex, 2).toString());
+            Course_ID.setText(model.getValueAt(rowIndex, 3).toString());
+            Quiz_1.setText(model.getValueAt(rowIndex, 4).toString());
+            Quiz_2.setText(model.getValueAt(rowIndex, 5).toString());
+            Quiz_3.setText(model.getValueAt(rowIndex, 6).toString());
+            Quiz_4.setText(model.getValueAt(rowIndex, 7).toString());
+            Assesmnent.setText(model.getValueAt(rowIndex, 8).toString());
+            Mid_term.setText(model.getValueAt(rowIndex, 9).toString());
+            final_T.setText(model.getValueAt(rowIndex, 10).toString());
+            final_P.setText(model.getValueAt(rowIndex, 11).toString());
+        }
     }//GEN-LAST:event_Marks_tableMouseClicked
 
     private void Mark_IDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Mark_IDActionPerformed
