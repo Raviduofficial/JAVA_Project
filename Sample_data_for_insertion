@@ -1,0 +1,152 @@
+set foreign_key_checks = 0;
+
+INSERT INTO undergraduate (ug_id, ug_batch) VALUES
+('TG1344', 7),
+('TG1345', 7),
+('TG1346', 7),
+('TG1347', 7),
+('TG1348', 7),
+('TG1349', 7),
+('TG1350', 7),
+('TG1351', 7),
+('TG1352', 7),
+('TG1353', 7),
+('TG1354', 7),
+('TG1355', 7),
+('TG1356', 7),
+('TG1357', 7),
+('TG1358', 7),
+('TG1359', 7),
+('TG1360', 7),
+('TG1361', 7),
+('TG1362', 7),
+('TG1363', 7);
+
+INSERT INTO lecturer (lec_id) VALUES
+('LC0001'),
+('LC0002'),
+('LC0003'),
+('LC0004'),
+('LC0005');
+
+INSERT INTO tech_officer (to_id, to_department) VALUES
+('TO0001', 'IT'),
+('TO0002', 'ENG'),
+('TO0003', 'CSE'),
+('TO0004', 'EEE');
+
+
+INSERT INTO users (user_id, user_password, user_name, user_email, user_phone, user_pro_pic, user_role) VALUES
+('LC0001', 'lect01', 'Lecturer 01', 'lect01@example.com', 712345601, NULL, 'lecturer'),
+('LC0002', 'lect02', 'Lecturer 02', 'lect02@example.com', 712345602, NULL, 'lecturer'),
+('LC0003', 'lect03', 'Lecturer 03', 'lect03@example.com', 712345603, NULL, 'lecturer'),
+('LC0004', 'lect04', 'Lecturer 04', 'lect04@example.com', 712345604, NULL, 'lecturer'),
+('LC0005', 'lect05', 'Lecturer 05', 'lect05@example.com', 712345605, NULL, 'lecturer'),
+('TG1344', 'pass01', 'User 01', 'user01@example.com', 713343561, 'C:\\Users\\Akalanka\\Desktop\\Akalanka\\images\\proPic3.png', 'undergraduate'),
+('TG1345', 'pass02', 'User 02', 'user02@example.com', 713343562, NULL, 'undergraduate'),
+('TG1346', 'pass03', 'User 03', 'user03@example.com', 713343563, NULL, 'undergraduate'),
+('TG1347', 'pass04', 'User 04', 'user04@example.com', 713343564, NULL, 'undergraduate'),
+('TG1348', 'pass05', 'User 05', 'user05@example.com', 713343565, NULL, 'undergraduate'),
+('TG1349', 'pass06', 'User 06', 'user06@example.com', 713343566, NULL, 'undergraduate'),
+('TG1350', 'pass07', 'User 07', 'user07@example.com', 713343567, NULL, 'undergraduate'),
+('TG1351', 'pass08', 'User 08', 'user08@example.com', 713343568, NULL, 'undergraduate'),
+('TG1352', 'pass09', 'User 09', 'user09@example.com', 713343569, NULL, 'undergraduate'),
+('TG1353', 'pass10', 'User 10', 'user10@example.com', 713343570, NULL, 'undergraduate'),
+('TG1354', 'pass11', 'User 11', 'user11@example.com', 713343571, NULL, 'undergraduate'),
+('TG1355', 'pass12', 'User 12', 'user12@example.com', 713343572, NULL, 'undergraduate'),
+('TG1356', 'pass13', 'User 13', 'user13@example.com', 713343573, NULL, 'undergraduate'),
+('TG1357', 'pass14', 'User 14', 'user14@example.com', 713343574, NULL, 'undergraduate'),
+('TG1358', 'pass15', 'User 15', 'user15@example.com', 713343575, NULL, 'undergraduate'),
+('TG1359', 'pass16', 'User 16', 'user16@example.com', 713343576, NULL, 'undergraduate'),
+('TG1360', 'pass17', 'User 17', 'user17@example.com', 713343577, NULL, 'undergraduate'),
+('TG1361', 'pass18', 'User 18', 'user18@example.com', 713343578, NULL, 'undergraduate'),
+('TG1362', 'pass19', 'User 19', 'user19@example.com', 713343579, NULL, 'undergraduate'),
+('TG1363', 'pass20', 'User 20', 'user20@example.com', 713343580, NULL, 'undergraduate'),
+('TO0001', 'tech01', 'Tech Officer 01', 'tech01@example.com', 712345601, NULL, 'tech_officer'),
+('TO0002', 'tech02', 'Tech Officer 02', 'tech02@example.com', 712345602, NULL, 'tech_officer'),
+('TO0003', 'tech03', 'Tech Officer 03', 'tech03@example.com', 712345603, NULL, 'tech_officer'),
+('TO0004', 'tech04', 'Tech Officer 04', 'tech04@example.com', 712345604, NULL, 'tech_officer');
+
+
+insert into course values
+('ict2113','Course 1','lc001','3','both','https://www.google.com'),
+('ict2122','Course 2','lc002','2','theory','https://www.google.com'),
+('ict2133','Course 3','lc003','3','both','https://www.google.com'),
+('ict2142','Course 4','lc004','3','practical','https://www.google.com'),
+('ict2152','Course 5','lc005','3','theory','https://www.google.com');
+
+
+INSERT INTO attendance (to_id, ug_id, course_id, atten_date, session_type, atten_status) VALUES
+('TO0003', 'TG1344', 'ict2113', '2025-04-01', 'practical', 'medical'),
+('TO0001', 'TG1344', 'ict2113', '2025-04-02', 'theory', 'medical'),
+('TO0003', 'TG1344', 'ict2113', '2025-04-03', 'practical', 'medical'),
+('TO0004', 'TG1344', 'ict2113', '2025-04-04', 'practical', 'medical'),
+('TO0004', 'TG1344', 'ict2113', '2025-04-05', 'theory', 'present'),
+-- (additional rows omitted for brevity)
+('TO0002', 'TG1344', 'ict2142', '2025-04-05', 'practical', 'medical');
+
+INSERT INTO attendance (to_id, ug_id, course_id, atten_date, session_type, atten_status) VALUES
+('TO0004', 'TG1344', 'ict2142', '2025-04-06', 'practical', 'absent'),
+('TO0002', 'TG1344', 'ict2142', '2025-04-07', 'practical', 'medical'),
+('TO0002', 'TG1344', 'ict2142', '2025-04-08', 'practical', 'present'),
+('TO0002', 'TG1344', 'ict2142', '2025-04-09', 'practical', 'present'),
+('TO0001', 'TG1344', 'ict2142', '2025-04-10', 'practical', 'present'),
+-- (additional rows omitted for brevity)
+('TO0001', 'TG1345', 'ict2122', '2025-04-10', 'theory', 'medical');
+
+INSERT INTO attendance (to_id, ug_id, course_id, atten_date, session_type, atten_status) VALUES
+('TO0001', 'TG1346', 'ict2113', '2025-04-01', 'theory', 'present'),
+('TO0002', 'TG1346', 'ict2113', '2025-04-02', 'practical', 'absent'),
+('TO0003', 'TG1346', 'ict2113', '2025-04-03', 'theory', 'present'),
+('TO0004', 'TG1346', 'ict2113', '2025-04-04', 'practical', 'medical'),
+('TO0002', 'TG1346', 'ict2113', '2025-04-05', 'theory', 'absent'),
+
+('TO0003', 'TG1346', 'ict2122', '2025-04-01', 'theory', 'present'),
+('TO0004', 'TG1346', 'ict2122', '2025-04-02', 'theory', 'absent'),
+('TO0001', 'TG1346', 'ict2122', '2025-04-03', 'theory', 'present'),
+('TO0001', 'TG1346', 'ict2122', '2025-04-04', 'theory', 'medical'),
+('TO0004', 'TG1346', 'ict2122', '2025-04-05', 'theory', 'present');
+
+INSERT INTO attendance (to_id, ug_id, course_id, atten_date, session_type, atten_status) VALUES
+('TO0003', 'TG1347', 'ict2133', '2025-04-01', 'practical', 'absent'),
+('TO0002', 'TG1347', 'ict2133', '2025-04-02', 'theory', 'present'),
+('TO0001', 'TG1347', 'ict2133', '2025-04-03', 'theory', 'present'),
+('TO0004', 'TG1347', 'ict2133', '2025-04-04', 'practical', 'medical'),
+('TO0001', 'TG1347', 'ict2133', '2025-04-05', 'practical', 'absent'),
+
+('TO0003', 'TG1347', 'ict2142', '2025-04-01', 'practical', 'present'),
+('TO0004', 'TG1347', 'ict2142', '2025-04-02', 'practical', 'absent'),
+('TO0003', 'TG1347', 'ict2142', '2025-04-03', 'practical', 'present'),
+('TO0001', 'TG1347', 'ict2142', '2025-04-04', 'practical', 'medical'),
+('TO0002', 'TG1347', 'ict2142', '2025-04-05', 'practical', 'present');
+
+
+INSERT INTO medical (ug_id, course_id, reason, medical_date, medical_status, to_id, atten_id) VALUES
+('TG1344', 'ict2113', 'Fever', '2025-04-03', 'pending', 'TO0001', 1),
+('TG1344', 'ict2122', 'Injury', '2025-04-05', 'approved', 'TO0002', 2),
+('TG1344', 'ict2133', 'Migraine', '2025-04-08', 'rejected', 'TO0003', 3),
+('TG1344', 'ict2142', 'Cold', '2025-04-10', 'approved', 'TO0001', 4),
+('TG1344', 'ict2152', 'Stomach Ache', '2025-04-12', 'pending', 'TO0004', 5);
+
+INSERT INTO medical (ug_id, course_id, reason, medical_date, medical_status, to_id, atten_id) VALUES
+('TG1345', 'ict2113', 'Back Pain', '2025-04-02', 'pending', 'TO0001', 6),
+('TG1345', 'ict2122', 'Headache', '2025-04-04', 'approved', 'TO0002', 7),
+('TG1345', 'ict2133', 'Sore Throat', '2025-04-06', 'rejected', 'TO0003', 8),
+('TG1345', 'ict2142', 'Dizziness', '2025-04-08', 'approved', 'TO0001', 9),
+('TG1345', 'ict2152', 'Cough', '2025-04-10', 'pending', 'TO0004', 10);
+
+
+INSERT INTO time_table (time_table_id, department, lec_id, course_id, admin_id, day, time, session_type) VALUES
+('TT001', 'CSE', 'lc001', 'ict2113', 'AD001', 'Monday', '10:00 AM - 12:00 PM', 'theory'),
+('TT002', 'CSE', 'lc002', 'ict2122', 'AD001', 'Tuesday', '01:00 PM - 03:00 PM', 'theory'),
+('TT003', 'CSE', 'lc003', 'ict2133', 'AD001', 'Wednesday', '09:00 AM - 11:00 AM', 'theory'),
+('TT004', 'CSE', 'lc004', 'ict2142', 'AD001', 'Thursday', '02:00 PM - 04:00 PM', 'practical'),
+('TT005', 'CSE', 'lc005', 'ict2152', 'AD001', 'Friday', '11:00 AM - 01:00 PM', 'theory');
+
+INSERT INTO notice (notice_title, notice_content, notice_date) VALUES
+('Exam Schedule', 'The final exams will be held from May 15, 2025 to May 25, 2025. Please check the individual course schedules.', '2025-04-10'),
+('Holiday Announcement', 'The university will be closed on April 21, 2025, due to a national holiday.', '2025-04-15'),
+('Workshop on AI', 'A workshop on Artificial Intelligence will be conducted on April 22, 2025. All students are encouraged to attend.', '2025-04-16'),
+('Semester Registration', 'The semester registration process starts on April 20, 2025. Please complete the registration before April 30, 2025.', '2025-04-17');
+
+set foreign_key_checks = 1;
