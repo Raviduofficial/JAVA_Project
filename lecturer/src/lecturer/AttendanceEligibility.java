@@ -20,7 +20,7 @@ public class AttendanceEligibility {
     }
     
     public void getStudentAttendance(RSTableMetro table, String searchValue){
-        String sql = "SELECT * FROM attendace_eligibility where concat(ug_id , course_id, session_type, percentage,eligibility) like ? order by ug_id ASC";
+        String sql = "SELECT * FROM attendance_eligibility where concat(ug_id , course_id, session_type,`80% Percentage`,Eligibility) like ? order by ug_id ASC";
         
         try (Connection con = getConnection();
                 PreparedStatement ps = (PreparedStatement) con.prepareStatement(sql)){
@@ -38,8 +38,8 @@ public class AttendanceEligibility {
                         result.getString("ug_id"),
                         result.getString("course_id"),
                         result.getString("session_type"),
-                        result.getString("percentage"),
-                        result.getString("eligibility")
+                        result.getString("80% Percentage"),
+                        result.getString("Eligibility")
                     });
                 }
             }
