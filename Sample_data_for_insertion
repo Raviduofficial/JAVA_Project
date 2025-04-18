@@ -121,12 +121,13 @@ INSERT INTO attendance (to_id, ug_id, course_id, atten_date, session_type, atten
 ('TO0002', 'TG1347', 'ict2142', '2025-04-05', 'practical', 'present');
 
 
-INSERT INTO medical (ug_id, course_id, reason, medical_date, medical_status, to_id, atten_id) VALUES
-('TG1344', 'ict2113', 'Fever', '2025-04-03', 'pending', 'TO0001', 1),
-('TG1344', 'ict2122', 'Injury', '2025-04-05', 'approved', 'TO0002', 2),
-('TG1344', 'ict2133', 'Migraine', '2025-04-08', 'rejected', 'TO0003', 3),
-('TG1344', 'ict2142', 'Cold', '2025-04-10', 'approved', 'TO0001', 4),
-('TG1344', 'ict2152', 'Stomach Ache', '2025-04-12', 'pending', 'TO0004', 5);
+INSERT INTO medical (ug_id, course_id, session_type, reason, medical_date, medical_status, to_id, atten_id) VALUES
+('TG1346', 'ict2113', 'theory', 'Flu', '2025-04-14', 'pending', 'TO0001', 12),
+('TG1346', 'ict2122', 'practical', 'Food Poison', '2025-04-15', 'approved', 'TO0002', 13),
+('TG1347', 'ict2133', 'theory', 'Fever', '2025-04-16', 'rejected', 'TO0003', 14),
+('TG1347', 'ict2142', 'practical', 'Leg Injury', '2025-04-17', 'approved', 'TO0001', 15),
+('TG1348', 'ict2152', 'theory', 'Allergy', '2025-04-18', 'pending', 'TO0004', 16);
+
 
 INSERT INTO medical (ug_id, course_id, reason, medical_date, medical_status, to_id, atten_id) VALUES
 ('TG1345', 'ict2113', 'Back Pain', '2025-04-02', 'pending', 'TO0001', 6),
