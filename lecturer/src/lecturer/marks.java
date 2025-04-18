@@ -27,9 +27,9 @@ public class marks {
     
     
     //insert data
-    public void insert(String mark_id,String lec_id,String ug_id,String course_id,float quiz_1,float quiz_2,float quiz_3,float quiz_4,float assesment,float mid_term, float final_theory, float final_practical){
+    public void insert(String lec_id,String ug_id,String course_id,float quiz_1,float quiz_2,float quiz_3,float quiz_4,float assesment,float mid_term, float final_theory, float final_practical){
         
-        if (!validateInsertParameters(mark_id, lec_id, ug_id, course_id,quiz_1, quiz_2, quiz_3, quiz_4,assesment, mid_term, final_theory, final_practical)) {
+        if (!validateInsertParameters(lec_id, ug_id, course_id,quiz_1, quiz_2, quiz_3, quiz_4,assesment, mid_term, final_theory, final_practical)) {
             return; 
         }
         float ca_marks = calculateCAMark(quiz_1, quiz_2, quiz_3, quiz_4, assesment, mid_term);
@@ -42,24 +42,24 @@ public class marks {
         }
         
         
-        String sql = "INSERT INTO marks VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO marks(lec_id, ug_id, course_id, quiz_1, quiz_2, quiz_3, quiz_4, assesment, mid_term, final_theory, final_practical) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
         try (Connection con = getConnection();
              PreparedStatement ps = con.prepareStatement(sql)){
             
-            ps.setString(1, mark_id);
-            ps.setString(2, lec_id);
-            ps.setString(3, ug_id);
-            ps.setString(4, course_id);
-            ps.setFloat(5, quiz_1);
-            ps.setFloat(6, quiz_2);
-            ps.setFloat(7, quiz_3);
-            ps.setFloat(8, quiz_4);
-            ps.setFloat(9, assesment);
-            ps.setFloat(10, mid_term);
-            ps.setFloat(11, final_theory);
-            ps.setFloat(12, final_practical);
-            ps.setFloat(13, ca_marks);
-            ps.setString(14, eligible);
+            
+            ps.setString(1, lec_id);
+            ps.setString(2, ug_id);
+            ps.setString(3, course_id);
+            ps.setFloat(4, quiz_1);
+            ps.setFloat(5, quiz_2);
+            ps.setFloat(6, quiz_3);
+            ps.setFloat(7, quiz_4);
+            ps.setFloat(8, assesment);
+            ps.setFloat(9, mid_term);
+            ps.setFloat(10, final_theory);
+            ps.setFloat(11, final_practical);
+//            ps.setFloat(12, ca_marks);
+//            ps.setString(13, eligible);
             
             if(ps.executeUpdate() > 0){
                 JOptionPane.showMessageDialog(null, "New Marks added Successfully!!");
@@ -72,12 +72,9 @@ public class marks {
     }
     
 
-    private boolean validateInsertParameters(String mark_id, String lec_id, String ug_id, String course_id,float quiz_1, float quiz_2, float quiz_3, float quiz_4,float assesment, float mid_term, float final_theory, float final_practical) {
+    private boolean validateInsertParameters(String lec_id, String ug_id, String course_id,float quiz_1, float quiz_2, float quiz_3, float quiz_4,float assesment, float mid_term, float final_theory, float final_practical) {
         // Validate IDs are not empty
-        if (mark_id == null || mark_id.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Mark ID cannot be empty", "Validation Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
+        
         if (lec_id == null || lec_id.trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Lecturer ID cannot be empty", "Validation Error", JOptionPane.ERROR_MESSAGE);
             return false;
@@ -111,7 +108,7 @@ public class marks {
         float ca_marks = calculateCAMark(quiz_1, quiz_2, quiz_3, quiz_4, assesment, mid_term);
         
         String sql = "UPDATE marks SET lec_id=?, ug_id=?, course_id=?, quiz_1=?, quiz_2=?, "
-                   + "quiz_3=?, quiz_4=?, assesment=?, mid_term=?, final_theory=?, final_practical=? , ca_marks=? "
+                   + "quiz_3=?, quiz_4=?, assesment=?, mid_term=?, final_theory=?, final_practical=?"
                    + "WHERE mark_id=?";
         boolean isUpdate = false;
 
@@ -129,8 +126,8 @@ public class marks {
             ps.setFloat(9, mid_term);
             ps.setFloat(10, final_theory);
             ps.setFloat(11, final_practical);
-            ps.setFloat(12, ca_marks);
-            ps.setString(13, mark_id);  // WHERE clause parameter
+//            ps.setFloat(12, ca_marks);
+            ps.setString(12, mark_id);  // WHERE clause parameter
 
             if(ps.executeUpdate() > 0) {
                 JOptionPane.showMessageDialog(null, "Updated Successfully!!");

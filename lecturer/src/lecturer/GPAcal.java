@@ -8,6 +8,7 @@ import rojeru_san.complementos.RSTableMetro;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class GPAcal {
@@ -18,30 +19,35 @@ public class GPAcal {
         }
         return conn;
     }
-    
-    public void getGPA(RSTableMetro table, String searchValue){
-        String sql = "SELECT * FROM studentsgpa where concat(ug_id , SGPA) like ? order by ug_id";
         
+    public void getGPA(RSTableMetro table, String searchValue) {
+    
+        String sql = "SELECT s.ug_id, s.SGPA, c.CGPA " +
+                     "FROM SGPA_view s " +
+                     "JOIN CGPA_view c ON s.ug_id = c.ug_id " +
+                     "WHERE CONCAT(s.ug_id, s.SGPA, c.CGPA) LIKE ? " +
+                     "ORDER BY s.ug_id";
+
         try (Connection con = getConnection();
-                PreparedStatement ps = (PreparedStatement) con.prepareStatement(sql)){
+             PreparedStatement ps = (PreparedStatement) con.prepareStatement(sql)) {
+
             ps.setString(1, "%" + searchValue + "%");
-            
-            
-            
-            try(ResultSet result = ps.executeQuery()){
+
+            try(ResultSet result = ps.executeQuery()) {
                 DefaultTableModel model = (DefaultTableModel) table.getModel();
-                
                 model.setRowCount(0);
-                
-                while(result.next()){
+
+                while(result.next()) {
                     model.addRow(new Object[]{
                         result.getString("ug_id"),
-                        result.getString("SGPA")
+                        result.getDouble("SGPA"), 
+                        result.getDouble("CGPA")  
                     });
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Course.class.getName()).log(Level.SEVERE,null,ex);
+            Logger.getLogger(GPAcal.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null,"Error loading GPA data: " + ex.getMessage(),"Database Error",JOptionPane.ERROR_MESSAGE);
         }
     }
 }

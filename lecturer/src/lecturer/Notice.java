@@ -1,34 +1,68 @@
 package lecturer;
 
+import com.mysql.jdbc.PreparedStatement;
+import connection.dbConnection;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import rojeru_san.complementos.RSTableMetro;
 
-public class GradePoint extends javax.swing.JFrame {
+public class Notice extends javax.swing.JFrame {
     
-    grade_point gradePoint = new grade_point();
     private DefaultTableModel model;
+    
+    private Connection getConnection() throws SQLException {
+        Connection conn = dbConnection.connect();
+        if (conn == null) {
+            throw new SQLException("Failed to establish database connection");
+        }
+        return conn;
+    }
 
-    public GradePoint() {
+    public Notice() {
         initComponents();
-        tableviewStudentGrades();
+        tableviewMedical();
     }
     
-    private void tableviewStudentGrades(){
-        gradePoint.getGradePoint(tbl_grade, "");
-        model = (DefaultTableModel) tbl_grade.getModel();
+    public void getNotice(RSTableMetro table, String searchValue){
+        String sql = "SELECT * FROM notice where concat(notice_id,notice_title,notice_content,notice_date) like ? order by notice_id ASC";
+        
+        try (Connection con = getConnection();
+                PreparedStatement ps = (PreparedStatement) con.prepareStatement(sql)){
+            ps.setString(1, "%" + searchValue + "%");
+            
+            try(ResultSet result = ps.executeQuery()){
+                model = (DefaultTableModel) table.getModel();
+                
+                model.setRowCount(0);
+                
+                while(result.next()){
+                    model.addRow(new Object[]{
+                        result.getString("notice_id"),
+                        result.getString("notice_title"),
+                        result.getString("notice_content"),
+                        result.getString("notice_date")
+                    });
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Course.class.getName()).log(Level.SEVERE,null,ex);
+        }
     }
     
+    private void tableviewMedical(){
+        getNotice(tbl_medical, "");
+        model = (DefaultTableModel) tbl_medical.getModel();
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_grade = new rojeru_san.complementos.RSTableMetro();
-        txt_search = new app.bolivia.swing.JCTextField();
-        jLabel1 = new javax.swing.JLabel();
-        btn_refresh = new rojerusan.RSMaterialButtonCircle();
-        btn_search = new rojerusan.RSMaterialButtonCircle();
         jPanel13 = new javax.swing.JPanel();
         lbl_dashboard = new javax.swing.JLabel();
         lbl_marks = new javax.swing.JLabel();
@@ -44,97 +78,15 @@ public class GradePoint extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl_medical = new rojeru_san.complementos.RSTableMetro();
+        txt_search = new app.bolivia.swing.JCTextField();
+        jLabel1 = new javax.swing.JLabel();
+        btn_refresh = new rojerusan.RSMaterialButtonCircle();
+        btn_search = new rojerusan.RSMaterialButtonCircle();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
-
-        tbl_grade.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Student ID", "Course Code", "Final Marks", "Grade"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, true, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tbl_grade.setFuenteHead(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        tbl_grade.setRowHeight(30);
-        jScrollPane1.setViewportView(tbl_grade);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Search Student ID :");
-
-        btn_refresh.setText("Refresh");
-        btn_refresh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_refreshActionPerformed(evt);
-            }
-        });
-
-        btn_search.setText("Search");
-        btn_search.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_searchActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 804, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(130, 130, 130)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(99, 99, 99)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
 
         jPanel13.setBackground(new java.awt.Color(153, 187, 187));
         jPanel13.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -216,7 +168,7 @@ public class GradePoint extends javax.swing.JFrame {
 
         lbl_grades.setBackground(new java.awt.Color(0, 0, 0));
         lbl_grades.setFont(new java.awt.Font("Segoe UI", 1, 17)); // NOI18N
-        lbl_grades.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_grades.setForeground(new java.awt.Color(0, 0, 0));
         lbl_grades.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_grades.setText("Grades & Final Marks");
         lbl_grades.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 2, new java.awt.Color(0, 0, 0)));
@@ -257,14 +209,14 @@ public class GradePoint extends javax.swing.JFrame {
                 lbl_medicalMouseClicked(evt);
             }
         });
-        jPanel13.add(lbl_medical, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 200, 30));
+        jPanel13.add(lbl_medical, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 510, 200, 30));
 
         lbl_notices.setBackground(new java.awt.Color(0, 0, 0));
         lbl_notices.setFont(new java.awt.Font("Segoe UI", 1, 17)); // NOI18N
-        lbl_notices.setForeground(new java.awt.Color(0, 0, 0));
+        lbl_notices.setForeground(new java.awt.Color(255, 255, 255));
         lbl_notices.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_notices.setText("Notices");
-        lbl_notices.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 2, new java.awt.Color(0, 0, 0)));
+        lbl_notices.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 2, new java.awt.Color(255, 255, 255)));
         lbl_notices.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lbl_notices.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lbl_notices.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -297,9 +249,9 @@ public class GradePoint extends javax.swing.JFrame {
         lbl_course1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 2, new java.awt.Color(0, 0, 0)));
         lbl_course1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lbl_course1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        lbl_course1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                lbl_course1KeyPressed(evt);
+        lbl_course1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_course1MouseClicked(evt);
             }
         });
         jPanel13.add(lbl_course1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 200, 30));
@@ -314,7 +266,7 @@ public class GradePoint extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("STUDENT'S GRADE ");
+        jLabel4.setText("Notices");
         jLabel4.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -322,8 +274,8 @@ public class GradePoint extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(444, 444, 444)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(470, 470, 470)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -334,15 +286,99 @@ public class GradePoint extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
+        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+
+        tbl_medical.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Notice ID", "Notice Title", "Content", "Date"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbl_medical.setFuenteHead(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        tbl_medical.setRowHeight(30);
+        jScrollPane1.setViewportView(tbl_medical);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Search Notice ID :");
+
+        btn_refresh.setText("Refresh");
+        btn_refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_refreshActionPerformed(evt);
+            }
+        });
+
+        btn_search.setText("Search");
+        btn_search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_searchActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1140, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57)
+                        .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,32 +386,11 @@ public class GradePoint extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jPanel13, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
+            .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE)
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
-        // TODO add your handling code here:
-        if(txt_search.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Please enter student ID");
-        }else{
-            gradePoint.getGradePoint(tbl_grade, "");
-            txt_search.setText("");
-        }
-    }//GEN-LAST:event_btn_refreshActionPerformed
-
-    private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
-        // TODO add your handling code here:
-
-        if(txt_search.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Please enter course code or student ID");
-        }else{
-            gradePoint.getGradePoint(tbl_grade, txt_search.getText());
-        }
-    }//GEN-LAST:event_btn_searchActionPerformed
 
     private void lbl_dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_dashboardMouseClicked
         // TODO add your handling code here:
@@ -384,19 +399,11 @@ public class GradePoint extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_lbl_dashboardMouseClicked
 
-    private void lbl_course1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lbl_course1KeyPressed
-        // TODO add your handling code here:
-        AddCourseMaterials addCourseMaterials = new AddCourseMaterials();
-        addCourseMaterials.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_lbl_course1KeyPressed
-
     private void lbl_marksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_marksMouseClicked
         // TODO add your handling code here:
         UploadMarksExams uploadMarksExams = new UploadMarksExams();
         uploadMarksExams.setVisible(true);
         this.setVisible(false);
-        
     }//GEN-LAST:event_lbl_marksMouseClicked
 
     private void lbl_studentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_studentMouseClicked
@@ -408,6 +415,9 @@ public class GradePoint extends javax.swing.JFrame {
 
     private void lbl_eligibilityMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_eligibilityMouseClicked
         // TODO add your handling code here:
+        CAEligibility cAEligibility = new CAEligibility();
+        cAEligibility.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_lbl_eligibilityMouseClicked
 
     private void lbl_gpaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_gpaMouseClicked
@@ -440,9 +450,9 @@ public class GradePoint extends javax.swing.JFrame {
 
     private void lbl_noticesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_noticesMouseClicked
         // TODO add your handling code here:
-                Notice notice =  new Notice();
-                notice.setVisible(true);
-                this.setVisible(false);
+        Notice notice =  new Notice();
+        notice.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_lbl_noticesMouseClicked
 
     private void lbl_logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_logoutMouseClicked
@@ -453,6 +463,33 @@ public class GradePoint extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_lbl_logoutMouseClicked
+
+    private void lbl_course1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_course1MouseClicked
+        // TODO add your handling code here:
+        AddCourseMaterials addCourseMaterials = new AddCourseMaterials();
+        addCourseMaterials.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_lbl_course1MouseClicked
+
+    private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
+        // TODO add your handling code here:
+        if(txt_search.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please enter course code or student ID");
+        }else{
+            getNotice(tbl_medical, "");
+            txt_search.setText("");
+        }
+    }//GEN-LAST:event_btn_refreshActionPerformed
+
+    private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
+        // TODO add your handling code here:
+
+        if(txt_search.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please enter course code or student ID");
+        }else{
+            getNotice(tbl_medical, txt_search.getText());
+        }
+    }//GEN-LAST:event_btn_searchActionPerformed
 
     /**
      * @param args the command line arguments
@@ -471,20 +508,23 @@ public class GradePoint extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GradePoint.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Notice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GradePoint.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Notice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GradePoint.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Notice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GradePoint.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Notice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GradePoint().setVisible(true);
+                new Notice().setVisible(true);
             }
         });
     }
@@ -510,7 +550,7 @@ public class GradePoint extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_medical;
     private javax.swing.JLabel lbl_notices;
     private javax.swing.JLabel lbl_student;
-    private rojeru_san.complementos.RSTableMetro tbl_grade;
+    private rojeru_san.complementos.RSTableMetro tbl_medical;
     private app.bolivia.swing.JCTextField txt_search;
     // End of variables declaration//GEN-END:variables
 }

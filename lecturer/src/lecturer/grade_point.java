@@ -20,7 +20,7 @@ public class grade_point {
     }
     
     public void getGradePoint(RSTableMetro table , String searchValue){
-        String sql = "SELECT * FROM studentFinalGrade WHERE CONCAT(user_id,course_id,final_marks,grade) LIKE ? ORDER BY user_id ASC";
+        String sql = "SELECT * FROM exam_grades_view WHERE CONCAT(ug_id,course_id,final_mark,grade) LIKE ? ORDER BY ug_id ASC";
         
         try (Connection con = getConnection();
              PreparedStatement ps = con.prepareStatement(sql)){
@@ -33,9 +33,9 @@ public class grade_point {
                 
                 while(result.next()){
                     model.addRow(new Object[]{
-                        result.getString("user_id"),
+                        result.getString("ug_id"),
                         result.getString("course_id"),
-                        result.getString("final_marks"),
+                        result.getString("final_mark"),
                         result.getString("grade")
                     });
                 }

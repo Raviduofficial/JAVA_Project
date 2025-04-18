@@ -19,30 +19,39 @@ public class Student_details {
         return conn;
     }
     
-    public void getStudentDetails(RSTableMetro table , String searchValue){
-        String sql = "SELECT * FROM user WHERE CONCAT(user_id,user_name,user_phone,user_email) LIKE ? AND user_role = 'undergraduate' ORDER BY user_id ASC";
-        
+    
+    public void getStudentDetails(RSTableMetro table, String searchValue) {
+        String sql = "SELECT u.user_id, u.user_name, u.user_phone, u.user_email " 
+                + "FROM user u "
+                + "JOIN undergraduate ug ON u.user_id = ug.ug_id "
+                + "WHERE u.user_role = 'undergraduate' "
+                + "AND (u.user_id LIKE ? OR u.user_name LIKE ? OR u.user_email LIKE ?)";
+
         try (Connection con = getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)){
-            ps.setString(1, "%" + searchValue + "%");
-            
-            try(ResultSet result = ps.executeQuery()){
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            String searchPattern = "%" + searchValue + "%";
+            ps.setString(1, searchPattern);  // user_id
+            ps.setString(2, searchPattern);  // user_name
+            ps.setString(3, searchPattern);  // user_email
+
+            try(ResultSet result = ps.executeQuery()) {
                 DefaultTableModel model = (DefaultTableModel) table.getModel();
-                
                 model.setRowCount(0);
-                
-                while(result.next()){
+
+                while(result.next()) {
                     model.addRow(new Object[]{
                         result.getString("user_id"),
                         result.getString("user_name"),
-                        result.getString("user_phone"),
+                        result.getString("user_phone"), 
                         result.getString("user_email")
                     });
                 }
             }
         } catch (SQLException ex) {
-             Logger.getLogger(Course.class.getName()).log(Level.SEVERE,null,ex);
-
+            Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
 }

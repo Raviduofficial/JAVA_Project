@@ -36,7 +36,7 @@ public class Course {
 //        return id;
 //    }
 
-    public boolean insert(String course_id, String course_name, String lec_id, int credit, String course_type, String lecture_materials) {
+    public boolean insert(String course_id, String course_name, String lec_id, int credit, String course_type, String course_content) {
         String sql = "INSERT INTO course VALUES(?,?,?,?,?,?)";
         boolean success = false;
         
@@ -49,7 +49,7 @@ public class Course {
             ps.setString(3, lec_id);
             ps.setInt(4, credit);
             ps.setString(5, course_type);
-            ps.setString(6, lecture_materials);
+            ps.setString(6, course_content);
             
             if (ps.executeUpdate() > 0) {
                 JOptionPane.showMessageDialog(null, "Course added successfully!");
@@ -57,8 +57,7 @@ public class Course {
             }
         } catch (SQLException ex) {
             Logger.getLogger(Course.class.getName()).log(Level.SEVERE, "Error inserting course", ex);
-            JOptionPane.showMessageDialog(null, "Error adding course: " + ex.getMessage(), 
-                "Database Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error adding course: " + ex.getMessage(),"Database Error", JOptionPane.ERROR_MESSAGE);
         }
         return success;
     }
@@ -75,15 +74,14 @@ public class Course {
             }
         } catch (SQLException ex) {
             Logger.getLogger(Course.class.getName()).log(Level.SEVERE, "Error checking course existence", ex);
-            JOptionPane.showMessageDialog(null, "Database error while checking course", 
-                "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Database error while checking course","Error", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
     
     //get all data course table
     public void getCourseValue(RSTableMetro table, String searchValue) {
-        String sql = "SELECT * FROM course WHERE CONCAT(course_id, course_name, lec_id, credit, course_type, lecture_materials) LIKE ? ORDER BY course_id ASC";
+        String sql = "SELECT * FROM course WHERE CONCAT(course_id, course_name, lec_id, credit, course_type, course_content) LIKE ? ORDER BY course_id ASC";
         
         try (Connection con = getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -101,19 +99,18 @@ public class Course {
                         result.getString("lec_id"),
                         result.getInt("credit"),
                         result.getString("course_type"),
-                        result.getString("lecture_materials")
+                        result.getString("course_content")
                     });
                 }
             }
         } catch (SQLException ex) {
             Logger.getLogger(Course.class.getName()).log(Level.SEVERE, "Error loading course data", ex);
-            JOptionPane.showMessageDialog(null, "Error loading courses: " + ex.getMessage(), 
-                "Database Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error loading courses: " + ex.getMessage(),"Database Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public boolean update(String course_id, String course_name, String lec_id, int credit, String course_type, String lecture_materials) {
-        String sql = "UPDATE course SET course_name=?, lec_id=?, credit=?, course_type=?, lecture_materials=? WHERE course_id=?";
+    public boolean update(String course_id, String course_name, String lec_id, int credit, String course_type, String course_content) {
+        String sql = "UPDATE course SET course_name=?, lec_id=?, credit=?, course_type=?, course_content=? WHERE course_id=?";
         boolean success = false;
         
         try (Connection con = getConnection();
@@ -124,7 +121,7 @@ public class Course {
             ps.setInt(3, credit);
             ps.setString(4, course_type);
             ps.setString(5, course_id);
-            ps.setString(6, lecture_materials);
+            ps.setString(6, course_content);
             
             if (ps.executeUpdate() > 0) {
                 JOptionPane.showMessageDialog(null, "Course updated successfully!");
