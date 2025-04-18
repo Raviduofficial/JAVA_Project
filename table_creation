@@ -82,17 +82,20 @@ course_type ENUM('theory','practical','both'),
 course_content varchar(200)
 );
 
-create table medical
-(
-medical_id int AUTO_INCREMENT primary key,
-ug_id char(6),
-course_id char(7),
-reason varchar(200),
-medical_date DATE,
-medical_status ENUM('pending','approved','rejected') default 'pending',
-to_id char(6),
-atten_id int
+CREATE TABLE medical (
+    medical_id INT AUTO_INCREMENT PRIMARY KEY,
+    ug_id VARCHAR(10) NOT NULL,
+    course_id VARCHAR(10) NOT NULL,
+    session_type VARCHAR(10) NOT NULL,
+    reason VARCHAR(255) NOT NULL,
+    medical_date DATE NOT NULL,
+    medical_status VARCHAR(20) NOT NULL,
+    to_id VARCHAR(10) NOT NULL,
+    atten_id INT NOT NULL,
+    FOREIGN KEY (course_id) REFERENCES course(course_id), 
+    FOREIGN KEY (ug_id) REFERENCES user(ug_id)  
 );
+
 
 create table attendance
 (
