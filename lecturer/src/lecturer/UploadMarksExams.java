@@ -1,6 +1,8 @@
 package lecturer;
 
+import java.awt.Color;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 public class UploadMarksExams extends javax.swing.JFrame {
@@ -24,7 +26,6 @@ public class UploadMarksExams extends javax.swing.JFrame {
     private void clearMarks(){       
         Lecture_ID.setText(null); 
         Student_ID.setText(null); 
-        Course_ID.setText(null); 
         Quiz_1.setText(null); 
         Quiz_2.setText(null); 
         Quiz_3.setText(null); 
@@ -37,38 +38,6 @@ public class UploadMarksExams extends javax.swing.JFrame {
     }
     
     public boolean isEmptyMarks(){
-        if(Quiz_1.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Quiz 1 is Empty");
-            return false;
-        }
-        if(Quiz_2.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Quiz 2 is Empty");
-            return false;
-        }
-        if(Quiz_3.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Quiz 3 is Empty");
-            return false;
-        }
-        if(Quiz_4.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Quiz 4 is Empty");
-            return false;
-        }
-        if(Assesmnent.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Assesment is Empty");
-            return false;
-        }
-        if(Mid_term.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Mid Term is Empty");
-            return false;
-        }
-        if(final_T.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Final Theory is Empty");
-            return false;
-        }
-        if(final_P.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Final Practical is Empty");
-            return false;
-        }
         if(Mark_ID.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "Mark ID is Empty");
             return false;
@@ -79,10 +48,6 @@ public class UploadMarksExams extends javax.swing.JFrame {
         }
         if(Student_ID.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "Student ID is Empty");
-            return false;
-        }
-        if(Course_ID.getText().isEmpty()){
-            JOptionPane.showMessageDialog(this, "Course ID is Empty");
             return false;
         }
         return true;
@@ -107,7 +72,6 @@ public class UploadMarksExams extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         Add_Button = new rojerusan.RSMaterialButtonCircle();
         Delete_Button = new rojerusan.RSMaterialButtonCircle();
-        Course_ID = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         Quiz_2 = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
@@ -122,6 +86,7 @@ public class UploadMarksExams extends javax.swing.JFrame {
         final_T = new javax.swing.JTextField();
         final_P = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
+        Course_ID = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Marks_table = new rojeru_san.complementos.RSTableMetro();
@@ -226,9 +191,6 @@ public class UploadMarksExams extends javax.swing.JFrame {
         });
         jPanel1.add(Delete_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, 150, 50));
 
-        Course_ID.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel1.add(Course_ID, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 190, 30));
-
         jLabel15.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("Quiz 2");
@@ -284,6 +246,14 @@ public class UploadMarksExams extends javax.swing.JFrame {
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
         jLabel21.setText("Final Practical");
         jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 110, 20));
+
+        Course_ID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ict2113", "ict2122", "ict2133", "ict2142", "ict2152" }));
+        Course_ID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Course_IDActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Course_ID, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 190, 30));
 
         jPanel3.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -571,18 +541,18 @@ public class UploadMarksExams extends javax.swing.JFrame {
 
     private void Update_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Update_ButtonActionPerformed
         if(isEmptyMarks()){
-            float q1 = Float.parseFloat(Quiz_1.getText());
-            float q2 = Float.parseFloat(Quiz_2.getText());
-            float q3 = Float.parseFloat(Quiz_3.getText());
-            float q4 = Float.parseFloat(Quiz_4.getText());
-            float ass = Float.parseFloat(Assesmnent.getText());
-            float mid = Float.parseFloat(Mid_term.getText());
-            float f_t = Float.parseFloat(final_T.getText());
-            float f_p = Float.parseFloat(final_P.getText());
+            float q1 = Quiz_1.getText().equals("N/A") ? 0 : Float.parseFloat(Quiz_1.getText());
+            float q2 = Quiz_2.getText().equals("N/A") ? 0 : Float.parseFloat(Quiz_2.getText());
+            float q3 = Quiz_3.getText().equals("N/A") ? 0 : Float.parseFloat(Quiz_3.getText());
+            float q4 = Quiz_4.getText().equals("N/A") ? 0 : Float.parseFloat(Quiz_4.getText());
+            float ass = Assesmnent.getText().equals("N/A") ? 0 : Float.parseFloat(Assesmnent.getText());
+            float mid = Mid_term.getText().equals("N/A") ? 0 : Float.parseFloat(Mid_term.getText());
+            float f_t = final_T.getText().equals("N/A") ? 0 : Float.parseFloat(final_T.getText());
+            float f_p = final_P.getText().equals("N/A") ? 0 : Float.parseFloat(final_P.getText());
             String m_id = Mark_ID.getText();
             String lid = Lecture_ID.getText();
             String sid = Student_ID.getText();
-            String cid = Course_ID.getText();
+            String cid = (String) Course_ID.getSelectedItem();
             
             marks.update(m_id, lid, sid, cid, q1, q2, q3, q4, ass, mid, f_t, f_p);
             clearMarks();
@@ -597,23 +567,22 @@ public class UploadMarksExams extends javax.swing.JFrame {
     private void Add_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add_ButtonActionPerformed
         // TODO add your handling code here:
         if(isEmptyMarks()){
-            float q1 = Float.parseFloat(Quiz_1.getText());
-            float q2 = Float.parseFloat(Quiz_2.getText());
-            float q3 = Float.parseFloat(Quiz_3.getText());
-            float q4 = Float.parseFloat(Quiz_4.getText());
-            float ass = Float.parseFloat(Assesmnent.getText());
-            float mid = Float.parseFloat(Mid_term.getText());
-            float f_t = Float.parseFloat(final_T.getText());
-            float f_p = Float.parseFloat(final_P.getText());
+            float q1 = Quiz_1.getText().equals("N/A") ? 0 : Float.parseFloat(Quiz_1.getText());
+            float q2 = Quiz_2.getText().equals("N/A") ? 0 : Float.parseFloat(Quiz_2.getText());
+            float q3 = Quiz_3.getText().equals("N/A") ? 0 : Float.parseFloat(Quiz_3.getText());
+            float q4 = Quiz_4.getText().equals("N/A") ? 0 : Float.parseFloat(Quiz_4.getText());
+            float ass = Assesmnent.getText().equals("N/A") ? 0 : Float.parseFloat(Assesmnent.getText());
+            float mid = Mid_term.getText().equals("N/A") ? 0 : Float.parseFloat(Mid_term.getText());
+            float f_t = final_T.getText().equals("N/A") ? 0 : Float.parseFloat(final_T.getText());
+            float f_p = final_P.getText().equals("N/A") ? 0 : Float.parseFloat(final_P.getText());
             String m_id = Mark_ID.getText();
             String lid = Lecture_ID.getText();
             String sid = Student_ID.getText();
-            String cid = Course_ID.getText();
+            String cid = (String) Course_ID.getSelectedItem();
             
             marks.insert(lid, sid, cid, q1, q2, q3, q4, ass, mid, f_t, f_p);
             marks.getMarksValues(Marks_table, "");
             clearMarks();
-            
         }
     }//GEN-LAST:event_Add_ButtonActionPerformed
 
@@ -635,7 +604,7 @@ public class UploadMarksExams extends javax.swing.JFrame {
             Mark_ID.setText(model.getValueAt(rowIndex, 0).toString());
             Lecture_ID.setText(model.getValueAt(rowIndex, 1).toString());
             Student_ID.setText(model.getValueAt(rowIndex, 2).toString());
-            Course_ID.setText(model.getValueAt(rowIndex, 3).toString());
+            Course_ID.setSelectedItem(model.getValueAt(rowIndex, 3).toString());
             Quiz_1.setText(model.getValueAt(rowIndex, 4).toString());
             Quiz_2.setText(model.getValueAt(rowIndex, 5).toString());
             Quiz_3.setText(model.getValueAt(rowIndex, 6).toString());
@@ -735,6 +704,71 @@ public class UploadMarksExams extends javax.swing.JFrame {
         Mark_ID.setText("");
     }//GEN-LAST:event_Mark_IDMouseClicked
 
+    private void Course_IDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Course_IDActionPerformed
+        // TODO add your handling code here:
+        String selectedCourse = (String) Course_ID.getSelectedItem();
+    
+        // Reset all fields to default state
+        resetAllMarkFields();
+
+        // Apply course-specific rules
+        if (selectedCourse != null) {
+            switch (selectedCourse) {
+                case "ict2113":
+                    setFieldsInactive(Quiz_4, Assesmnent);
+                    break;
+
+                case "ict2122":
+                    setFieldsInactive(final_P);
+                    break;
+
+                case "ict2133":
+                    setFieldsInactive(Quiz_4, Mid_term);
+                    break;
+
+                case "ict2142":
+                    setFieldsInactive(Quiz_1, Quiz_2, Quiz_3, Quiz_4, final_T);
+                    break;
+
+                case "ict2152":
+                    setFieldsInactive(Quiz_4, Mid_term, final_P);
+                    break;
+            }
+        }
+    }//GEN-LAST:event_Course_IDActionPerformed
+    
+    // Helper method to reset all fields to active state
+    private void resetAllMarkFields() {
+        JTextField[] allFields = {
+            Quiz_1, Quiz_2, Quiz_3, Quiz_4,Assesmnent, Mid_term, final_T, final_P
+        };
+
+        for (JTextField field : allFields) {
+            setFieldActive(field);
+        }
+    }
+
+    // Method to deactivate multiple fields at once
+    private void setFieldsInactive(JTextField... fields) {
+        for (JTextField field : fields) {
+            setFieldInactive(field);
+        }
+    }
+
+    // Styles an inactive field
+    private void setFieldInactive(JTextField field) {
+        field.setEditable(false);
+        field.setBackground(new Color(204, 204, 255 )); // Light gray
+        field.setText("N/A"); // Indicator instead of 0
+    }
+
+    // Styles an active field
+    private void setFieldActive(JTextField field) {
+        field.setEditable(true);
+        field.setBackground(Color.WHITE);
+        field.setForeground(Color.BLACK);
+        field.setText("");
+    }
     
     /**
      * @param args the command line arguments
@@ -775,7 +809,7 @@ public class UploadMarksExams extends javax.swing.JFrame {
     private rojerusan.RSMaterialButtonCircle Add_Button;
     private javax.swing.JTextField Assesmnent;
     private rojerusan.RSMaterialButtonCircle Clear_Button;
-    private javax.swing.JTextField Course_ID;
+    private javax.swing.JComboBox<String> Course_ID;
     private rojerusan.RSMaterialButtonCircle Delete_Button;
     private javax.swing.JTextField Lecture_ID;
     private javax.swing.JTextField Mark_ID;
