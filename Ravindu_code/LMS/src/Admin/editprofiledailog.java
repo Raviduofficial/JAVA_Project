@@ -1,11 +1,10 @@
-
 package Admin;
 
 import javax.swing.*;
 import Database.dbconnection;
 import java.sql.*;
-import java.awt.Image;
-import java.io.File;
+
+
 
 
 public class editprofiledailog extends javax.swing.JDialog {
@@ -19,16 +18,7 @@ public class editprofiledailog extends javax.swing.JDialog {
         setdetails(username);
     }
     
-    private ImageIcon resizeImage(String imagePath, JLabel label) {
-        ImageIcon myImage = new ImageIcon(imagePath);
-        Image img = myImage.getImage();
-        Image newImg = img.getScaledInstance(
-            label.getWidth(), 
-            label.getHeight(), 
-            Image.SCALE_SMOOTH
-        );
-        return new ImageIcon(newImg);
-    }
+ 
     
     private void setdetails(String username){
         String sql = "Select * from users where username = ?";
@@ -209,7 +199,7 @@ public class editprofiledailog extends javax.swing.JDialog {
             System.out.println(e);
         }
     }
-              }
+              
     }//GEN-LAST:event_new_saveActionPerformed
 
     /**
@@ -230,6 +220,7 @@ public class editprofiledailog extends javax.swing.JDialog {
             }
         });
     }*/
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

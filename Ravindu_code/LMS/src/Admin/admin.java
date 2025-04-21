@@ -2,6 +2,7 @@
 package Admin;
 import java.sql.*;
 import Database.dbconnection;
+import Admin.editprofiledailog;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.Vector;
@@ -2113,65 +2114,48 @@ if (sess_type.equals("Select Session") || sess_type.isEmpty()) {
     }//GEN-LAST:event_add_courseActionPerformed
 
     private void c_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c_updateActionPerformed
-        String c_id = Course_id_update.getText();
+    String c_id = Course_id_update.getText();
     String c_name = Course_name_update.getText();
     String lec_id = Lec_Id_update.getText();
     int credit = Integer.parseInt(Credit_update.getText());
     String c_type = Course_type_update.getSelectedItem().toString().toLowerCase();
     String c_content = Course_content_update.getText();
     
-    if (c_id.isEmpty() || c_name.isEmpty() || lec_id.isEmpty() || Credit.getText().isEmpty() || c_content.isEmpty()) {
-    JOptionPane.showMessageDialog(this, "Please fill all required fields!");
+    if (c_id.isEmpty() || c_name.isEmpty() || lec_id.isEmpty() || c_content.isEmpty()) {
+    JOptionPane.showMessageDialog(this, "Please fill  fields!");
     return; }
 
-    String sql = "UPDATE course SET "
-               + "course_name = ?, lec_id = ?, credit = ?, "
-               + "course_type= ?, course_content = ? "
-               + "WHERE course_id =?";
+    String sql = "UPDATE course SET course_name = ?, lec_id = ?, credit = ?, course_type= ?, course_content = ? WHERE course_id =?";
 
     try (Connection conn = dbconnection.getConnection();
          PreparedStatement pst = conn.prepareStatement(sql)) {
 
-        // Set parameters for the UPDATE query
+        
         pst.setString(1, c_name);
         pst.setString(2, lec_id);
         pst.setInt(3, credit);
         pst.setString(4, c_type);
         pst.setString(5, c_content);
-        pst.setString(6, c_id); // WHERE condition
+        pst.setString(6, c_id); 
 
         int rowsUpdated = pst.executeUpdate();
 
         if (rowsUpdated > 0) {
-            JOptionPane.showMessageDialog(
-                this, 
-                "Course updated successfully!",
-                "Success",
-                JOptionPane.INFORMATION_MESSAGE
-            );
+            JOptionPane.showMessageDialog( this,"Course updated successfully!" );
+            course_table();
             
-            // Clear fields after successful update
             Course_id.setText("");
             Course_name.setText("");
             Lec_Id.setText("");
             Credit.setText("");
             Course_content.setText("");
         } else {
-            JOptionPane.showMessageDialog(
-                this, 
-                "No course found with ID: " + c_id,
-                "Update Failed",
-                JOptionPane.ERROR_MESSAGE
+            JOptionPane.showMessageDialog(this,"No course found with ID: " + c_id
             );
         }
 
     } catch (SQLException e) {
-        JOptionPane.showMessageDialog(
-            this, 
-            "Database Error: " + e.getMessage(),
-            "Error",
-            JOptionPane.ERROR_MESSAGE
-        );
+        JOptionPane.showMessageDialog( this, "Database Error: " + e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
         e.printStackTrace();
     }
     }//GEN-LAST:event_c_updateActionPerformed
@@ -2180,7 +2164,7 @@ if (sess_type.equals("Select Session") || sess_type.isEmpty()) {
         String c_id = Course_id_update.getText().trim();
     
     if (c_id.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please enter a Course ID to find.", "Warning", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Please enter a Course ID to find.");
         return;
     }
     
@@ -2194,18 +2178,18 @@ if (sess_type.equals("Select Session") || sess_type.isEmpty()) {
         ResultSet rs = pst.executeQuery();
         
         if (rs.next()) {
-            // Course found, fill the fields
+            
             Course_name_update.setText(rs.getString("course_name"));
             Lec_Id_update.setText(rs.getString("lec_id"));
             Credit_update.setText(String.valueOf(rs.getInt("credit")));
-            Course_type_update.setSelectedItem(rs.getString("course_type")); // adjust if you have custom display
+            Course_type_update.setSelectedItem(rs.getString("course_type")); 
             Course_content_update.setText(rs.getString("course_content"));
         } else {
-            JOptionPane.showMessageDialog(this, "Course not found!", "Info", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Course not found!");
         }
         
     } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         System.out.println(e);
     }
     }//GEN-LAST:event_u_findActionPerformed
@@ -2253,14 +2237,14 @@ if (sess_type.equals("Select Session") || sess_type.isEmpty()) {
     
     
 
-   public static void main(String args[]) {
+   /*public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new admin().setVisible(true);
             }
         });
-    }
+    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Course_content;
