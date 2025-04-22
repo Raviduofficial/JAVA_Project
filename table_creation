@@ -203,7 +203,7 @@ SELECT
                     COALESCE(quiz_3, 0),
                     COALESCE(quiz_4, 0)
                 )) * 0.0333 +
-                COALESCE(assesment_1, 0) * 0.10 +
+                COALESCE(assesment, 0) * 0.10 +
                 COALESCE(mid_term, 0) * 0.20 +
                 COALESCE(final_theory, 0) * 0.60
             
@@ -214,12 +214,12 @@ SELECT
                     COALESCE(quiz_2, 0), 
                     COALESCE(quiz_3, 0)
                 )) * 0.05 +
-                (COALESCE(assesment_1, 0) + COALESCE(assesment_2, 0)) * 0.20 +
+                COALESCE(assesment, 0) * 0.20 +
                 COALESCE(final_theory, 0) * 0.40 +
                 COALESCE(final_practical, 0) * 0.30
             
             WHEN course_id IN ('ICT2142') THEN 
-                COALESCE(assesment_1, 0) * 0.20 +
+                COALESCE(assesment, 0) * 0.20 +
                 COALESCE(mid_term, 0) * 0.20 +
                 COALESCE(final_practical, 0) * 0.60
 
@@ -230,7 +230,7 @@ SELECT
                     COALESCE(quiz_2, 0), 
                     COALESCE(quiz_3, 0)
                 )) * 0.05 +
-                (COALESCE(assesment_1, 0) + COALESCE(assesment_2, 0)) * 0.20 +
+                COALESCE(assesment, 0) * 0.20 +
                 COALESCE(final_theory, 0) * 0.70
           
             ELSE 0
@@ -239,7 +239,6 @@ SELECT
     ) AS final_mark
 FROM
     marks;
-
 
 CREATE OR REPLACE VIEW exam_grades_view AS
 SELECT 
