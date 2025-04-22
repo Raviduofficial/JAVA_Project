@@ -30,7 +30,7 @@ public class UploadMarksExams extends javax.swing.JFrame {
         Quiz_2.setText(null); 
         Quiz_3.setText(null); 
         Quiz_4.setText(null); 
-        Assesmnent.setText(null); 
+        Assesmnent.setText(null);
         Mid_term.setText(null); 
         final_T.setText(null); 
         final_P.setText(null); 
@@ -307,7 +307,7 @@ public class UploadMarksExams extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(65, 65, 65)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -554,7 +554,7 @@ public class UploadMarksExams extends javax.swing.JFrame {
             String sid = Student_ID.getText();
             String cid = (String) Course_ID.getSelectedItem();
             
-            marks.update(m_id, lid, sid, cid, q1, q2, q3, q4, ass, mid, f_t, f_p);
+            marks.update(m_id, lid, sid, cid, q1, q2, q3, q4, ass ,mid, f_t, f_p);
             clearMarks();
             marks.getMarksValues(Marks_table, "");
         }
