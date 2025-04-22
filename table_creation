@@ -263,6 +263,7 @@ FROM
     final_exam_marks_view;
 
 
+
 CREATE VIEW grade_point_view AS
 SELECT
     final_exam_marks_view.ug_id,
