@@ -248,7 +248,6 @@ SELECT
 FROM
     marks;
 
-
 CREATE OR REPLACE VIEW exam_grades_view AS
 SELECT 
     ug_id,
