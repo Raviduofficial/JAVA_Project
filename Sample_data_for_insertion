@@ -121,13 +121,12 @@ INSERT INTO attendance (to_id, ug_id, course_id, atten_date, session_type, atten
 ('TO0002', 'TG1347', 'ict2142', '2025-04-05', 'practical', 'present');
 
 
-INSERT INTO medical (ug_id, course_id, session_type, reason, medical_date, medical_status, to_id, atten_id) VALUES
-('TG1346', 'ict2113', 'theory', 'Flu', '2025-04-14', 'pending', 'TO0001', 12),
-('TG1346', 'ict2122', 'practical', 'Food Poison', '2025-04-15', 'approved', 'TO0002', 13),
-('TG1347', 'ict2133', 'theory', 'Fever', '2025-04-16', 'rejected', 'TO0003', 14),
-('TG1347', 'ict2142', 'practical', 'Leg Injury', '2025-04-17', 'approved', 'TO0001', 15),
-('TG1348', 'ict2152', 'theory', 'Allergy', '2025-04-18', 'pending', 'TO0004', 16);
-
+INSERT INTO medical (ug_id, course_id, reason, medical_date, medical_status, to_id, atten_id) VALUES
+('TG1344', 'ict2113', 'Fever', '2025-04-03', 'pending', 'TO0001', 1),
+('TG1344', 'ict2122', 'Injury', '2025-04-05', 'approved', 'TO0002', 2),
+('TG1344', 'ict2133', 'Migraine', '2025-04-08', 'rejected', 'TO0003', 3),
+('TG1344', 'ict2142', 'Cold', '2025-04-10', 'approved', 'TO0001', 4),
+('TG1344', 'ict2152', 'Stomach Ache', '2025-04-12', 'pending', 'TO0004', 5);
 
 INSERT INTO medical (ug_id, course_id, reason, medical_date, medical_status, to_id, atten_id) VALUES
 ('TG1345', 'ict2113', 'Back Pain', '2025-04-02', 'pending', 'TO0001', 6),
@@ -150,4 +149,215 @@ INSERT INTO notice (notice_title, notice_content, notice_date) VALUES
 ('Workshop on AI', 'A workshop on Artificial Intelligence will be conducted on April 22, 2025. All students are encouraged to attend.', '2025-04-16'),
 ('Semester Registration', 'The semester registration process starts on April 20, 2025. Please complete the registration before April 30, 2025.', '2025-04-17');
 
+INSERT INTO marks (
+    mark_id, lec_id, ug_id, course_id, 
+    quiz_1, quiz_2, quiz_3, quiz_4, 
+    assesment, mid_term, final_theory, final_practical
+) VALUES
+(1, 'LC0001', 'TG1345', 'ict2113', 77, 89, 56, 88, 99, 66, 55, 44),
+(6, 'LC0001', 'TG1346', 'ict2113', 56, 88, 99, 66, 88, 75, 64, 68),
+(7, 'LC0002', 'TG1345', 'ict2122', 58, 98, 88, 96, 56, 89, 45, 69),
+(8, 'LC0003', 'TG1345', 'ict2133', 85, 77, 96, 0, 89, 0, 85, 69),
+(9, 'LC0004', 'TG1345', 'ict2142', 0, 0, 0, 0, 50, 82, 0, 89),
+(10, 'LC0005', 'TG1345', 'ict2152', 86, 95, 85, 0, 69, 0, 89, 0),
+(11, 'LC0002', 'TG1346', 'ict2122', 78, 88, 99, 56, 89, 66, 99, 0),
+(12, 'LC0003', 'TG1346', 'ict2133', 78, 96, 95, 0, 99, 0, 96, 96);
+
+
+
+CREATE VIEW ca_marks AS
+SELECT 
+    ug_id,
+    course_id,
+    ROUND(
+        (
+            COALESCE(quiz_1, 0) * 0.10 + 
+            COALESCE(quiz_2, 0) * 0.10 + 
+            COALESCE(quiz_3, 0) * 0.10 + 
+            COALESCE(assesment, 0) * 0.20 + 
+            COALESCE(mid_term, 0) * 0.25
+        ),
+        2
+    ) AS ca_mark
+FROM 
+    marks;
+
+
+CREATE VIEW ca_eligibility AS
+SELECT 
+    ug_id,
+    course_id,
+    CASE 
+        WHEN ca_mark >= 50 THEN "Eligible"
+        ELSE "Not Eligible"
+    END AS ca_eligibility_status
+FROM 
+    ca_marks;
+
+
+CREATE VIEW overall_eligibility AS
+SELECT 
+    a.ug_id,
+    a.course_id,
+    a.session_type,
+    CASE 
+        WHEN a.Eligibility = "Eligible" AND c.ca_mark >= 50 THEN "Eligible"
+        ELSE "Not Eligible"
+    END AS overrall_eligibility_status
+FROM 
+    attendance_eligibility AS a
+JOIN 
+    ca_marks AS c 
+ON 
+    a.ug_id = c.ug_id 
+    AND a.course_id = c.course_id;
+
+
+CREATE OR REPLACE VIEW final_exam_marks_view AS
+SELECT
+    ug_id,
+    course_id,
+    ROUND(
+        CASE 
+            
+            WHEN course_id IN ('ict2113') THEN 
+                -- Calculate sum of all quizzes minus the lowest one (effectively top 2)
+                (COALESCE(quiz_1, 0) + COALESCE(quiz_2, 0) + COALESCE(quiz_3, 0) - 
+                LEAST(
+                    COALESCE(quiz_1, 0), 
+                    COALESCE(quiz_2, 0), 
+                    COALESCE(quiz_3, 0)
+                )) * 0.05 +
+                COALESCE(mid_term, 0) * 0.20 +
+                COALESCE(final_theory, 0) * 0.40 +
+                COALESCE(final_practical, 0) * 0.30
+
+            WHEN course_id IN ('ict2122') THEN 
+                (COALESCE(quiz_1, 0) + COALESCE(quiz_2, 0) + COALESCE(quiz_3, 0) + COALESCE(quiz_4, 0) - 
+                LEAST(
+                    COALESCE(quiz_1, 0), 
+                    COALESCE(quiz_2, 0), 
+                    COALESCE(quiz_3, 0),
+                    COALESCE(quiz_4, 0)
+                )) * 0.0333 +
+                COALESCE(assesment, 0) * 0.10 +
+                COALESCE(mid_term, 0) * 0.20 +
+                COALESCE(final_theory, 0) * 0.60
+            
+            WHEN course_id IN ('ICT2133') THEN 
+                (COALESCE(quiz_1, 0) + COALESCE(quiz_2, 0) + COALESCE(quiz_3, 0) - 
+                LEAST(
+                    COALESCE(quiz_1, 0), 
+                    COALESCE(quiz_2, 0), 
+                    COALESCE(quiz_3, 0)
+                )) * 0.05 +
+                COALESCE(assesment, 0) * 0.20 +
+                COALESCE(final_theory, 0) * 0.40 +
+                COALESCE(final_practical, 0) * 0.30
+            
+            WHEN course_id IN ('ICT2142') THEN 
+                COALESCE(assesment, 0) * 0.20 +
+                COALESCE(mid_term, 0) * 0.20 +
+                COALESCE(final_practical, 0) * 0.60
+
+            WHEN course_id = 'ICT2152' THEN 
+                (COALESCE(quiz_1, 0) + COALESCE(quiz_2, 0) + COALESCE(quiz_3, 0) - 
+                LEAST(
+                    COALESCE(quiz_1, 0), 
+                    COALESCE(quiz_2, 0), 
+                    COALESCE(quiz_3, 0)
+                )) * 0.05 +
+                COALESCE(assesment, 0) * 0.20 +
+                COALESCE(final_theory, 0) * 0.70
+          
+            ELSE 0
+        END,
+        2
+    ) AS final_mark
+FROM
+    marks;
+
+
+CREATE OR REPLACE VIEW exam_grades_view AS
+SELECT 
+    ug_id,
+    course_id,
+    final_mark,
+    CASE
+        WHEN final_mark <= 100 AND final_mark >= 85 THEN 'A+'
+                WHEN final_mark < 85 AND final_mark >= 75 THEN 'A'
+                WHEN final_mark < 75 AND final_mark >= 70 THEN 'A-'
+                WHEN final_mark < 70 AND final_mark >= 65 THEN 'B+'
+                WHEN final_mark < 65 AND final_mark >= 60 THEN 'B'
+                WHEN final_mark < 60 AND final_mark >= 55 THEN 'B-'
+                WHEN final_mark < 55 AND final_mark >= 50 THEN 'C+'
+                WHEN final_mark < 50 AND final_mark >= 45 THEN 'C'
+                WHEN final_mark < 45 AND final_mark >= 40 THEN 'C-'
+                WHEN final_mark < 40 AND final_mark >= 35 THEN 'D+'
+                WHEN final_mark < 35 AND final_mark >= 30 THEN 'D'
+                ELSE 'E'
+    END AS grade
+FROM 
+    final_exam_marks_view;
+
+
+CREATE VIEW grade_point_view AS
+SELECT
+    final_exam_marks_view.ug_id,
+    final_exam_marks_view.course_id,
+    final_exam_marks_view.final_mark,
+    IF(final_exam_marks_view.final_mark >= 90, 4.0,
+    IF(final_exam_marks_view.final_mark >= 84, 4.0,
+    IF(final_exam_marks_view.final_mark >= 75, 3.7,
+    IF(final_exam_marks_view.final_mark >= 70, 3.3,
+    IF(final_exam_marks_view.final_mark >= 65, 3.0,
+    IF(final_exam_marks_view.final_mark >= 60, 2.7,
+    IF(final_exam_marks_view.final_mark >= 55, 2.3,
+    IF(final_exam_marks_view.final_mark >= 50, 2.0,
+    IF(final_exam_marks_view.final_mark >= 45, 1.7,
+    IF(final_exam_marks_view.final_mark >= 40, 1.3,
+    IF(final_exam_marks_view.final_mark >= 35, 1.0, 0.0)
+    )))))))))) AS Grade_point
+FROM
+    final_exam_marks_view;
+
+
+CREATE VIEW SGPA_view AS
+SELECT 
+    grade_point_view.ug_id,
+    ROUND((SUM(grade_point_view.Grade_point * course.credit) / SUM(course.credit)), 2) AS SGPA
+FROM 
+    grade_point_view
+JOIN 
+    course ON grade_point_view.course_id = course.course_id
+GROUP BY 
+    grade_point_view.ug_id;
+
+select * from SGPA_view;
+
+
+CREATE VIEW CGPA_view AS
+SELECT 
+    grade_point_view.ug_id,
+    ROUND((SUM(grade_point_view.Grade_point * course.credit) / SUM(course.credit)), 2) AS CGPA
+FROM 
+    grade_point_view
+JOIN 
+    course ON grade_point_view.course_id = course.course_id
+WHERE 
+    course.course_id != 'ENG2112'  
+GROUP BY 
+    grade_point_view.ug_id;
+
+
+
 set foreign_key_checks = 1;
+
+
+select * from ca_marks;
+select * from ca_eligibility;
+select * from overall_eligibility;
+select * from exam_grades_view;
+select * from grade_point_view;
+select * from SGPA_view;
+select * from CGPA_view;
