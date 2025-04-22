@@ -42,6 +42,14 @@ public class Lecture_profile extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         lbl_photo = new javax.swing.JLabel();
         lbl_name = new javax.swing.JLabel();
+        lbl_name2 = new javax.swing.JLabel();
+        lbl_name3 = new javax.swing.JLabel();
+        lbl_name4 = new javax.swing.JLabel();
+        lbl_name5 = new javax.swing.JLabel();
+        lbl_name7 = new javax.swing.JLabel();
+        lbl_name8 = new javax.swing.JLabel();
+        lbl_name9 = new javax.swing.JLabel();
+        lbl_name10 = new javax.swing.JLabel();
 
         jButton8.setText("Grades & Final Marks");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -258,30 +266,118 @@ public class Lecture_profile extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(153, 153, 153));
         jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 0, 1, 1, new java.awt.Color(0, 0, 0)));
 
+        lbl_photo.setBackground(new java.awt.Color(255, 255, 255));
+        lbl_photo.setForeground(new java.awt.Color(255, 255, 255));
         lbl_photo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        lbl_name.setBackground(new java.awt.Color(255, 255, 255));
+        lbl_name.setFont(new java.awt.Font("Algerian", 2, 18)); // NOI18N
+        lbl_name.setForeground(new java.awt.Color(255, 255, 255));
         lbl_name.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_name.setText("name");
         lbl_name.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lbl_name2.setBackground(new java.awt.Color(255, 255, 255));
+        lbl_name2.setFont(new java.awt.Font("Algerian", 2, 18)); // NOI18N
+        lbl_name2.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_name2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_name2.setText("Email");
+
+        lbl_name3.setBackground(new java.awt.Color(255, 255, 255));
+        lbl_name3.setFont(new java.awt.Font("Algerian", 2, 18)); // NOI18N
+        lbl_name3.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_name3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_name3.setText("Password");
+
+        lbl_name4.setBackground(new java.awt.Color(255, 255, 255));
+        lbl_name4.setFont(new java.awt.Font("Algerian", 2, 18)); // NOI18N
+        lbl_name4.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_name4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_name4.setText("Phone Number");
+
+        lbl_name5.setBackground(new java.awt.Color(0, 0, 0));
+        lbl_name5.setFont(new java.awt.Font("Algerian", 2, 18)); // NOI18N
+        lbl_name5.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_name5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_name5.setText("Lecture ID");
+
+        lbl_name7.setBackground(new java.awt.Color(255, 255, 255));
+        lbl_name7.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_name7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_name7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lbl_name8.setBackground(new java.awt.Color(255, 255, 255));
+        lbl_name8.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_name8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_name8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lbl_name9.setBackground(new java.awt.Color(255, 255, 255));
+        lbl_name9.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_name9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_name9.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        lbl_name10.setBackground(new java.awt.Color(255, 255, 255));
+        lbl_name10.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_name10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_name10.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(122, 122, 122)
+                .addGap(121, 121, 121)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbl_name7, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_name8, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_name10, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lbl_name4, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                    .addGap(155, 155, 155)
+                                    .addComponent(lbl_name9, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(184, 184, 184))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_name5, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_name2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_name3, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(434, 434, 434)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbl_name, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_photo, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lbl_photo, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_name, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addComponent(lbl_photo, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(59, 59, 59)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(lbl_photo, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(lbl_name, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(lbl_name5, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(69, 69, 69)
+                                .addComponent(lbl_name2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(70, 70, 70)
+                                .addComponent(lbl_name3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lbl_name8, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(69, 69, 69)
+                                .addComponent(lbl_name7, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(65, 65, 65)
+                                .addComponent(lbl_name10, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(18, 18, 18)
-                .addComponent(lbl_name, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbl_name4, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbl_name9, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -303,11 +399,10 @@ public class Lecture_profile extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(0, 0, 0)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE))
-                .addGap(0, 0, 0))
+                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)))
         );
 
         pack();
@@ -464,6 +559,14 @@ public class Lecture_profile extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_marks;
     private javax.swing.JLabel lbl_medical;
     private javax.swing.JLabel lbl_name;
+    private javax.swing.JLabel lbl_name10;
+    private javax.swing.JLabel lbl_name2;
+    private javax.swing.JLabel lbl_name3;
+    private javax.swing.JLabel lbl_name4;
+    private javax.swing.JLabel lbl_name5;
+    private javax.swing.JLabel lbl_name7;
+    private javax.swing.JLabel lbl_name8;
+    private javax.swing.JLabel lbl_name9;
     private javax.swing.JLabel lbl_notices;
     private javax.swing.JLabel lbl_photo;
     private javax.swing.JLabel lbl_student;
