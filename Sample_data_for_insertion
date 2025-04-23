@@ -204,6 +204,15 @@ SELECT
 FROM 
     ca_marks;
 
+CREATE VIEW attendance_eligibility AS
+SELECT 	ug_id, 
+	course_id, 
+	session_type, 
+	COUNT(status)/15 *100 AS "80% Percentage",
+	IF((COUNT(status)/15*100)>=80, "Eligible", "Not Eligible") AS "Eligibility"
+FROM attendance
+WHERE status = "Present" AND type IN ("Theory","Practical")
+GROUP BY ug_id,course_id,session_type;
 
 CREATE VIEW overall_eligibility AS
 SELECT 
