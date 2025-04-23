@@ -104,7 +104,7 @@ public class admin extends javax.swing.JFrame {
                         v.add(rs.getString(4));
                         v.add(rs.getString(5));
                         v.add(rs.getString(6));
-          
+                        v.add(rs.getString(7));
 
                         dt.addRow(v);
                     }
