@@ -20,29 +20,29 @@ public class marks {
         return conn;
     }
     
-    public float calculateCAMark(float quiz1, float quiz2, float quiz3, float quiz4, float assessment, float midTerm) {
-        return (quiz1 * 0.10f) + (quiz2 * 0.10f) + (quiz3 * 0.10f) +(assessment * 0.20f) + (midTerm * 0.25f);
-    }
+//    public float calculateCAMark(float quiz1, float quiz2, float quiz3, float quiz4, float assessment_1,float assessment_2, float midTerm) {
+//        return (quiz1 * 0.10f) + (quiz2 * 0.10f) + (quiz3 * 0.10f) +(assessment * 0.20f) + (midTerm * 0.25f);
+//    }
     
     
     
     //insert data
-    public void insert(String lec_id,String ug_id,String course_id,float quiz_1,float quiz_2,float quiz_3,float quiz_4,float assesment,float mid_term, float final_theory, float final_practical){
+    public void insert(String lec_id,String ug_id,String course_id,float quiz_1,float quiz_2,float quiz_3,float quiz_4,float assesment_1,float assesment_2,float mid_term, float final_theory, float final_practical){
         
-        if (!validateInsertParameters(lec_id, ug_id, course_id,quiz_1, quiz_2, quiz_3, quiz_4,assesment, mid_term, final_theory, final_practical)) {
+        if (!validateInsertParameters(lec_id, ug_id, course_id,quiz_1, quiz_2, quiz_3, quiz_4,assesment_1,assesment_2, mid_term, final_theory, final_practical)) {
             return; 
         }
-        float ca_marks = calculateCAMark(quiz_1, quiz_2, quiz_3, quiz_4, assesment, mid_term);
+//        float ca_marks = calculateCAMark(quiz_1, quiz_2, quiz_3, quiz_4, assesment, mid_term);
         
-        String eligible ;
-        if(ca_marks > 50){
-            eligible = "Eligible";
-        }else{
-            eligible = "Not Eligible";
-        }
+//        String eligible ;
+//        if(ca_marks > 50){
+//            eligible = "Eligible";
+//        }else{
+//            eligible = "Not Eligible";
+//        }
         
         
-        String sql = "INSERT INTO marks(lec_id, ug_id, course_id, quiz_1, quiz_2, quiz_3, quiz_4, assesment, mid_term, final_theory, final_practical) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO marks(lec_id, ug_id, course_id, quiz_1, quiz_2, quiz_3, quiz_4, assesment_1,assesment_2, mid_term, final_theory, final_practical) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
         try (Connection con = getConnection();
              PreparedStatement ps = con.prepareStatement(sql)){
             
@@ -54,10 +54,11 @@ public class marks {
             ps.setFloat(5, quiz_2);
             ps.setFloat(6, quiz_3);
             ps.setFloat(7, quiz_4);
-            ps.setFloat(8, assesment);
-            ps.setFloat(9, mid_term);
-            ps.setFloat(10, final_theory);
-            ps.setFloat(11, final_practical);
+            ps.setFloat(8, assesment_1);
+            ps.setFloat(9, assesment_2);
+            ps.setFloat(10, mid_term);
+            ps.setFloat(11, final_theory);
+            ps.setFloat(12, final_practical);
 //            ps.setFloat(12, ca_marks);
 //            ps.setString(13, eligible);
             
@@ -72,7 +73,7 @@ public class marks {
     }
     
 
-    private boolean validateInsertParameters(String lec_id, String ug_id, String course_id,float quiz_1, float quiz_2, float quiz_3, float quiz_4,float assesment, float mid_term, float final_theory, float final_practical) {
+    private boolean validateInsertParameters(String lec_id, String ug_id, String course_id,float quiz_1, float quiz_2, float quiz_3, float quiz_4,float assesment_1,float assesment_2, float mid_term, float final_theory, float final_practical) {
         // Validate IDs are not empty
         
         if (lec_id == null || lec_id.trim().isEmpty()) {
@@ -89,7 +90,7 @@ public class marks {
         }
 
         // Validate marks are within reasonable range (0-100)
-        if (!isValidMark(quiz_1) || !isValidMark(quiz_2) || !isValidMark(quiz_3) || !isValidMark(quiz_4) || !isValidMark(assesment) || !isValidMark(mid_term) ||!isValidMark(final_theory) || !isValidMark(final_practical)) {
+        if (!isValidMark(quiz_1) || !isValidMark(quiz_2) || !isValidMark(quiz_3) || !isValidMark(quiz_4) || !isValidMark(assesment_1) || !isValidMark(assesment_2) || !isValidMark(mid_term) ||!isValidMark(final_theory) || !isValidMark(final_practical)) {
             JOptionPane.showMessageDialog(null, "All marks must be between 0 and 100","Validation Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -103,12 +104,12 @@ public class marks {
     
     //update marks
 
-    public boolean update(String mark_id, String lec_id, String ug_id, String course_id,float quiz_1, float quiz_2, float quiz_3, float quiz_4,float assesment, float mid_term, float final_theory, float final_practical) {
+    public boolean update(String mark_id, String lec_id, String ug_id, String course_id,float quiz_1, float quiz_2, float quiz_3, float quiz_4,float assesment_1,float  assesment_2, float mid_term, float final_theory, float final_practical) {
         
-        float ca_marks = calculateCAMark(quiz_1, quiz_2, quiz_3, quiz_4, assesment, mid_term);
+//        float ca_marks = calculateCAMark(quiz_1, quiz_2, quiz_3, quiz_4, assesment_1 ,assesment_2, mid_term);
         
         String sql = "UPDATE marks SET lec_id=?, ug_id=?, course_id=?, quiz_1=?, quiz_2=?, "
-                   + "quiz_3=?, quiz_4=?, assesment=?, mid_term=?, final_theory=?, final_practical=?"
+                   + "quiz_3=?, quiz_4=?, assesment_1=?, assesment_2=?, mid_term=?, final_theory=?, final_practical=?"
                    + "WHERE mark_id=?";
         boolean isUpdate = false;
 
@@ -122,12 +123,13 @@ public class marks {
             ps.setFloat(5, quiz_2);
             ps.setFloat(6, quiz_3);
             ps.setFloat(7, quiz_4);
-            ps.setFloat(8, assesment);
-            ps.setFloat(9, mid_term);
-            ps.setFloat(10, final_theory);
-            ps.setFloat(11, final_practical);
+            ps.setFloat(8, assesment_1);
+            ps.setFloat(9, assesment_2);
+            ps.setFloat(10, mid_term);
+            ps.setFloat(11, final_theory);
+            ps.setFloat(12, final_practical);
 //            ps.setFloat(12, ca_marks);
-            ps.setString(12, mark_id);  // WHERE clause parameter
+            ps.setString(13, mark_id);  // WHERE clause parameter
 
             if(ps.executeUpdate() > 0) {
                 JOptionPane.showMessageDialog(null, "Updated Successfully!!");
@@ -164,7 +166,7 @@ public class marks {
     
     //get all data course table
     public void getMarksValues(JTable table,String searchValue){
-        String sql = "SELECT * FROM marks WHERE CONCAT(mark_id,lec_id,ug_id,course_id,quiz_1,quiz_2,quiz_3,quiz_4,assesment,mid_term,final_theory,final_practical) LIKE ? ";
+        String sql = "SELECT * FROM marks WHERE CONCAT(mark_id,lec_id,ug_id,course_id,quiz_1,quiz_2,quiz_3,quiz_4,assesment_1,assesment_2,mid_term,final_theory,final_practical) LIKE ? ";
         
         try (Connection con = getConnection();
              PreparedStatement ps = con.prepareStatement(sql)){
@@ -185,7 +187,8 @@ public class marks {
                         result.getString("quiz_2"),
                         result.getString("quiz_3"),
                         result.getString("quiz_4"),
-                        result.getString("assesment"),
+                        result.getString("assesment_1"),
+                        result.getString("assesment_2"),
                         result.getString("mid_term"),
                         result.getString("final_theory"),
                         result.getString("final_practical")

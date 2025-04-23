@@ -31,12 +31,12 @@ public class CAEligibility extends javax.swing.JFrame {
     
 public void getCAeligibility(RSTableMetro table, String searchValue) {
     String sql = "SELECT m.ug_id, m.course_id, m.quiz_1, m.quiz_2, m.quiz_3, m.quiz_4, " +
-                 "m.assesment, m.mid_term, cm.ca_mark, ce.ca_eligibility_status " +
+                 "m.assesment_1, m.assesment_2, m.mid_term, cm.ca_mark, ce.ca_eligibility_status " +
                  "FROM marks m " +
                  "LEFT JOIN ca_marks cm ON m.ug_id = cm.ug_id AND m.course_id = cm.course_id " +
                  "LEFT JOIN ca_eligibility ce ON m.ug_id = ce.ug_id AND m.course_id = ce.course_id " +
                  "WHERE CONCAT(m.ug_id, m.course_id, m.quiz_1, m.quiz_2, m.quiz_3, m.quiz_4, " +
-                 "m.assesment, m.mid_term, cm.ca_mark, ce.ca_eligibility_status) LIKE ? " +
+                 "m.assesment_1, m.assesment_2, m.mid_term, cm.ca_mark, ce.ca_eligibility_status) LIKE ? " +
                  "ORDER BY m.ug_id ASC";
     
     try (Connection con = getConnection();
@@ -56,7 +56,8 @@ public void getCAeligibility(RSTableMetro table, String searchValue) {
                     result.getFloat("quiz_2"),
                     result.getFloat("quiz_3"),
                     result.getFloat("quiz_4"),
-                    result.getFloat("assesment"),
+                    result.getFloat("assesment_1"),
+                    result.getFloat("assesment_2"),
                     result.getFloat("mid_term"),
                     result.getDouble("ca_mark"),
                     result.getString("ca_eligibility_status")
@@ -110,23 +111,23 @@ public void getCAeligibility(RSTableMetro table, String searchValue) {
 
         tbl_eligibility.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Student ID", "Course Code", "Quiz 1", "Quiz 2", "Quiz 3", "Quiz 4", "Assessment", "Mid Marks", "CA Marks", "Eligibility"
+                "Student ID", "Course Code", "Quiz 1", "Quiz 2", "Quiz 3", "Quiz 4", "Ass 1", "Ass 2", "Mid Marks", "CA Marks", "Eligibility"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true, true, true, true, true, true
+                false, false, false, false, false, true, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
