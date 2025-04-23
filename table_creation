@@ -4,11 +4,11 @@ use javaMiniProject;
 create table user 
 (
 user_id char(6) primary key NOT NULL,
-user_password varchar(15) NOT NULL,
+user_password varchar(255) NOT NULL,
 user_name varchar(50) NOT NULL,
 user_email varchar(50) ,
-user_phone BIGINT,
-user_pro_pic varchar(200),
+user_phone varchar(13),
+user_pro_pic varchar(300),
 user_role ENUM('admin','lecturer','undergraduate','tech_officer') NOT NULL
 
 );
@@ -51,6 +51,8 @@ lec_id char(6),
 course_id char(7),
 admin_id char(6),
 day varchar(10),
+start_time time,
+end_time time,
 time varchar(20),
 session_type ENUM('theory','practical')
 );
@@ -87,13 +89,10 @@ CREATE TABLE medical (
     ug_id VARCHAR(10) NOT NULL,
     course_id VARCHAR(10) NOT NULL,
     session_type VARCHAR(10) NOT NULL,
-    reason VARCHAR(255) NOT NULL,
+    reason VARCHAR(500) NOT NULL,
     medical_date DATE NOT NULL,
-    medical_status VARCHAR(20) NOT NULL,
     to_id VARCHAR(10) NOT NULL,
-    atten_id INT NOT NULL,
-    FOREIGN KEY (course_id) REFERENCES course(course_id), 
-    FOREIGN KEY (ug_id) REFERENCES user(ug_id)  
+    atten_id INT NOT NULL
 );
 
 
