@@ -36,7 +36,7 @@ INSERT INTO tech_officer (to_id, to_department) VALUES
 ('TO0004', 'EEE');
 
 
-INSERT INTO users (user_id, user_password, user_name, user_email, user_phone, user_pro_pic, user_role) VALUES
+INSERT INTO user (user_id, user_password, user_name, user_email, user_phone, user_pro_pic, user_role) VALUES
 ('LC0001', 'lect01', 'Lecturer 01', 'lect01@example.com', 712345601, NULL, 'lecturer'),
 ('LC0002', 'lect02', 'Lecturer 02', 'lect02@example.com', 712345602, NULL, 'lecturer'),
 ('LC0003', 'lect03', 'Lecturer 03', 'lect03@example.com', 712345603, NULL, 'lecturer'),
@@ -121,19 +121,29 @@ INSERT INTO attendance (to_id, ug_id, course_id, atten_date, session_type, atten
 ('TO0002', 'TG1347', 'ict2142', '2025-04-05', 'practical', 'present');
 
 
-INSERT INTO medical (ug_id, course_id, reason, medical_date, medical_status, to_id, atten_id) VALUES
-('TG1344', 'ict2113', 'Fever', '2025-04-03', 'pending', 'TO0001', 1),
-('TG1344', 'ict2122', 'Injury', '2025-04-05', 'approved', 'TO0002', 2),
-('TG1344', 'ict2133', 'Migraine', '2025-04-08', 'rejected', 'TO0003', 3),
-('TG1344', 'ict2142', 'Cold', '2025-04-10', 'approved', 'TO0001', 4),
-('TG1344', 'ict2152', 'Stomach Ache', '2025-04-12', 'pending', 'TO0004', 5);
+INSERT INTO medical (ug_id, course_id, session_type, reason, medical_date, to_id, atten_id)
+VALUES
+('TG1344', 'ict2113', 'theory', 'Fever', '2025-04-03', 'TO0001', 1),
+('TG1344', 'ict2122', 'theory', 'Injury', '2025-04-05', 'TO0002', 2),
+('TG1344', 'ict2133', 'practical', 'Migraine', '2025-04-08', 'TO0003', 3),
+('TG1344', 'ict2142', 'practical', 'Cold', '2025-04-10', 'TO0001', 4),
+('TG1344', 'ict2152', 'theory', 'Stomach Ache', '2025-04-12', 'TO0004', 5),
+('TG1345', 'ict2113', 'practical', 'Back Pain', '2025-04-02', 'TO0001', 6),
+('TG1345', 'ict2122', 'theory', 'Headache', '2025-04-04', 'TO0002', 7),
+('TG1345', 'ict2133', 'theory', 'Sore Throat', '2025-04-06', 'TO0003', 8),
+('TG1345', 'ict2142', 'practical', 'Dizziness', '2025-04-08', 'TO0001', 9),
+('TG1345', 'ict2152', 'theory', 'Cough', '2025-04-10', 'TO0004', 10),
+('TG1344', 'ict2113', 'practical', 'Fever', '2025-04-03', 'TO0001', 1),
+('TG1344', 'ict2122', 'theory', 'Injury', '2025-04-05', 'TO0002', 2),
+('TG1344', 'ict2133', 'theory', 'Migraine', '2025-04-08', 'TO0003', 3),
+('TG1344', 'ict2142', 'practical', 'Cold', '2025-04-10', 'TO0001', 4),
+('TG1344', 'ict2152', 'theory', 'Stomach Ache', '2025-04-12', 'TO0004', 5),
+('TG1345', 'ict2113', 'theory', 'Back Pain', '2025-04-02', 'TO0001', 6),
+('TG1345', 'ict2122', 'theory', 'Headache', '2025-04-04', 'TO0002', 7),
+('TG1345', 'ict2133', 'practical', 'Sore Throat', '2025-04-06', 'TO0003', 8),
+('TG1345', 'ict2142', 'practical', 'Dizziness', '2025-04-08', 'TO0001', 9),
+('TG1345', 'ict2152', 'theory', 'Cough', '2025-04-10', 'TO0004', 10);
 
-INSERT INTO medical (ug_id, course_id, reason, medical_date, medical_status, to_id, atten_id) VALUES
-('TG1345', 'ict2113', 'Back Pain', '2025-04-02', 'pending', 'TO0001', 6),
-('TG1345', 'ict2122', 'Headache', '2025-04-04', 'approved', 'TO0002', 7),
-('TG1345', 'ict2133', 'Sore Throat', '2025-04-06', 'rejected', 'TO0003', 8),
-('TG1345', 'ict2142', 'Dizziness', '2025-04-08', 'approved', 'TO0001', 9),
-('TG1345', 'ict2152', 'Cough', '2025-04-10', 'pending', 'TO0004', 10);
 
 
 INSERT INTO time_table (time_table_id, department, lec_id, course_id, admin_id, day, time, session_type) VALUES
