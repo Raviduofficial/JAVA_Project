@@ -30,7 +30,8 @@ public class UploadMarksExams extends javax.swing.JFrame {
         Quiz_2.setText(null); 
         Quiz_3.setText(null); 
         Quiz_4.setText(null); 
-        Assesmnent.setText(null);
+        assesmnent_1.setText(null);
+        assesmnent_2.setText(null);
         Mid_term.setText(null); 
         final_T.setText(null); 
         final_P.setText(null); 
@@ -78,7 +79,7 @@ public class UploadMarksExams extends javax.swing.JFrame {
         Quiz_3 = new javax.swing.JTextField();
         Quiz_4 = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        Assesmnent = new javax.swing.JTextField();
+        assesmnent_1 = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         Mid_term = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
@@ -87,6 +88,8 @@ public class UploadMarksExams extends javax.swing.JFrame {
         final_P = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         Course_ID = new javax.swing.JComboBox<>();
+        jLabel22 = new javax.swing.JLabel();
+        assesmnent_2 = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Marks_table = new rojeru_san.complementos.RSTableMetro();
@@ -160,7 +163,7 @@ public class UploadMarksExams extends javax.swing.JFrame {
                 Update_ButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(Update_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 510, 150, 50));
+        jPanel1.add(Update_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 530, 150, 40));
 
         Clear_Button.setText("Clear");
         Clear_Button.addActionListener(new java.awt.event.ActionListener() {
@@ -168,7 +171,7 @@ public class UploadMarksExams extends javax.swing.JFrame {
                 Clear_ButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(Clear_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 570, 150, 50));
+        jPanel1.add(Clear_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 570, 150, 40));
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -181,7 +184,7 @@ public class UploadMarksExams extends javax.swing.JFrame {
                 Add_ButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(Add_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 510, 150, 50));
+        jPanel1.add(Add_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, 150, 40));
 
         Delete_Button.setText("Delete");
         Delete_Button.addActionListener(new java.awt.event.ActionListener() {
@@ -189,7 +192,7 @@ public class UploadMarksExams extends javax.swing.JFrame {
                 Delete_ButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(Delete_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, 150, 50));
+        jPanel1.add(Delete_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, 150, 40));
 
         jLabel15.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
@@ -215,37 +218,37 @@ public class UploadMarksExams extends javax.swing.JFrame {
         jLabel17.setText("Quiz 4");
         jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 100, 20));
 
-        Assesmnent.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel1.add(Assesmnent, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 190, 30));
+        assesmnent_1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jPanel1.add(assesmnent_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 190, 30));
 
         jLabel18.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setText("Assessment");
+        jLabel18.setText("Assessment 1");
         jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 100, 20));
 
         Mid_term.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel1.add(Mid_term, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 380, 190, 30));
+        jPanel1.add(Mid_term, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 420, 190, 30));
 
         jLabel19.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setText("Mid Term");
-        jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 100, 20));
+        jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 100, 20));
 
         jLabel20.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setText("Final Theory");
-        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 100, 20));
+        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 100, 20));
 
         final_T.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel1.add(final_T, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 420, 190, 30));
+        jPanel1.add(final_T, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 460, 190, 30));
 
         final_P.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel1.add(final_P, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 460, 190, 30));
+        jPanel1.add(final_P, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 500, 190, 30));
 
         jLabel21.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
         jLabel21.setText("Final Practical");
-        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 110, 20));
+        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 110, 20));
 
         Course_ID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ict2113", "ict2122", "ict2133", "ict2142", "ict2152" }));
         Course_ID.addActionListener(new java.awt.event.ActionListener() {
@@ -255,30 +258,38 @@ public class UploadMarksExams extends javax.swing.JFrame {
         });
         jPanel1.add(Course_ID, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 190, 30));
 
+        jLabel22.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel22.setText("Assessment 2");
+        jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 100, 20));
+
+        assesmnent_2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jPanel1.add(assesmnent_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 380, 190, 30));
+
         jPanel3.setBackground(new java.awt.Color(153, 153, 153));
 
         Marks_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mark ID", "LectureID", "Student ID", "Course ID", "Quiz 1", "Quiz 2", "Quiz 3", "Quiz 4", "Assessment", "Mid Term", "Final Theroy", "Final Practical"
+                "Mark ID", "LectureID", "Student ID", "Course ID", "Quiz 1", "Quiz 2", "Quiz 3", "Quiz 4", "Ass 1", "Ass 2", "Mid Term", "Final T", "Final P"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -545,7 +556,8 @@ public class UploadMarksExams extends javax.swing.JFrame {
             float q2 = Quiz_2.getText().equals("N/A") ? 0 : Float.parseFloat(Quiz_2.getText());
             float q3 = Quiz_3.getText().equals("N/A") ? 0 : Float.parseFloat(Quiz_3.getText());
             float q4 = Quiz_4.getText().equals("N/A") ? 0 : Float.parseFloat(Quiz_4.getText());
-            float ass = Assesmnent.getText().equals("N/A") ? 0 : Float.parseFloat(Assesmnent.getText());
+            float ass_1 = assesmnent_1.getText().equals("N/A") ? 0 : Float.parseFloat(assesmnent_1.getText());
+            float ass_2 = assesmnent_2.getText().equals("N/A") ? 0 : Float.parseFloat(assesmnent_2.getText());
             float mid = Mid_term.getText().equals("N/A") ? 0 : Float.parseFloat(Mid_term.getText());
             float f_t = final_T.getText().equals("N/A") ? 0 : Float.parseFloat(final_T.getText());
             float f_p = final_P.getText().equals("N/A") ? 0 : Float.parseFloat(final_P.getText());
@@ -554,7 +566,7 @@ public class UploadMarksExams extends javax.swing.JFrame {
             String sid = Student_ID.getText();
             String cid = (String) Course_ID.getSelectedItem();
             
-            marks.update(m_id, lid, sid, cid, q1, q2, q3, q4, ass ,mid, f_t, f_p);
+            marks.update(m_id, lid, sid, cid, q1, q2, q3, q4, ass_1, ass_2 ,mid, f_t, f_p);
             clearMarks();
             marks.getMarksValues(Marks_table, "");
         }
@@ -571,7 +583,8 @@ public class UploadMarksExams extends javax.swing.JFrame {
             float q2 = Quiz_2.getText().equals("N/A") ? 0 : Float.parseFloat(Quiz_2.getText());
             float q3 = Quiz_3.getText().equals("N/A") ? 0 : Float.parseFloat(Quiz_3.getText());
             float q4 = Quiz_4.getText().equals("N/A") ? 0 : Float.parseFloat(Quiz_4.getText());
-            float ass = Assesmnent.getText().equals("N/A") ? 0 : Float.parseFloat(Assesmnent.getText());
+            float ass_1 = assesmnent_1.getText().equals("N/A") ? 0 : Float.parseFloat(assesmnent_1.getText());
+            float ass_2 = assesmnent_2.getText().equals("N/A") ? 0 : Float.parseFloat(assesmnent_2.getText());
             float mid = Mid_term.getText().equals("N/A") ? 0 : Float.parseFloat(Mid_term.getText());
             float f_t = final_T.getText().equals("N/A") ? 0 : Float.parseFloat(final_T.getText());
             float f_p = final_P.getText().equals("N/A") ? 0 : Float.parseFloat(final_P.getText());
@@ -580,7 +593,7 @@ public class UploadMarksExams extends javax.swing.JFrame {
             String sid = Student_ID.getText();
             String cid = (String) Course_ID.getSelectedItem();
             
-            marks.insert(lid, sid, cid, q1, q2, q3, q4, ass, mid, f_t, f_p);
+            marks.insert(lid, sid, cid, q1, q2, q3, q4, ass_1, ass_2, mid, f_t, f_p);
             marks.getMarksValues(Marks_table, "");
             clearMarks();
         }
@@ -609,7 +622,8 @@ public class UploadMarksExams extends javax.swing.JFrame {
             Quiz_2.setText(model.getValueAt(rowIndex, 5).toString());
             Quiz_3.setText(model.getValueAt(rowIndex, 6).toString());
             Quiz_4.setText(model.getValueAt(rowIndex, 7).toString());
-            Assesmnent.setText(model.getValueAt(rowIndex, 8).toString());
+            assesmnent_1.setText(model.getValueAt(rowIndex, 8).toString());
+            assesmnent_2.setText(model.getValueAt(rowIndex, 8).toString());
             Mid_term.setText(model.getValueAt(rowIndex, 9).toString());
             final_T.setText(model.getValueAt(rowIndex, 10).toString());
             final_P.setText(model.getValueAt(rowIndex, 11).toString());
@@ -715,11 +729,11 @@ public class UploadMarksExams extends javax.swing.JFrame {
         if (selectedCourse != null) {
             switch (selectedCourse) {
                 case "ict2113":
-                    setFieldsInactive(Quiz_4, Assesmnent);
+                    setFieldsInactive(Quiz_4, assesmnent_1,assesmnent_2);
                     break;
 
                 case "ict2122":
-                    setFieldsInactive(final_P);
+                    setFieldsInactive(final_P,assesmnent_2);
                     break;
 
                 case "ict2133":
@@ -727,7 +741,7 @@ public class UploadMarksExams extends javax.swing.JFrame {
                     break;
 
                 case "ict2142":
-                    setFieldsInactive(Quiz_1, Quiz_2, Quiz_3, Quiz_4, final_T);
+                    setFieldsInactive(Quiz_1, Quiz_2, Quiz_3, Quiz_4, final_T,assesmnent_2);
                     break;
 
                 case "ict2152":
@@ -740,7 +754,7 @@ public class UploadMarksExams extends javax.swing.JFrame {
     // Helper method to reset all fields to active state
     private void resetAllMarkFields() {
         JTextField[] allFields = {
-            Quiz_1, Quiz_2, Quiz_3, Quiz_4,Assesmnent, Mid_term, final_T, final_P
+            Quiz_1, Quiz_2, Quiz_3, Quiz_4,assesmnent_1, assesmnent_2, Mid_term, final_T, final_P
         };
 
         for (JTextField field : allFields) {
@@ -807,7 +821,6 @@ public class UploadMarksExams extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rojerusan.RSMaterialButtonCircle Add_Button;
-    private javax.swing.JTextField Assesmnent;
     private rojerusan.RSMaterialButtonCircle Clear_Button;
     private javax.swing.JComboBox<String> Course_ID;
     private rojerusan.RSMaterialButtonCircle Delete_Button;
@@ -821,6 +834,8 @@ public class UploadMarksExams extends javax.swing.JFrame {
     private javax.swing.JTextField Quiz_4;
     private javax.swing.JTextField Student_ID;
     private rojerusan.RSMaterialButtonCircle Update_Button;
+    private javax.swing.JTextField assesmnent_1;
+    private javax.swing.JTextField assesmnent_2;
     private javax.swing.JTextField final_P;
     private javax.swing.JTextField final_T;
     private javax.swing.JLabel jLabel10;
@@ -832,6 +847,7 @@ public class UploadMarksExams extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

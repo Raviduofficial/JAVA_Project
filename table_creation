@@ -66,7 +66,8 @@ quiz_1 float,
 quiz_2 float,
 quiz_3 float,
 quiz_4 float,
-assesment float,
+assesment_1 float,
+assesment_2 float,
 mid_term float,
 final_theory float,
 final_practical float
@@ -132,14 +133,53 @@ CREATE VIEW ca_marks AS
 SELECT 
     ug_id,
     course_id,
-    ROUND(
-        (
-            COALESCE(quiz_1, 0) * 0.10 + 
-            COALESCE(quiz_2, 0) * 0.10 + 
-            COALESCE(quiz_3, 0) * 0.10 + 
-            COALESCE(assesment, 0) * 0.20 + 
-            COALESCE(mid_term, 0) * 0.25
-        ),
+	ROUND(
+        CASE 
+            WHEN course_id IN ('ict2113') THEN 
+                -- Calculate sum of all quizzes minus the lowest one (effectively top 2)
+                (COALESCE(quiz_1, 0) + COALESCE(quiz_2, 0) + COALESCE(quiz_3, 0) - 
+                LEAST(
+                    COALESCE(quiz_1, 0), 
+                    COALESCE(quiz_2, 0), 
+                    COALESCE(quiz_3, 0)
+                )) * 0.10 +
+                COALESCE(mid_term, 0) * 0.20 
+
+            WHEN course_id IN ('ict2122') THEN 
+                (COALESCE(quiz_1, 0) + COALESCE(quiz_2, 0) + COALESCE(quiz_3, 0) + COALESCE(quiz_4, 0) - 
+                LEAST(
+                    COALESCE(quiz_1, 0), 
+                    COALESCE(quiz_2, 0), 
+                    COALESCE(quiz_3, 0),
+                    COALESCE(quiz_4, 0)
+                )) * 0.10 +
+                COALESCE(assesment_1, 0) * 0.10 +
+                COALESCE(mid_term, 0) * 0.20
+            
+            WHEN course_id IN ('ICT2133') THEN 
+                (COALESCE(quiz_1, 0) + COALESCE(quiz_2, 0) + COALESCE(quiz_3, 0) - 
+                LEAST(
+                    COALESCE(quiz_1, 0), 
+                    COALESCE(quiz_2, 0), 
+                    COALESCE(quiz_3, 0)
+                )) * 0.10 +
+                (COALESCE(assesment_1, 0) + COALESCE(assesment_2, 0)) * 0.20 
+            
+            WHEN course_id IN ('ICT2142') THEN 
+                COALESCE(assesment_1, 0) * 0.20 +
+                COALESCE(mid_term, 0) * 0.20 
+
+            WHEN course_id = 'ICT2152' THEN 
+                (COALESCE(quiz_1, 0) + COALESCE(quiz_2, 0) + COALESCE(quiz_3, 0) - 
+                LEAST(
+                    COALESCE(quiz_1, 0), 
+                    COALESCE(quiz_2, 0), 
+                    COALESCE(quiz_3, 0)
+                )) * 0.10 +
+                (COALESCE(assesment_1, 0) + COALESCE(assesment_2, 0)) * 0.20 
+          
+            ELSE 0
+        END,
         2
     ) AS ca_mark
 FROM 
@@ -151,8 +191,12 @@ SELECT
     ug_id,
     course_id,
     CASE 
-        WHEN ca_mark >= 50 THEN "Eligible"
-        ELSE "Not Eligible"
+        WHEN course_id = 'ict2113' AND ca_mark >= 15 THEN 'Eligible'
+        WHEN course_id = 'ict2122' AND ca_mark >= 20 THEN 'Eligible'
+        WHEN course_id = 'ICT2133' AND ca_mark >= 15 THEN 'Eligible'
+        WHEN course_id = 'ICT2142' AND ca_mark >= 20 THEN 'Eligible'
+        WHEN course_id = 'ICT2152' AND ca_mark >= 15 THEN 'Eligible'
+        ELSE 'Not Eligible'
     END AS ca_eligibility_status
 FROM 
     ca_marks;
@@ -164,13 +208,13 @@ SELECT
     a.course_id,
     a.session_type,
     CASE 
-        WHEN a.Eligibility = "Eligible" AND c.ca_mark >= 50 THEN "Eligible"
+        WHEN a.Eligibility = "Eligible" AND c.ca_eligibility_status = "Eligible" THEN "Eligible"
         ELSE "Not Eligible"
     END AS overrall_eligibility_status
 FROM 
     attendance_eligibility AS a
 JOIN 
-    ca_marks AS c 
+    ca_eligibility AS c 
 ON 
     a.ug_id = c.ug_id 
     AND a.course_id = c.course_id;
@@ -203,7 +247,7 @@ SELECT
                     COALESCE(quiz_3, 0),
                     COALESCE(quiz_4, 0)
                 )) * 0.0333 +
-                COALESCE(assesment, 0) * 0.10 +
+                COALESCE(assesment_1, 0) * 0.10 +
                 COALESCE(mid_term, 0) * 0.20 +
                 COALESCE(final_theory, 0) * 0.60
             
@@ -214,12 +258,12 @@ SELECT
                     COALESCE(quiz_2, 0), 
                     COALESCE(quiz_3, 0)
                 )) * 0.05 +
-                COALESCE(assesment, 0) * 0.20 +
+                (COALESCE(assesment_1, 0) + COALESCE(assesment_2, 0)) * 0.20 +
                 COALESCE(final_theory, 0) * 0.40 +
                 COALESCE(final_practical, 0) * 0.30
             
             WHEN course_id IN ('ICT2142') THEN 
-                COALESCE(assesment, 0) * 0.20 +
+                COALESCE(assesment_1, 0) * 0.20 +
                 COALESCE(mid_term, 0) * 0.20 +
                 COALESCE(final_practical, 0) * 0.60
 
@@ -230,7 +274,7 @@ SELECT
                     COALESCE(quiz_2, 0), 
                     COALESCE(quiz_3, 0)
                 )) * 0.05 +
-                COALESCE(assesment, 0) * 0.20 +
+                (COALESCE(assesment_1, 0) + COALESCE(assesment_2, 0)) * 0.20 +
                 COALESCE(final_theory, 0) * 0.70
           
             ELSE 0
