@@ -45,7 +45,7 @@ notice_date DATE
 
 create table time_table
 (
-time_table_id varchar(6) primary key,
+time_table_id int AUTO_INCREMENT primary key,
 department varchar(3),
 lec_id char(6),
 course_id char(7),
