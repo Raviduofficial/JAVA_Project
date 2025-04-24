@@ -9,22 +9,26 @@ public class UploadMarksExams extends javax.swing.JFrame {
     marks marks = new marks();
     private DefaultTableModel model;
     private int rowIndex;
+    private String currentUserId;
     
-    public UploadMarksExams() {
+    public UploadMarksExams(String userId) {
+        this.currentUserId = userId;
         initComponents();
+        Lecture_ID.setText(currentUserId);
+        Lecture_ID.setEditable(false);
         tableViewMarks();
     }
  
     
     private void tableViewMarks(){
-        marks.getMarksValues(Marks_table, "");
+        marks.getMarksValues(Marks_table, currentUserId);
         model = (DefaultTableModel) Marks_table.getModel();
         Marks_table.setRowHeight(30);
         Marks_table.setShowGrid(true);
     }
     
     private void clearMarks(){       
-        Lecture_ID.setText(null); 
+        Lecture_ID.setText(currentUserId); 
         Student_ID.setText(null); 
         Quiz_1.setText(null); 
         Quiz_2.setText(null); 
@@ -34,8 +38,9 @@ public class UploadMarksExams extends javax.swing.JFrame {
         assesmnent_2.setText(null);
         Mid_term.setText(null); 
         final_T.setText(null); 
-        final_P.setText(null); 
+        final_P.setText("Only enter Update & Delete"); 
         Marks_table.clearSelection();
+        resetAllMarkFields();
     }
     
     public boolean isEmptyMarks(){
@@ -568,7 +573,7 @@ public class UploadMarksExams extends javax.swing.JFrame {
             
             marks.update(m_id, lid, sid, cid, q1, q2, q3, q4, ass_1, ass_2 ,mid, f_t, f_p);
             clearMarks();
-            marks.getMarksValues(Marks_table, "");
+            marks.getMarksValues(Marks_table, currentUserId);
         }
     }//GEN-LAST:event_Update_ButtonActionPerformed
 
@@ -594,18 +599,17 @@ public class UploadMarksExams extends javax.swing.JFrame {
             String cid = (String) Course_ID.getSelectedItem();
             
             marks.insert(lid, sid, cid, q1, q2, q3, q4, ass_1, ass_2, mid, f_t, f_p);
-            marks.getMarksValues(Marks_table, "");
+            marks.getMarksValues(Marks_table, currentUserId);
             clearMarks();
         }
     }//GEN-LAST:event_Add_ButtonActionPerformed
 
     private void Delete_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Delete_ButtonActionPerformed
         if(marks.delete(Mark_ID.getText()) == true ){
-            JOptionPane.showMessageDialog(this, "Course Deleted Successfully..");
             clearMarks();
-            marks.getMarksValues(Marks_table, "");
+            marks.getMarksValues(Marks_table, currentUserId);
         }else{
-            JOptionPane.showMessageDialog(this, "Course Deleted Failed!!");
+            JOptionPane.showMessageDialog(this, " Enter All Fields!!");
         }
     }//GEN-LAST:event_Delete_ButtonActionPerformed
 
@@ -636,70 +640,70 @@ public class UploadMarksExams extends javax.swing.JFrame {
 
     private void lbl_dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_dashboardMouseClicked
         // TODO add your handling code here:
-        Lecture_profile lectureDashboard = new Lecture_profile();
+        Lecture_profile lectureDashboard = new Lecture_profile(this.currentUserId);
         lectureDashboard.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_dashboardMouseClicked
 
     private void lbl_course1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_course1MouseClicked
         // TODO add your handling code here:
-        AddCourseMaterials addCourseMaterials = new AddCourseMaterials();
+        AddCourseMaterials addCourseMaterials = new AddCourseMaterials(this.currentUserId);
         addCourseMaterials.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_course1MouseClicked
 
     private void lbl_marksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_marksMouseClicked
         // TODO add your handling code here:
-        UploadMarksExams uploadMarksExams = new UploadMarksExams();
+        UploadMarksExams uploadMarksExams = new UploadMarksExams(this.currentUserId);
         uploadMarksExams.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_marksMouseClicked
 
     private void lbl_studentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_studentMouseClicked
         // TODO add your handling code here:
-        StudentDetails studentDetails = new StudentDetails();
+        StudentDetails studentDetails = new StudentDetails(this.currentUserId);
         studentDetails.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_studentMouseClicked
 
     private void lbl_eligibilityMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_eligibilityMouseClicked
         // TODO add your handling code here:
-        CAEligibility cAEligibility = new CAEligibility();
+        CAEligibility cAEligibility = new CAEligibility(this.currentUserId);
         cAEligibility.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_eligibilityMouseClicked
 
     private void lbl_gpaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_gpaMouseClicked
         // TODO add your handling code here:
-        GPAcalculation gPAcalculation = new GPAcalculation();
+        GPAcalculation gPAcalculation = new GPAcalculation(this.currentUserId);
         gPAcalculation.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_gpaMouseClicked
 
     private void lbl_gradesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_gradesMouseClicked
         // TODO add your handling code here:
-        GradePoint gradePoint = new GradePoint();
+        GradePoint gradePoint = new GradePoint(this.currentUserId);
         gradePoint.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_gradesMouseClicked
 
     private void lbl_attendanceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_attendanceMouseClicked
         // TODO add your handling code here:
-        Attendance attendance = new Attendance();
+        Attendance attendance = new Attendance(this.currentUserId);
         attendance.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_attendanceMouseClicked
 
     private void lbl_medicalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_medicalMouseClicked
         // TODO add your handling code here:
-        MedicalLEC medicalLEC = new MedicalLEC();
+        MedicalLEC medicalLEC = new MedicalLEC(this.currentUserId);
         medicalLEC.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_medicalMouseClicked
 
     private void lbl_noticesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_noticesMouseClicked
         // TODO add your handling code here:
-                Notice notice =  new Notice();
+                Notice notice =  new Notice(this.currentUserId);
                 notice.setVisible(true);
                 this.setVisible(false);
     }//GEN-LAST:event_lbl_noticesMouseClicked
@@ -784,40 +788,40 @@ public class UploadMarksExams extends javax.swing.JFrame {
         field.setText("");
     }
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UploadMarksExams.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UploadMarksExams.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UploadMarksExams.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UploadMarksExams.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new UploadMarksExams().setVisible(true);
-            }
-        });
-    }
+//    /**
+//     * @param args the command line arguments
+//     */
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(UploadMarksExams.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(UploadMarksExams.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(UploadMarksExams.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(UploadMarksExams.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new UploadMarksExams().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rojerusan.RSMaterialButtonCircle Add_Button;
