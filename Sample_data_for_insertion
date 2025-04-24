@@ -146,12 +146,15 @@ VALUES
 
 
 
-INSERT INTO time_table (time_table_id, department, lec_id, course_id, admin_id, day, time, session_type) VALUES
-('TT001', 'CSE', 'lc001', 'ict2113', 'AD001', 'Monday', '10:00 AM - 12:00 PM', 'theory'),
-('TT002', 'CSE', 'lc002', 'ict2122', 'AD001', 'Tuesday', '01:00 PM - 03:00 PM', 'theory'),
-('TT003', 'CSE', 'lc003', 'ict2133', 'AD001', 'Wednesday', '09:00 AM - 11:00 AM', 'theory'),
-('TT004', 'CSE', 'lc004', 'ict2142', 'AD001', 'Thursday', '02:00 PM - 04:00 PM', 'practical'),
-('TT005', 'CSE', 'lc005', 'ict2152', 'AD001', 'Friday', '11:00 AM - 01:00 PM', 'theory');
+INSERT INTO time_table (
+    time_table_id, department, lec_id, course_id, admin_id, day, start_time, end_time, session_type
+) VALUES 
+    ('TT01', 'ICT', 'LC0001', 'ict2113', 'AD0001', 'Monday', '08:00:00', '10:00:00', 'theory'),
+    ('TT02', 'ICT', 'LC0002', 'ict2122', 'AD0001', 'Tuesday', '09:00:00', '11:00:00', 'theory'),
+    ('TT03', 'ICT', 'LC0003', 'ict2133', 'AD0001', 'Wednesday', '08:30:00', '10:30:00', 'theory'),
+    ('TT04', 'ICT', 'LC0004', 'ict2142', 'AD0001', 'Thursday', '09:00:00', '12:00:00', 'practical'),
+    ('TT05', 'ICT', 'LC0005', 'ict2152', 'AD0001', 'Friday', '08:00:00', '10:30:00', 'theory');
+
 
 INSERT INTO notice (notice_title, notice_content, notice_date) VALUES
 ('Exam Schedule', 'The final exams will be held from May 15, 2025 to May 25, 2025. Please check the individual course schedules.', '2025-04-10'),
