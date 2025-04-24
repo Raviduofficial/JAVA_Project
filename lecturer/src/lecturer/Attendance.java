@@ -7,8 +7,14 @@ import javax.swing.table.DefaultTableModel;
 public class Attendance extends javax.swing.JFrame {
     AttendanceEligibility attendanceEligibility = new AttendanceEligibility();
     private DefaultTableModel model;
+    private String currentUserId;
 
-    public Attendance() {
+    public Attendance(){
+        initComponents();
+        tableAttendaceEligibility();
+    }
+    public Attendance(String userId) {
+        this.currentUserId = userId;
         initComponents();
         tableAttendaceEligibility();
     }
@@ -385,58 +391,58 @@ public class Attendance extends javax.swing.JFrame {
 
     private void lbl_marksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_marksMouseClicked
         // TODO add your handling code here:
-        UploadMarksExams uploadMarksExams = new UploadMarksExams();
+        UploadMarksExams uploadMarksExams = new UploadMarksExams(this.currentUserId);
         uploadMarksExams.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_marksMouseClicked
 
     private void lbl_studentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_studentMouseClicked
         // TODO add your handling code here:
-        StudentDetails studentDetails = new StudentDetails();
+        StudentDetails studentDetails = new StudentDetails(this.currentUserId);
         studentDetails.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_studentMouseClicked
 
     private void lbl_eligibilityMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_eligibilityMouseClicked
         // TODO add your handling code here:
-        CAEligibility cAEligibility = new CAEligibility();
+        CAEligibility cAEligibility = new CAEligibility(this.currentUserId);
         cAEligibility.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_eligibilityMouseClicked
 
     private void lbl_gpaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_gpaMouseClicked
         // TODO add your handling code here:
-        GPAcalculation gPAcalculation = new GPAcalculation();
+        GPAcalculation gPAcalculation = new GPAcalculation(this.currentUserId);
         gPAcalculation.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_gpaMouseClicked
 
     private void lbl_gradesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_gradesMouseClicked
         // TODO add your handling code here:
-        GradePoint gradePoint = new GradePoint();
+        GradePoint gradePoint = new GradePoint(this.currentUserId);
         gradePoint.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_gradesMouseClicked
 
     private void lbl_attendanceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_attendanceMouseClicked
         // TODO add your handling code here:
-        Attendance attendance = new Attendance();
+        Attendance attendance = new Attendance(this.currentUserId);
         attendance.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_attendanceMouseClicked
 
     private void lbl_medicalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_medicalMouseClicked
         // TODO add your handling code here:
-        MedicalLEC medicalLEC = new MedicalLEC();
+        MedicalLEC medicalLEC = new MedicalLEC(this.currentUserId);
         medicalLEC.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_medicalMouseClicked
 
     private void lbl_noticesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_noticesMouseClicked
         // TODO add your handling code here:
-                Notice notice =  new Notice();
-                notice.setVisible(true);
-                this.setVisible(false);
+        Notice notice =  new Notice(this.currentUserId);
+        notice.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_lbl_noticesMouseClicked
 
     private void lbl_logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_logoutMouseClicked
@@ -450,7 +456,7 @@ public class Attendance extends javax.swing.JFrame {
 
     private void lbl_course1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_course1MouseClicked
         // TODO add your handling code here:
-        AddCourseMaterials addCourseMaterials = new AddCourseMaterials();
+        AddCourseMaterials addCourseMaterials = new AddCourseMaterials(this.currentUserId);
         addCourseMaterials.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_course1MouseClicked

@@ -20,27 +20,12 @@ public class marks {
         return conn;
     }
     
-//    public float calculateCAMark(float quiz1, float quiz2, float quiz3, float quiz4, float assessment_1,float assessment_2, float midTerm) {
-//        return (quiz1 * 0.10f) + (quiz2 * 0.10f) + (quiz3 * 0.10f) +(assessment * 0.20f) + (midTerm * 0.25f);
-//    }
-    
-    
-    
     //insert data
     public void insert(String lec_id,String ug_id,String course_id,float quiz_1,float quiz_2,float quiz_3,float quiz_4,float assesment_1,float assesment_2,float mid_term, float final_theory, float final_practical){
         
         if (!validateInsertParameters(lec_id, ug_id, course_id,quiz_1, quiz_2, quiz_3, quiz_4,assesment_1,assesment_2, mid_term, final_theory, final_practical)) {
             return; 
         }
-//        float ca_marks = calculateCAMark(quiz_1, quiz_2, quiz_3, quiz_4, assesment, mid_term);
-        
-//        String eligible ;
-//        if(ca_marks > 50){
-//            eligible = "Eligible";
-//        }else{
-//            eligible = "Not Eligible";
-//        }
-        
         
         String sql = "INSERT INTO marks(lec_id, ug_id, course_id, quiz_1, quiz_2, quiz_3, quiz_4, assesment_1,assesment_2, mid_term, final_theory, final_practical) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
         try (Connection con = getConnection();
@@ -59,8 +44,6 @@ public class marks {
             ps.setFloat(10, mid_term);
             ps.setFloat(11, final_theory);
             ps.setFloat(12, final_practical);
-//            ps.setFloat(12, ca_marks);
-//            ps.setString(13, eligible);
             
             if(ps.executeUpdate() > 0){
                 JOptionPane.showMessageDialog(null, "New Marks added Successfully!!");
@@ -106,8 +89,6 @@ public class marks {
 
     public boolean update(String mark_id, String lec_id, String ug_id, String course_id,float quiz_1, float quiz_2, float quiz_3, float quiz_4,float assesment_1,float  assesment_2, float mid_term, float final_theory, float final_practical) {
         
-//        float ca_marks = calculateCAMark(quiz_1, quiz_2, quiz_3, quiz_4, assesment_1 ,assesment_2, mid_term);
-        
         String sql = "UPDATE marks SET lec_id=?, ug_id=?, course_id=?, quiz_1=?, quiz_2=?, "
                    + "quiz_3=?, quiz_4=?, assesment_1=?, assesment_2=?, mid_term=?, final_theory=?, final_practical=?"
                    + "WHERE mark_id=?";
@@ -128,7 +109,6 @@ public class marks {
             ps.setFloat(10, mid_term);
             ps.setFloat(11, final_theory);
             ps.setFloat(12, final_practical);
-//            ps.setFloat(12, ca_marks);
             ps.setString(13, mark_id);  // WHERE clause parameter
 
             if(ps.executeUpdate() > 0) {
@@ -158,20 +138,19 @@ public class marks {
                 isDelete = true;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(marks.class.getName()).log(Level.SEVERE, "Error deleting marks", ex);
             JOptionPane.showMessageDialog(null, "Error deleting marks: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
         }
         return isDelete;
     }
     
     //get all data course table
-    public void getMarksValues(JTable table,String searchValue){
-        String sql = "SELECT * FROM marks WHERE CONCAT(mark_id,lec_id,ug_id,course_id,quiz_1,quiz_2,quiz_3,quiz_4,assesment_1,assesment_2,mid_term,final_theory,final_practical) LIKE ? ";
+    public void getMarksValues(JTable table,String lecId){
+        String sql = "SELECT * FROM marks WHERE lec_id=?";
         
         try (Connection con = getConnection();
              PreparedStatement ps = con.prepareStatement(sql)){
             
-            ps.setString(1, "%" + searchValue + "%");
+            ps.setString(1,lecId);
             
             try(ResultSet result = ps.executeQuery()){
                 DefaultTableModel model = (DefaultTableModel) table.getModel();

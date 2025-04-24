@@ -10,15 +10,19 @@ public class AddCourseMaterials extends javax.swing.JFrame {
     Course course = new Course();
     private int rowIndex;
     private DefaultTableModel model;
+    private String currentUserId;
 
-    public AddCourseMaterials() {
+    public AddCourseMaterials(String userId) {
+        this.currentUserId = userId;
         initComponents();
+        txt_LecId.setText(userId);
+        txt_LecId.setEditable(false);
         tableviewLecturer();
     }
    
     
     private void tableviewLecturer(){
-        course.getCourseValue(course_table, "");
+        course.getCourseValue(course_table, currentUserId);
         model = (DefaultTableModel) course_table.getModel();
     }
     
@@ -51,6 +55,11 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         }
         if(txt_driverlink.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "Course Material is missing");
+            return false;
+        }
+        int credit = Integer.parseInt(txt_credit.getText());
+        if(credit < 1 || credit > 4){
+            JOptionPane.showMessageDialog(this, "Credit must between 1 - 4");
             return false;
         }
         return true;
@@ -108,7 +117,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 txt_course_IdActionPerformed(evt);
             }
         });
-        jPanel1.add(txt_course_Id, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 250, 35));
+        jPanel1.add(txt_course_Id, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 210, 35));
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
@@ -116,7 +125,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 130, 30));
 
         txt_CourseName.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel1.add(txt_CourseName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, 250, 35));
+        jPanel1.add(txt_CourseName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, 210, 35));
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -124,7 +133,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 130, 30));
 
         txt_LecId.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel1.add(txt_LecId, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 250, 35));
+        jPanel1.add(txt_LecId, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 210, 35));
 
         jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -132,7 +141,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 90, 30));
 
         txt_credit.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel1.add(txt_credit, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 300, 250, 35));
+        jPanel1.add(txt_credit, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 300, 210, 35));
 
         jLabel14.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
@@ -145,7 +154,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 Update_ButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(Update_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 490, 150, 50));
+        jPanel1.add(Update_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 490, 150, 50));
 
         Clear_Button.setText("Clear");
         Clear_Button.addActionListener(new java.awt.event.ActionListener() {
@@ -153,7 +162,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 Clear_ButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(Clear_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 570, 150, 50));
+        jPanel1.add(Clear_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 550, 150, 50));
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -166,10 +175,10 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 Add_ButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(Add_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, 150, 50));
+        jPanel1.add(Add_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 490, 150, 50));
 
-        ComboBox_course_type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Theory", "Practical", "Theory/Practical", " " }));
-        jPanel1.add(ComboBox_course_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 370, 250, 35));
+        ComboBox_course_type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "theory", "practical", "theory/practical", " " }));
+        jPanel1.add(ComboBox_course_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 370, 210, 35));
 
         Delete_Button.setText("Delete");
         Delete_Button.addActionListener(new java.awt.event.ActionListener() {
@@ -177,7 +186,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 Delete_ButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(Delete_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 570, 150, 50));
+        jPanel1.add(Delete_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, 150, 50));
 
         jLabel11.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
@@ -195,7 +204,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 txt_driverlinkKeyPressed(evt);
             }
         });
-        jPanel1.add(txt_driverlink, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 440, 250, 35));
+        jPanel1.add(txt_driverlink, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 440, 210, 35));
 
         jPanel3.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -247,8 +256,8 @@ public class AddCourseMaterials extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 758, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 780, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,7 +281,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(463, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(441, 441, 441))
         );
@@ -463,25 +472,26 @@ public class AddCourseMaterials extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE)
         );
 
         pack();
@@ -503,8 +513,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 
                 course.update(courseId, courseName, lecId, credit, course_type, lecture_materials);
                 clearCourseMaterials();
-                course.getCourseValue(course_table, "");
-                
+                course.getCourseValue(course_table, currentUserId);
         }
     }//GEN-LAST:event_Update_ButtonActionPerformed
 
@@ -524,7 +533,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
                 String lecture_materials = txt_driverlink.getText();
                 
                 course.insert(courseId, courseName, lecId, credit, course_type, lecture_materials);
-                course.getCourseValue(course_table, "");
+                course.getCourseValue(course_table, currentUserId);
                 clearCourseMaterials();
             }else{
                 JOptionPane.showMessageDialog(this, "Course code Already Exist !!!");
@@ -546,10 +555,10 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         txt_credit.setText(model.getValueAt(rowIndex, 3).toString());
         String ct = model.getValueAt(rowIndex, 4).toString();
         switch (ct) {
-            case "Theory":
+            case "theory":
                 ComboBox_course_type.setSelectedIndex(0);
                 break;
-            case "Practical":
+            case "practical":
                 ComboBox_course_type.setSelectedIndex(1);
                 break;
             default:
@@ -563,7 +572,7 @@ public class AddCourseMaterials extends javax.swing.JFrame {
         if(course.delete(txt_course_Id.getText()) == true ){
             JOptionPane.showMessageDialog(this, "Course Deleted Successfully..");
             clearCourseMaterials();
-            course.getCourseValue(course_table, "");
+            course.getCourseValue(course_table, currentUserId);
         }else{
             JOptionPane.showMessageDialog(this, "Course Deleted Failed!!");
         }
@@ -575,74 +584,72 @@ public class AddCourseMaterials extends javax.swing.JFrame {
 
     private void txt_driverlinkKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_driverlinkKeyPressed
         // TODO add your handling code here:
-        txt_driverlink.setText("");
+//        txt_driverlink.setText("");
     }//GEN-LAST:event_txt_driverlinkKeyPressed
 
     private void lbl_dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_dashboardMouseClicked
         // TODO add your handling code here:
-        Lecture_profile lectureDashboard = new Lecture_profile();
+        Lecture_profile lectureDashboard = new Lecture_profile(this.currentUserId);
         lectureDashboard.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_dashboardMouseClicked
 
     private void lbl_marksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_marksMouseClicked
         // TODO add your handling code here:
-        UploadMarksExams uploadMarksExams = new UploadMarksExams();
+        UploadMarksExams uploadMarksExams = new UploadMarksExams(this.currentUserId);
         uploadMarksExams.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_marksMouseClicked
 
     private void lbl_studentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_studentMouseClicked
         // TODO add your handling code here:
-        StudentDetails studentDetails = new StudentDetails();
+        StudentDetails studentDetails = new StudentDetails(this.currentUserId);
         studentDetails.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_studentMouseClicked
 
     private void lbl_eligibilityMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_eligibilityMouseClicked
         // TODO add your handling code here:
-        CAEligibility cAEligibility = new CAEligibility();
+        CAEligibility cAEligibility = new CAEligibility(this.currentUserId);
         cAEligibility.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_eligibilityMouseClicked
 
     private void lbl_gpaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_gpaMouseClicked
         // TODO add your handling code here:
-        GPAcalculation gPAcalculation = new GPAcalculation();
+        GPAcalculation gPAcalculation = new GPAcalculation(this.currentUserId);
         gPAcalculation.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_gpaMouseClicked
 
     private void lbl_gradesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_gradesMouseClicked
         // TODO add your handling code here:
-        GradePoint gradePoint = new GradePoint();
+        GradePoint gradePoint = new GradePoint(this.currentUserId);
         gradePoint.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_gradesMouseClicked
 
     private void lbl_attendanceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_attendanceMouseClicked
         // TODO add your handling code here:
-        Attendance attendance = new Attendance();
+        Attendance attendance = new Attendance(this.currentUserId);
         attendance.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_attendanceMouseClicked
 
     private void lbl_medicalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_medicalMouseClicked
         // TODO add your handling code here:
-        MedicalLEC medicalLEC = new MedicalLEC();
+        MedicalLEC medicalLEC = new MedicalLEC(this.currentUserId);
         medicalLEC.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_medicalMouseClicked
 
     private void lbl_noticesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_noticesMouseClicked
-        // TODO add your handling code here:
-                Notice notice =  new Notice();
-                notice.setVisible(true);
-                this.setVisible(false);
+        Notice notice =  new Notice(this.currentUserId);
+        notice.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_lbl_noticesMouseClicked
 
     private void lbl_logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_logoutMouseClicked
-        // TODO add your handling code here:
         int a = JOptionPane.showConfirmDialog(this, "Do you want to logout?","Logout",JOptionPane.YES_NO_OPTION);
         if (a == 0) {
             //            new Login().setVisible(true);
@@ -652,42 +659,42 @@ public class AddCourseMaterials extends javax.swing.JFrame {
 
     private void lbl_course1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_course1MouseClicked
         // TODO add your handling code here:
-        AddCourseMaterials addCourseMaterials = new AddCourseMaterials();
+        AddCourseMaterials addCourseMaterials = new AddCourseMaterials(this.currentUserId);
         addCourseMaterials.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_course1MouseClicked
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddCourseMaterials.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddCourseMaterials.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddCourseMaterials.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddCourseMaterials.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AddCourseMaterials().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(AddCourseMaterials.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(AddCourseMaterials.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(AddCourseMaterials.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(AddCourseMaterials.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new AddCourseMaterials().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rojerusan.RSMaterialButtonCircle Add_Button;
