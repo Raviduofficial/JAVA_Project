@@ -383,7 +383,7 @@ public class StudentDetails extends javax.swing.JFrame {
 
     private void lbl_dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_dashboardMouseClicked
         // TODO add your handling code here:
-        Lecture_profile lectureDashboard = new Lecture_profile();
+        Lecture_profile lectureDashboard = new Lecture_profile(this.currentUserId);
         lectureDashboard.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lbl_dashboardMouseClicked

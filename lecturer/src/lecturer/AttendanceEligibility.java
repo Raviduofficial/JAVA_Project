@@ -19,14 +19,20 @@ public class AttendanceEligibility {
         return conn;
     }
     
-    public void getStudentAttendance(RSTableMetro table, String searchValue){
-        String sql = "SELECT * FROM attendance_eligibility where concat(ug_id , course_id, session_type,`80% Percentage`,Eligibility) like ? order by ug_id ASC";
+    public void getStudentAttendance(RSTableMetro table, String searchValue,String lecId){
+        String sql = "SELECT * FROM attendance_eligibility a " +
+                    "JOIN course c on c.course_id = a.course_id " +
+                    "WHERE c.lec_id=?" +
+                    (searchValue.isEmpty() ? "" : " AND a.ug_id LIKE ? " ) + 
+                    "ORDER BY ug_id ASC";
         
         try (Connection con = getConnection();
                 PreparedStatement ps = (PreparedStatement) con.prepareStatement(sql)){
-            ps.setString(1, "%" + searchValue + "%");
             
-            
+            ps.setString(1, lecId);
+            if(!searchValue.isEmpty()){
+                ps.setString(2, "%" + searchValue + "%");
+            }
             
             try(ResultSet result = ps.executeQuery()){
                 DefaultTableModel model = (DefaultTableModel) table.getModel();

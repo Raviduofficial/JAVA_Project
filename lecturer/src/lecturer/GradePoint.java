@@ -16,7 +16,7 @@ public class GradePoint extends javax.swing.JFrame {
     }
     
     private void tableviewStudentGrades(){
-        gradePoint.getGradePoint(tbl_grade, "");
+        gradePoint.getGradePoint(tbl_grade, "" , currentUserId);
         model = (DefaultTableModel) tbl_grade.getModel();
     }
     
@@ -299,6 +299,11 @@ public class GradePoint extends javax.swing.JFrame {
         lbl_course1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 2, new java.awt.Color(0, 0, 0)));
         lbl_course1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lbl_course1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbl_course1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_course1MouseClicked(evt);
+            }
+        });
         lbl_course1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 lbl_course1KeyPressed(evt);
@@ -364,7 +369,7 @@ public class GradePoint extends javax.swing.JFrame {
         if(txt_search.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "Please enter student ID");
         }else{
-            gradePoint.getGradePoint(tbl_grade, "");
+            gradePoint.getGradePoint(tbl_grade, "" , currentUserId);
             txt_search.setText("");
         }
     }//GEN-LAST:event_btn_refreshActionPerformed
@@ -375,7 +380,7 @@ public class GradePoint extends javax.swing.JFrame {
         if(txt_search.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "Please enter course code or student ID");
         }else{
-            gradePoint.getGradePoint(tbl_grade, txt_search.getText());
+            gradePoint.getGradePoint(tbl_grade, txt_search.getText() , currentUserId);
         }
     }//GEN-LAST:event_btn_searchActionPerformed
 
@@ -388,9 +393,7 @@ public class GradePoint extends javax.swing.JFrame {
 
     private void lbl_course1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lbl_course1KeyPressed
         // TODO add your handling code here:
-        AddCourseMaterials addCourseMaterials = new AddCourseMaterials(this.currentUserId);
-        addCourseMaterials.setVisible(true);
-        this.setVisible(false);
+        
     }//GEN-LAST:event_lbl_course1KeyPressed
 
     private void lbl_marksMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_marksMouseClicked
@@ -451,10 +454,17 @@ public class GradePoint extends javax.swing.JFrame {
         // TODO add your handling code here:
         int a = JOptionPane.showConfirmDialog(this, "Do you want to logout?","Logout",JOptionPane.YES_NO_OPTION);
         if (a == 0) {
-            //            new Login().setVisible(true);
+          //new Login().setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_lbl_logoutMouseClicked
+
+    private void lbl_course1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_course1MouseClicked
+        // TODO add your handling code here:
+        AddCourseMaterials addCourseMaterials = new AddCourseMaterials(this.currentUserId);
+        addCourseMaterials.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_lbl_course1MouseClicked
 
 //    /**
 //     * @param args the command line arguments

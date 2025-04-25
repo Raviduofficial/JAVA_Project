@@ -27,25 +27,29 @@ public class CAEligibility extends javax.swing.JFrame {
     public CAEligibility(String userId) {
         this.currentUserId = userId;
         initComponents();
-        getCAeligibility(tbl_eligibility, "");
+        getCAeligibility(tbl_eligibility, "",currentUserId);
     }
     
     
     
-public void getCAeligibility(RSTableMetro table, String searchValue) {
+public void getCAeligibility(RSTableMetro table, String searchValue, String userId) {
     String sql = "SELECT m.ug_id, m.course_id, m.quiz_1, m.quiz_2, m.quiz_3, m.quiz_4, " +
                  "m.assesment_1, m.assesment_2, m.mid_term, cm.ca_mark, ce.ca_eligibility_status " +
                  "FROM marks m " +
                  "LEFT JOIN ca_marks cm ON m.ug_id = cm.ug_id AND m.course_id = cm.course_id " +
                  "LEFT JOIN ca_eligibility ce ON m.ug_id = ce.ug_id AND m.course_id = ce.course_id " +
-                 "WHERE CONCAT(m.ug_id, m.course_id, m.quiz_1, m.quiz_2, m.quiz_3, m.quiz_4, " +
-                 "m.assesment_1, m.assesment_2, m.mid_term, cm.ca_mark, ce.ca_eligibility_status) LIKE ? " +
+                 "WHERE m.lec_id = ? " + 
+                 (searchValue.isEmpty() ? "" : "AND m.ug_id LIKE ? ") +
                  "ORDER BY m.ug_id ASC";
     
     try (Connection con = getConnection();
          PreparedStatement ps = con.prepareStatement(sql)) {
         
-        ps.setString(1, "%" + searchValue + "%");
+        ps.setString(1, userId);
+        
+        if(!searchValue.isEmpty()){
+            ps.setString(2, "%" + searchValue + "%");
+        }
         
         try (ResultSet result = ps.executeQuery()) {
             DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -77,7 +81,7 @@ public void getCAeligibility(RSTableMetro table, String searchValue) {
 }
     
     private void tableviewStuedntCAeLIGIBILITY(){
-        getCAeligibility(tbl_eligibility, "");
+        getCAeligibility(tbl_eligibility, "",currentUserId);
         model = (DefaultTableModel) tbl_eligibility.getModel();
     }
 
@@ -425,7 +429,7 @@ public void getCAeligibility(RSTableMetro table, String searchValue) {
         if(txt_search.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "Please enter course code or student ID");
         }else{
-            getCAeligibility(tbl_eligibility, "");
+            getCAeligibility(tbl_eligibility, "",currentUserId);
             txt_search.setText("");
         }
     }//GEN-LAST:event_btn_refreshActionPerformed
@@ -436,7 +440,7 @@ public void getCAeligibility(RSTableMetro table, String searchValue) {
         if(txt_search.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "Please enter course code or student ID");
         }else{
-            getCAeligibility(tbl_eligibility, txt_search.getText());
+            getCAeligibility(tbl_eligibility, txt_search.getText(),currentUserId);
         }
     }//GEN-LAST:event_btn_searchActionPerformed
 
