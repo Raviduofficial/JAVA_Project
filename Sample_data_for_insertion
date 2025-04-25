@@ -265,24 +265,28 @@ FROM
 
 
 CREATE VIEW attendance_eligibility AS
-SELECT 	ug_id, 
-	course_id, 
-	session_type, 
-	COUNT(status)/15 *100 AS "80% Percentage",
-	IF((COUNT(status)/15*100)>=80, "Eligible", "Not Eligible") AS "Eligibility"
-FROM attendance
-WHERE status = "Present" AND type IN ("Theory","Practical")
-GROUP BY ug_id,course_id,session_type;
+SELECT 	
+    ug_id, 
+    course_id, 
+    session_type, 
+    COUNT(atten_status)/15 * 100 AS `80_percent_percentage`,
+    IF((COUNT(atten_status)/15*100) >= 80, 'Eligible', 'Not Eligible') AS eligibility
+FROM 
+    attendance
+WHERE 
+    atten_status = 'present' AND session_type IN ('theory', 'practical')
+GROUP BY 
+    ug_id, course_id, session_type;
 
 
-CREATE VIEW overall_eligibility AS
+CREATE VIEW overall_eligibility AS 
 SELECT 
     a.ug_id,
     a.course_id,
     a.session_type,
     CASE 
-        WHEN a.Eligibility = "Eligible" AND c.ca_eligibility_status = "Eligible" THEN "Eligible"
-        ELSE "Not Eligible"
+        WHEN a.eligibility = 'Eligible' AND c.ca_eligibility_status = 'Eligible' THEN 'Eligible'
+        ELSE 'Not Eligible'
     END AS overrall_eligibility_status
 FROM 
     attendance_eligibility AS a
@@ -291,6 +295,7 @@ JOIN
 ON 
     a.ug_id = c.ug_id 
     AND a.course_id = c.course_id;
+
 
 
 CREATE OR REPLACE VIEW final_exam_marks_view AS
