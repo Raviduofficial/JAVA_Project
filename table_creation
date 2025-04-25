@@ -67,12 +67,12 @@ quiz_1 float,
 quiz_2 float,
 quiz_3 float,
 quiz_4 float,
-assesment float,
+assesment_1 float,
+assesment_2 float,
 mid_term float,
 final_theory float,
 final_practical float
 );
-
 create table course
 (
 course_id char(7) primary key,
