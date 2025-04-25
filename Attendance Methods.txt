@@ -1,0 +1,274 @@
+---------with------ug---with--medical-------------
+SELECT 
+    course_id,
+    session_type,
+    COUNT(*) AS total_classes,
+    SUM(CASE 
+            WHEN atten_status IN ('present', 'medical') THEN 1 
+            ELSE 0 
+        END) AS attended,
+    ROUND(
+        100.0 * SUM(CASE 
+                        WHEN atten_status IN ('present', 'medical') THEN 1 
+                        ELSE 0 
+                   END) / COUNT(*), 2
+    ) AS attendance_percentage
+FROM attendance
+WHERE ug_id = 'TG1345'
+GROUP BY course_id, session_type;
+
+-----------with----ug---with--out--medical-------------
+SELECT 
+    course_id,
+    session_type,
+    COUNT(*) AS total_classes,
+    SUM(CASE 
+            WHEN atten_status = 'present' THEN 1 
+            ELSE 0 
+        END) AS attended,
+    ROUND(
+        100.0 * SUM(CASE 
+                        WHEN atten_status = 'present' THEN 1 
+                        ELSE 0 
+                   END) / COUNT(*), 2
+    ) AS attendance_percentage
+FROM attendance
+WHERE ug_id = 'TG1345'
+GROUP BY course_id, session_type;
+
+
+------------with---course---with--medical-------------
+SELECT 
+    ug_id,
+    session_type,
+    COUNT(*) AS total_classes,
+    SUM(CASE 
+            WHEN atten_status IN ('present', 'medical') THEN 1 
+            ELSE 0 
+        END) AS attended,
+    ROUND(
+        100.0 * SUM(CASE 
+                        WHEN atten_status IN ('present', 'medical') THEN 1 
+                        ELSE 0 
+                   END) / COUNT(*), 2
+    ) AS attendance_percentage
+FROM attendance
+WHERE course_id = 'ict2113'
+GROUP BY ug_id, session_type;
+
+------------with---course---with--out--medical-------------
+
+SELECT 
+    ug_id,
+    session_type,
+    COUNT(*) AS total_classes,
+    SUM(CASE 
+            WHEN atten_status = 'present' THEN 1 
+            ELSE 0 
+        END) AS attended,
+    ROUND(
+        100.0 * SUM(CASE 
+                        WHEN atten_status = 'present' THEN 1 
+                        ELSE 0 
+                   END) / COUNT(*), 2
+    ) AS attendance_percentage
+FROM attendance
+WHERE course_id = 'ict2113'
+GROUP BY ug_id, session_type;
+
+------------whole-batch------with----medical-------------
+
+SELECT 
+    ug_id,
+    course_id,
+    session_type,
+    COUNT(*) AS total_classes,
+    SUM(CASE 
+            WHEN atten_status IN ('present', 'medical') THEN 1 
+            ELSE 0 
+        END) AS attended,
+    ROUND(
+        100.0 * SUM(CASE 
+                        WHEN atten_status IN ('present', 'medical') THEN 1 
+                        ELSE 0 
+                   END) / COUNT(*), 2
+    ) AS attendance_percentage
+FROM attendance
+GROUP BY ug_id, course_id, session_type;
+
+
+------------whole-batch------with----out----medical-------------
+
+
+SELECT 
+    ug_id,
+    course_id,
+    session_type,
+    COUNT(*) AS total_classes,
+    SUM(CASE 
+            WHEN atten_status = 'present' THEN 1 
+            ELSE 0 
+        END) AS attended,
+    ROUND(
+        100.0 * SUM(CASE 
+                        WHEN atten_status = 'present' THEN 1 
+                        ELSE 0 
+                   END) / COUNT(*), 2
+    ) AS attendance_percentage
+FROM attendance
+GROUP BY ug_id, course_id, session_type;
+
+------------------both------course-----wala-----theory------percentage---------
+
+SELECT 
+    a.ug_id,
+    a.course_id,
+    a.session_type,
+    COUNT(*) AS total_classes,
+    SUM(CASE 
+            WHEN a.atten_status IN ('present', 'medical') THEN 1 
+            ELSE 0 
+        END) AS attended,
+    ROUND(
+        100.0 * SUM(CASE 
+                        WHEN a.atten_status IN ('present', 'medical') THEN 1 
+                        ELSE 0 
+                   END) / COUNT(*), 2
+    ) AS attendance_percentage
+FROM attendance a
+JOIN course c ON a.course_id = c.course_id
+WHERE c.course_type = 'both'
+  AND a.session_type = 'theory'
+GROUP BY a.ug_id, a.course_id, a.session_type;
+
+------------------both------course-----wala-----practical------percentage---------
+
+SELECT 
+    a.ug_id,
+    a.course_id,
+    a.session_type,
+    COUNT(*) AS total_classes,
+    SUM(CASE 
+            WHEN a.atten_status IN ('present', 'medical') THEN 1 
+            ELSE 0 
+        END) AS attended,
+    ROUND(
+        100.0 * SUM(CASE 
+                        WHEN a.atten_status IN ('present', 'medical') THEN 1 
+                        ELSE 0 
+                   END) / COUNT(*), 2
+    ) AS attendance_percentage
+FROM attendance a
+JOIN course c ON a.course_id = c.course_id
+WHERE c.course_type = 'both'
+  AND a.session_type = 'practical'
+GROUP BY a.ug_id, a.course_id, a.session_type;
+
+
+
+-- BASE attendance summary
+SELECT 
+    a.ug_id,
+    a.course_id,
+    c.course_name,
+    a.session_type,
+    COUNT(*) AS total_classes,
+    SUM(CASE 
+            WHEN a.atten_status IN ('present', 'medical') THEN 1 
+            ELSE 0 
+        END) AS attended,
+    ROUND(
+        100.0 * SUM(CASE 
+                        WHEN a.atten_status IN ('present', 'medical') THEN 1 
+                        ELSE 0 
+                   END) / COUNT(*), 2
+    ) AS attendance_percentage
+FROM attendance a
+JOIN course c ON a.course_id = c.course_id
+WHERE c.course_type = 'both'
+GROUP BY a.ug_id, a.course_id, a.session_type;
+
+--------------------les-----than-----80%---------------
+
+WITH attendance_summary AS (
+    SELECT 
+        a.ug_id,
+        a.course_id,
+        c.course_name,
+        a.session_type,
+        COUNT(*) AS total_classes,
+        SUM(CASE 
+                WHEN a.atten_status IN ('present', 'medical') THEN 1 
+                ELSE 0 
+            END) AS attended,
+        ROUND(
+            100.0 * SUM(CASE 
+                            WHEN a.atten_status IN ('present', 'medical') THEN 1 
+                            ELSE 0 
+                       END) / COUNT(*), 2
+        ) AS attendance_percentage
+    FROM attendance a
+    JOIN course c ON a.course_id = c.course_id
+    GROUP BY a.ug_id, a.course_id, a.session_type
+)
+SELECT * 
+FROM attendance_summary
+WHERE attendance_percentage < 80;
+
+--------------------equal--to---80%------------
+
+
+WITH attendance_summary AS (
+    SELECT 
+        a.ug_id,
+        a.course_id,
+        c.course_name,
+        a.session_type,
+        COUNT(*) AS total_classes,
+        SUM(CASE 
+                WHEN a.atten_status IN ('present', 'medical') THEN 1 
+                ELSE 0 
+            END) AS attended,
+        ROUND(
+            100.0 * SUM(CASE 
+                            WHEN a.atten_status IN ('present', 'medical') THEN 1 
+                            ELSE 0 
+                       END) / COUNT(*), 2
+        ) AS attendance_percentage
+    FROM attendance a
+    JOIN course c ON a.course_id = c.course_id
+    GROUP BY a.ug_id, a.course_id, a.session_type
+)
+SELECT * 
+FROM attendance_summary
+WHERE attendance_percentage = 80;
+
+
+--------------------higher-----than-----80%---------------
+
+
+WITH attendance_summary AS (
+    SELECT 
+        a.ug_id,
+        a.course_id,
+        c.course_name,
+        a.session_type,
+        COUNT(*) AS total_classes,
+        SUM(CASE 
+                WHEN a.atten_status IN ('present', 'medical') THEN 1 
+                ELSE 0 
+            END) AS attended,
+        ROUND(
+            100.0 * SUM(CASE 
+                            WHEN a.atten_status IN ('present', 'medical') THEN 1 
+                            ELSE 0 
+                       END) / COUNT(*), 2
+        ) AS attendance_percentage
+    FROM attendance a
+    JOIN course c ON a.course_id = c.course_id
+    GROUP BY a.ug_id, a.course_id, a.session_type
+)
+SELECT * 
+FROM attendance_summary
+WHERE attendance_percentage > 80;
+
