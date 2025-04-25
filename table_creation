@@ -1,5 +1,5 @@
-create database javaMiniProject;
-use javaMiniProject;
+create database javaminiproject;
+use javaminiproject;
 
 create table user 
 (
