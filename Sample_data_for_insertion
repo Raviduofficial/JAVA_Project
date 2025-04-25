@@ -162,19 +162,32 @@ INSERT INTO notice (notice_title, notice_content, notice_date) VALUES
 ('Workshop on AI', 'A workshop on Artificial Intelligence will be conducted on April 22, 2025. All students are encouraged to attend.', '2025-04-16'),
 ('Semester Registration', 'The semester registration process starts on April 20, 2025. Please complete the registration before April 30, 2025.', '2025-04-17');
 
-INSERT INTO marks (
-    mark_id, lec_id, ug_id, course_id, 
-    quiz_1, quiz_2, quiz_3, quiz_4, 
-    assesment, mid_term, final_theory, final_practical
-) VALUES
-(1, 'LC0001', 'TG1345', 'ict2113', 77, 89, 56, 88, 99, 66, 55, 44),
-(6, 'LC0001', 'TG1346', 'ict2113', 56, 88, 99, 66, 88, 75, 64, 68),
-(7, 'LC0002', 'TG1345', 'ict2122', 58, 98, 88, 96, 56, 89, 45, 69),
-(8, 'LC0003', 'TG1345', 'ict2133', 85, 77, 96, 0, 89, 0, 85, 69),
-(9, 'LC0004', 'TG1345', 'ict2142', 0, 0, 0, 0, 50, 82, 0, 89),
-(10, 'LC0005', 'TG1345', 'ict2152', 86, 95, 85, 0, 69, 0, 89, 0),
-(11, 'LC0002', 'TG1346', 'ict2122', 78, 88, 99, 56, 89, 66, 99, 0),
-(12, 'LC0003', 'TG1346', 'ict2133', 78, 96, 95, 0, 99, 0, 96, 96);
+INSERT INTO marks 
+(mark_id, lec_id, ug_id, course_id, quiz_1, quiz_2, quiz_3, quiz_4, assesment_1, assesment_2, mid_term, final_theory, final_practical) 
+VALUES
+(1, 'LC0001', 'TG1345', 'ict2113', 77, 89, 56, 88, 0, 0, 66, 55, 44),
+(2, 'LC0001', 'TG1346', 'ict2113', 56, 88, 99, 66, 0, 0, 75, 64, 68),
+(3, 'LC0002', 'TG1345', 'ict2122', 58, 98, 88, 96, 56, 0, 89, 45, 69),
+(4, 'LC0003', 'TG1345', 'ict2133', 85, 77, 96, 0, 89, 78, 0, 85, 69),
+(5, 'LC0004', 'TG1345', 'ict2142', 0, 0, 0, 0, 50, 0, 82, 0, 89),
+(6, 'LC0005', 'TG1345', 'ict2152', 86, 95, 85, 0, 69, 89, 0, 89, 0),
+(7, 'LC0002', 'TG1346', 'ict2122', 78, 88, 99, 56, 89, 0, 66, 99, 0),
+(8, 'LC0003', 'TG1346', 'ict2133', 78, 96, 95, 0, 99, 95, 0, 96, 96),
+(9, 'LC0004', 'TG1346', 'ict2142', 0, 0, 0, 0, 78, 0, 69, 0, 89),
+(10, 'LC0001', 'TG1347', 'ict2113', 67, 70, 72, 0, 0, 0, 73, 65, 60),
+(11, 'LC0002', 'TG1347', 'ict2122', 60, 62, 65, 61, 57, 0, 68, 60, 0),
+(12, 'LC0003', 'TG1347', 'ict2133', 75, 77, 73, 0, 64, 56, 0, 75, 68),
+(13, 'LC0004', 'TG1347', 'ict2142', 0, 0, 0, 0, 60, 0, 72, 0, 82),
+(14, 'LC0005', 'TG1347', 'ict2152', 80, 78, 85, 0, 72, 78, 0, 84, 0),
+(15, 'LC0001', 'TG1348', 'ict2113', 90, 85, 88, 0, 0, 0, 93, 91, 89),
+(16, 'LC0002', 'TG1348', 'ict2122', 82, 80, 83, 85, 84, 0, 88, 86, 0),
+(17, 'LC0003', 'TG1348', 'ict2133', 85, 87, 89, 0, 86, 60, 0, 90, 87),
+(18, 'LC0004', 'TG1348', 'ict2142', 0, 0, 0, 0, 90, 0, 85, 0, 93),
+(19, 'LC0005', 'TG1348', 'ict2152', 88, 90, 87, 0, 84, 58, 0, 89, 0),
+(23, 'LC0001', 'TG1349', 'ict2113', 12, 45, 63, 0, 0, 0, 56, 45, 25),
+(24, 'LC0001', 'TG1350', 'ict2113', 45, 66, 95, 0, 0, 0, 54, 66, 35),
+(25, 'LC0001', 'TG1351', 'ict2113', 78, 56, 42, 0, 0, 0, 66, 56, 55);
+
 
 
 
@@ -182,14 +195,53 @@ CREATE VIEW ca_marks AS
 SELECT 
     ug_id,
     course_id,
-    ROUND(
-        (
-            COALESCE(quiz_1, 0) * 0.10 + 
-            COALESCE(quiz_2, 0) * 0.10 + 
-            COALESCE(quiz_3, 0) * 0.10 + 
-            COALESCE(assesment, 0) * 0.20 + 
-            COALESCE(mid_term, 0) * 0.25
-        ),
+	ROUND(
+        CASE 
+            WHEN course_id IN ('ict2113') THEN 
+                -- Calculate sum of all quizzes minus the lowest one (effectively top 2)
+                (COALESCE(quiz_1, 0) + COALESCE(quiz_2, 0) + COALESCE(quiz_3, 0) - 
+                LEAST(
+                    COALESCE(quiz_1, 0), 
+                    COALESCE(quiz_2, 0), 
+                    COALESCE(quiz_3, 0)
+                )) * 0.10 +
+                COALESCE(mid_term, 0) * 0.20 
+
+            WHEN course_id IN ('ict2122') THEN 
+                (COALESCE(quiz_1, 0) + COALESCE(quiz_2, 0) + COALESCE(quiz_3, 0) + COALESCE(quiz_4, 0) - 
+                LEAST(
+                    COALESCE(quiz_1, 0), 
+                    COALESCE(quiz_2, 0), 
+                    COALESCE(quiz_3, 0),
+                    COALESCE(quiz_4, 0)
+                )) * 0.10 +
+                COALESCE(assesment_1, 0) * 0.10 +
+                COALESCE(mid_term, 0) * 0.20
+            
+            WHEN course_id IN ('ICT2133') THEN 
+                (COALESCE(quiz_1, 0) + COALESCE(quiz_2, 0) + COALESCE(quiz_3, 0) - 
+                LEAST(
+                    COALESCE(quiz_1, 0), 
+                    COALESCE(quiz_2, 0), 
+                    COALESCE(quiz_3, 0)
+                )) * 0.10 +
+                (COALESCE(assesment_1, 0) + COALESCE(assesment_2, 0)) * 0.20 
+            
+            WHEN course_id IN ('ICT2142') THEN 
+                COALESCE(assesment_1, 0) * 0.20 +
+                COALESCE(mid_term, 0) * 0.20 
+
+            WHEN course_id = 'ICT2152' THEN 
+                (COALESCE(quiz_1, 0) + COALESCE(quiz_2, 0) + COALESCE(quiz_3, 0) - 
+                LEAST(
+                    COALESCE(quiz_1, 0), 
+                    COALESCE(quiz_2, 0), 
+                    COALESCE(quiz_3, 0)
+                )) * 0.10 +
+                (COALESCE(assesment_1, 0) + COALESCE(assesment_2, 0)) * 0.20 
+          
+            ELSE 0
+        END,
         2
     ) AS ca_mark
 FROM 
@@ -201,40 +253,44 @@ SELECT
     ug_id,
     course_id,
     CASE 
-        WHEN ca_mark >= 50 THEN "Eligible"
-        ELSE "Not Eligible"
+        WHEN course_id = 'ict2113' AND ca_mark >= 15 THEN 'Eligible'
+        WHEN course_id = 'ict2122' AND ca_mark >= 20 THEN 'Eligible'
+        WHEN course_id = 'ICT2133' AND ca_mark >= 15 THEN 'Eligible'
+        WHEN course_id = 'ICT2142' AND ca_mark >= 20 THEN 'Eligible'
+        WHEN course_id = 'ICT2152' AND ca_mark >= 15 THEN 'Eligible'
+        ELSE 'Not Eligible'
     END AS ca_eligibility_status
 FROM 
     ca_marks;
 
-CREATE VIEW attendance_eligibility AS 
-SELECT  
-    ug_id, 
-    course_id, 
-    session_type, 
-    (COUNT(*) / 15.0) * 100 AS `80% Percentage`,
-    IF((COUNT(*) / 15.0 * 100) >= 80, 'Eligible', 'Not Eligible') AS Eligibility
+
+CREATE VIEW attendance_eligibility AS
+SELECT 	ug_id, 
+	course_id, 
+	session_type, 
+	COUNT(status)/15 *100 AS "80% Percentage",
+	IF((COUNT(status)/15*100)>=80, "Eligible", "Not Eligible") AS "Eligibility"
 FROM attendance
-WHERE atten_status IN ('present', 'medical')
-  AND session_type IN ('theory', 'practical')
-GROUP BY ug_id, course_id, session_type;
+WHERE status = "Present" AND type IN ("Theory","Practical")
+GROUP BY ug_id,course_id,session_type;
 
 
-CREATE VIEW overall_eligibility AS 
+CREATE VIEW overall_eligibility AS
 SELECT 
     a.ug_id,
     a.course_id,
     a.session_type,
     CASE 
-        WHEN a.Eligibility = 'Eligible' AND c.ca_mark >= 50 THEN 'Eligible'
-        ELSE 'Not Eligible'
-    END AS overall_eligibility_status
+        WHEN a.Eligibility = "Eligible" AND c.ca_eligibility_status = "Eligible" THEN "Eligible"
+        ELSE "Not Eligible"
+    END AS overrall_eligibility_status
 FROM 
     attendance_eligibility AS a
 JOIN 
-    ca_marks AS c 
-    ON a.ug_id = c.ug_id AND a.course_id = c.course_id;
-
+    ca_eligibility AS c 
+ON 
+    a.ug_id = c.ug_id 
+    AND a.course_id = c.course_id;
 
 
 CREATE OR REPLACE VIEW final_exam_marks_view AS
@@ -264,7 +320,7 @@ SELECT
                     COALESCE(quiz_3, 0),
                     COALESCE(quiz_4, 0)
                 )) * 0.0333 +
-                COALESCE(assesment, 0) * 0.10 +
+                COALESCE(assesment_1, 0) * 0.10 +
                 COALESCE(mid_term, 0) * 0.20 +
                 COALESCE(final_theory, 0) * 0.60
             
@@ -275,12 +331,12 @@ SELECT
                     COALESCE(quiz_2, 0), 
                     COALESCE(quiz_3, 0)
                 )) * 0.05 +
-                COALESCE(assesment, 0) * 0.20 +
+                (COALESCE(assesment_1, 0) + COALESCE(assesment_2, 0)) * 0.20 +
                 COALESCE(final_theory, 0) * 0.40 +
                 COALESCE(final_practical, 0) * 0.30
             
             WHEN course_id IN ('ICT2142') THEN 
-                COALESCE(assesment, 0) * 0.20 +
+                COALESCE(assesment_1, 0) * 0.20 +
                 COALESCE(mid_term, 0) * 0.20 +
                 COALESCE(final_practical, 0) * 0.60
 
@@ -291,7 +347,7 @@ SELECT
                     COALESCE(quiz_2, 0), 
                     COALESCE(quiz_3, 0)
                 )) * 0.05 +
-                COALESCE(assesment, 0) * 0.20 +
+                (COALESCE(assesment_1, 0) + COALESCE(assesment_2, 0)) * 0.20 +
                 COALESCE(final_theory, 0) * 0.70
           
             ELSE 0
@@ -300,7 +356,6 @@ SELECT
     ) AS final_mark
 FROM
     marks;
-
 
 CREATE OR REPLACE VIEW exam_grades_view AS
 SELECT 
@@ -323,6 +378,7 @@ SELECT
     END AS grade
 FROM 
     final_exam_marks_view;
+
 
 
 CREATE VIEW grade_point_view AS
