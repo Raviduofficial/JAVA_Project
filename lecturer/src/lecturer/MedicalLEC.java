@@ -32,12 +32,20 @@ public class MedicalLEC extends javax.swing.JFrame {
     }
     
     
-    public void getMedical(RSTableMetro table, String searchValue){
-        String sql = "SELECT medical_id,course_id ,ug_id ,medical_date ,medical_status  FROM medical where concat(medical_id,course_id ,ug_id ,medical_date ,medical_status) like ? order by medical_id ASC";
+    public void getMedical(RSTableMetro table, String searchValue , String userId){
+        String sql = "SELECT m.medical_id,m.course_id ,m.ug_id ,m.medical_date ,m.medical_status  FROM medical m "
+                     +"join course c on c.course_id = m.course_id "
+                     +"where c.lec_id=?"
+                     +(searchValue.isEmpty() ? "" :" AND m.ug_id LIKE ?") + "ORDER BY m.medical_id ASC";
         
         try (Connection con = getConnection();
                 PreparedStatement ps = (PreparedStatement) con.prepareStatement(sql)){
-            ps.setString(1, "%" + searchValue + "%");
+            
+            ps.setString(1,userId);
+            
+            if(!searchValue.isEmpty()){
+                ps.setString(2, "%" + searchValue + "%");
+            }
             
             try(ResultSet result = ps.executeQuery()){
                 model = (DefaultTableModel) table.getModel();
@@ -60,7 +68,7 @@ public class MedicalLEC extends javax.swing.JFrame {
     }
     
     private void tableviewMedical(){
-        getMedical(tbl_medical, "");
+        getMedical(tbl_medical, "" , currentUserId);
         model = (DefaultTableModel) tbl_medical.getModel();
     }
 
@@ -129,7 +137,7 @@ public class MedicalLEC extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Search Student ID :");
+        jLabel1.setText("Search by Student ID :");
 
         btn_refresh.setText("Refresh");
         btn_refresh.addActionListener(new java.awt.event.ActionListener() {
@@ -152,17 +160,16 @@ public class MedicalLEC extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
-                        .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(29, 29, 29)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 792, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -413,18 +420,16 @@ public class MedicalLEC extends javax.swing.JFrame {
         if(txt_search.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "Please enter course code or student ID");
         }else{
-            getMedical(tbl_medical, "");
+            getMedical(tbl_medical, "" , currentUserId);
             txt_search.setText("");
         }
     }//GEN-LAST:event_btn_refreshActionPerformed
 
     private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
-        // TODO add your handling code here:
-
         if(txt_search.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "Please enter course code or student ID");
         }else{
-            getMedical(tbl_medical, txt_search.getText());
+            getMedical(tbl_medical, txt_search.getText() , currentUserId);
         }
     }//GEN-LAST:event_btn_searchActionPerformed
 

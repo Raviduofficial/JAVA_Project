@@ -19,12 +19,20 @@ public class grade_point {
         return conn;
     }
     
-    public void getGradePoint(RSTableMetro table , String searchValue){
-        String sql = "SELECT * FROM exam_grades_view WHERE CONCAT(ug_id,course_id,final_mark,grade) LIKE ? ORDER BY ug_id ASC";
-        
+    public void getGradePoint(RSTableMetro table , String searchValue , String userId){
+        String sql = "SELECT * FROM exam_grades_view e "
+                   +"join course c on c.course_id = e.course_id "
+                   +"WHERE c.lec_id = ? "
+                   +(searchValue.isEmpty() ? "" : "AND e.ug_id LIKE ? " ) + "ORDER BY e.ug_id ASC " ;
+                  
         try (Connection con = getConnection();
              PreparedStatement ps = con.prepareStatement(sql)){
-            ps.setString(1, "%" + searchValue + "%");
+            
+            ps.setString(1, userId);
+            
+            if(!searchValue.isEmpty()){
+                ps.setString(2, "%" + searchValue + "%");
+            }
             
             try(ResultSet result = ps.executeQuery()){
                 DefaultTableModel model = (DefaultTableModel) table.getModel();
