@@ -1,0 +1,54 @@
+private void changeProfilePicture() {
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Select Profile Picture");
+    fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image files", "jpg", "jpeg", "png"));
+
+    int result = fileChooser.showOpenDialog(this);
+
+    if (result == JFileChooser.APPROVE_OPTION) {
+        File selectedFile = fileChooser.getSelectedFile();
+        String originalPath = selectedFile.getAbsolutePath();
+        
+        // Destination folder and file name
+        String destinationFolder = "src/Undergraduate/Profile_images/";
+        String newFileName = selectedFile.getName(); // You can customize the name if you want
+        File destinationFile = new File(destinationFolder + newFileName);
+
+        try {
+            // Create directories if not exist
+            new File(destinationFolder).mkdirs();
+
+            // Copy the file
+            Files.copy(selectedFile.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+            // Save the new path (relative path) in database
+            String newImagePath = destinationFolder + newFileName;
+            updateProfilePicInDatabase(userId, newImagePath);
+
+            JOptionPane.showMessageDialog(this, "Profile picture updated! Please login again.");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Failed to update profile picture.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+}
+
+
+    private void updateProfilePicInDatabase(String userId, String imagePath) {
+        try {
+            con = mdc.getMyConnection();
+            String updateQuery = "UPDATE user SET user_pro_pic = ? WHERE user_id = ?";
+            ps = con.prepareStatement(updateQuery);
+            ps.setString(1, imagePath);
+            ps.setString(2, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
