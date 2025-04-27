@@ -83,6 +83,16 @@ course_type ENUM('theory','practical','both'),
 course_content varchar(200)
 );
 
+CREATE TABLE lecture_materials (
+    material_id INT AUTO_INCREMENT PRIMARY KEY,
+    course_id CHAR(7) NOT NULL,
+    material_name VARCHAR(100) NOT NULL,
+    material_path VARCHAR(255) NOT NULL,  -- stores local file path
+    material_type ENUM('pdf', 'video', 'ppt', 'other') NOT NULL,
+    FOREIGN KEY (course_id) REFERENCES course(course_id)
+);
+
+
 CREATE TABLE medical (
     medical_id INT AUTO_INCREMENT PRIMARY KEY,
     ug_id VARCHAR(10) NOT NULL,
