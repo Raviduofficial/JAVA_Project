@@ -76,6 +76,17 @@ insert into course values
 ('ict2142','Object Oriented Analysis and Design','LC0004','3','practical'),
 ('ict2152','E-Commerce Implementation, Management and Security','LC0005','3','theory');
 
+INSERT INTO lecture_materials (course_id, material_name, material_path, material_type) VALUES
+('ict2113', 'Lab3_answers', 'src/LectureMaterials/DSA/Lab3_answers.pdf', 'pdf'),
+('ict2113', 'Lab3_DSA', 'src/LectureMaterials/DSA/Lab3_DSA.pdf', 'pdf'),
+('ict2152', 'ICT2152_Lecture01', 'src/LectureMaterials/ECommerce/ICT2152_Lecture01.pdf', 'pdf'),
+('ict2152', 'ICT2152_Lecture02', 'src/LectureMaterials/ECommerce/ICT2152_Lecture02.pdf', 'pdf'),
+('ict2142', 'Lecture_01', 'src/LectureMaterials/OOAD/Lecture_01.pdf', 'pdf'),
+('ict2142', 'Lecture_02', 'src/LectureMaterials/OOAD/Lecture_02.pdf', 'pdf'),
+('ict2122', 'Lesson_01_Introduction_to_Java', 'src/LectureMaterials/OOP/Lesson_01_Introduction_to_Java.pdf', 'pdf'),
+('ict2122', 'Lesson_02_Control_Statements_and_Arrays', 'src/LectureMaterials/OOP/Lesson_02_Control_Statements_and_Arrays.pdf', 'pdf'),
+('ict2133', 'Lesson_02', 'src/LectureMaterials/PHP/Lesson_02.pdf', 'pdf'),
+('ict2133', 'Lesson_01', 'src/LectureMaterials/PHP/Lesson_01.pdf', 'pdf');
 
 
 INSERT INTO attendance (to_id, ug_id, course_id, atten_date, session_type, atten_status) VALUES
