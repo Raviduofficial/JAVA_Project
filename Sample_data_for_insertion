@@ -80,10 +80,28 @@ insert into course values
 
 INSERT INTO attendance (to_id, ug_id, course_id, atten_date, session_type, atten_status) VALUES
 -- ict2122 - theory only4
-('TO0001', 'TG1344', 'ict2122', '2025-04-01', 'theory', 'present'),
-('TO0002', 'TG1345', 'ict2122', '2025-04-01', 'theory', 'absent'),
+('TO0001', 'TG1344', 'ict2122', '2025-04-01', 'theory', 'medical'),
+('TO0002', 'TG1345', 'ict2122', '2025-04-01', 'theory', 'medical'),
 ('TO0003', 'TG1346', 'ict2122', '2025-04-01', 'theory', 'present'),
-('TO0004', 'TG1347', 'ict2122', '2025-04-01', 'theory', 'present'),
+('TO0004', 'TG1347', 'ict2122', '2025-04-01', 'theory', 'medical'),
+('TO0005', 'TG1348', 'ict2122', '2025-04-01', 'theory', 'absent'),
+('TO0001', 'TG1349', 'ict2122', '2025-04-01', 'theory', 'present'),
+('TO0002', 'TG1350', 'ict2122', '2025-04-01', 'theory', 'present'),
+('TO0003', 'TG1351', 'ict2122', '2025-04-01', 'theory', 'present'),
+('TO0004', 'TG1352', 'ict2122', '2025-04-01', 'theory', 'medical'),
+('TO0005', 'TG1353', 'ict2122', '2025-04-01', 'theory', 'present'),
+('TO0001', 'TG1354', 'ict2122', '2025-04-01', 'theory', 'present'),
+('TO0002', 'TG1355', 'ict2122', '2025-04-01', 'theory', 'present'),
+('TO0003', 'TG1356', 'ict2122', '2025-04-01', 'theory', 'present'),
+('TO0004', 'TG1357', 'ict2122', '2025-04-01', 'theory', 'absent'),
+('TO0005', 'TG1358', 'ict2122', '2025-04-01', 'theory', 'present'),
+('TO0002', 'TG1359', 'ict2122', '2025-04-01', 'theory', 'absent'),
+('TO0003', 'TG1360', 'ict2122', '2025-04-01', 'theory', 'present'),
+('TO0004', 'TG1361', 'ict2122', '2025-04-01', 'theory', 'present'),
+('TO0005', 'TG1362', 'ict2122', '2025-04-01', 'theory', '('TO0001', 'TG1344', 'ict2122', '2025-04-01', 'theory', 'medical'),
+('TO0002', 'TG1345', 'ict2122', '2025-04-01', 'theory', 'medical'),
+('TO0003', 'TG1346', 'ict2122', '2025-04-01', 'theory', 'present'),
+('TO0004', 'TG1347', 'ict2122', '2025-04-01', 'theory', 'medical'),
 ('TO0005', 'TG1348', 'ict2122', '2025-04-01', 'theory', 'absent'),
 ('TO0001', 'TG1349', 'ict2122', '2025-04-01', 'theory', 'present'),
 ('TO0002', 'TG1350', 'ict2122', '2025-04-01', 'theory', 'present'),
@@ -99,13 +117,14 @@ INSERT INTO attendance (to_id, ug_id, course_id, atten_date, session_type, atten
 ('TO0003', 'TG1360', 'ict2122', '2025-04-01', 'theory', 'present'),
 ('TO0004', 'TG1361', 'ict2122', '2025-04-01', 'theory', 'present'),
 ('TO0005', 'TG1362', 'ict2122', '2025-04-01', 'theory', 'absent'),
+('TO0001', 'TG1363', 'ict2122', '2025-04-01', 'theory', 'medical'),
 ('TO0001', 'TG1363', 'ict2122', '2025-04-01', 'theory', 'present'),
 ('TO0002', 'TG1364', 'ict2122', '2025-04-01', 'theory', 'present'),
 
 -- ict2152 - theory only)1
 
 ('TO0001', 'TG1344', 'ict2152', '2025-04-02', 'theory', 'present'),
-('TO0002', 'TG1345', 'ict2152', '2025-04-02', 'theory', 'absent'),
+('TO0002', 'TG1345', 'ict2152', '2025-04-02', 'theory', 'medical'),
 ('TO0003', 'TG1346', 'ict2152', '2025-04-02', 'theory', 'present'),
 ('TO0004', 'TG1347', 'ict2152', '2025-04-02', 'theory', 'present'),
 ('TO0005', 'TG1348', 'ict2152', '2025-04-02', 'theory', 'absent'),
@@ -130,12 +149,12 @@ INSERT INTO attendance (to_id, ug_id, course_id, atten_date, session_type, atten
 -- ict2113 – both5
 ('TO0001', 'TG1344', 'ict2113', '2025-04-03', 'theory', 'present'),
 ('TO0001', 'TG1344', 'ict2113', '2025-04-03', 'practical', 'present'),
-('TO0002', 'TG1345', 'ict2113', '2025-04-03', 'theory', 'absent'),
+('TO0002', 'TG1345', 'ict2113', '2025-04-03', 'theory', 'medical'),
 ('TO0002', 'TG1345', 'ict2113', '2025-04-03', 'practical', 'present'),
 ('TO0003', 'TG1346', 'ict2113', '2025-04-03', 'theory', 'present'),
 ('TO0003', 'TG1346', 'ict2113', '2025-04-03', 'practical', 'present'),
 ('TO0004', 'TG1347', 'ict2113', '2025-04-03', 'theory', 'present'),
-('TO0004', 'TG1347', 'ict2113', '2025-04-03', 'practical', 'absent'),
+('TO0004', 'TG1347', 'ict2113', '2025-04-03', 'practical', 'medical'),
 ('TO0005', 'TG1348', 'ict2113', '2025-04-03', 'theory', 'absent'),
 ('TO0005', 'TG1348', 'ict2113', '2025-04-03', 'practical', 'present'),
 ('TO0001', 'TG1349', 'ict2113', '2025-04-03', 'theory', 'present'),
@@ -146,7 +165,7 @@ INSERT INTO attendance (to_id, ug_id, course_id, atten_date, session_type, atten
 ('TO0003', 'TG1351', 'ict2113', '2025-04-03', 'practical', 'absent'),
 ('TO0004', 'TG1352', 'ict2113', '2025-04-03', 'theory', 'present'),
 ('TO0004', 'TG1352', 'ict2113', '2025-04-03', 'practical', 'present'),
-('TO0005', 'TG1353', 'ict2113', '2025-04-03', 'theory', 'present'),
+('TO0005', 'TG1353', 'ict2113', '2025-04-03', 'theory', 'medical'),
 ('TO0005', 'TG1353', 'ict2113', '2025-04-03', 'practical', 'present'),
 ('TO0001', 'TG1354', 'ict2113', '2025-04-03', 'theory', 'absent'),
 ('TO0001', 'TG1354', 'ict2113', '2025-04-03', 'practical', 'present'),
@@ -160,7 +179,7 @@ INSERT INTO attendance (to_id, ug_id, course_id, atten_date, session_type, atten
 ('TO0005', 'TG1358', 'ict2113', '2025-04-03', 'practical', 'present'),
 ('TO0005', 'TG1359', 'ict2113', '2025-04-03', 'theory', 'present'),
 ('TO0005', 'TG1359', 'ict2113', '2025-04-03', 'practical', 'present'),
-('TO0001', 'TG1360', 'ict2113', '2025-04-03', 'theory', 'absent'),
+('TO0001', 'TG1360', 'ict2113', '2025-04-03', 'theory', 'medical'),
 ('TO0001', 'TG1360', 'ict2113', '2025-04-03', 'practical', 'present'),
 ('TO0002', 'TG1361', 'ict2113', '2025-04-03', 'theory', 'present'),
 ('TO0002', 'TG1361', 'ict2113', '2025-04-03', 'practical', 'present'),
@@ -176,12 +195,12 @@ INSERT INTO attendance (to_id, ug_id, course_id, atten_date, session_type, atten
 -- ict2133 – both
 ('TO0001', 'TG1344', 'ict2133', '2025-04-04', 'theory', 'present'),
 ('TO0001', 'TG1344', 'ict2133', '2025-04-04', 'practical', 'present'),
-('TO0002', 'TG1345', 'ict2133', '2025-04-04', 'theory', 'absent'),
+('TO0002', 'TG1345', 'ict2133', '2025-04-04', 'theory', 'medical'),
 ('TO0002', 'TG1345', 'ict2133', '2025-04-04', 'practical', 'present'),
 ('TO0003', 'TG1346', 'ict2133', '2025-04-04', 'theory', 'present'),
 ('TO0003', 'TG1346', 'ict2133', '2025-04-04', 'practical', 'present'),
 ('TO0004', 'TG1347', 'ict2133', '2025-04-04', 'theory', 'present'),
-('TO0004', 'TG1347', 'ict2133', '2025-04-04', 'practical', 'absent'),
+('TO0004', 'TG1347', 'ict2133', '2025-04-04', 'practical', 'medical'),
 ('TO0005', 'TG1348', 'ict2133', '2025-04-04', 'theory', 'absent'),
 ('TO0005', 'TG1348', 'ict2133', '2025-04-04', 'practical', 'present'),
 ('TO0001', 'TG1349', 'ict2133', '2025-04-04', 'theory', 'present'),
@@ -219,9 +238,9 @@ INSERT INTO attendance (to_id, ug_id, course_id, atten_date, session_type, atten
 
 -- ict2142 – patrical  only 2
     ('TO0001', 'TG1344', 'ict2142', '2025-04-05', 'practical', 'present'),
-    ('TO0002', 'TG1345', 'ict2142', '2025-04-05', 'practical', 'absent'),
+    ('TO0002', 'TG1345', 'ict2142', '2025-04-05', 'practical', 'medical'),
     ('TO0003', 'TG1346', 'ict2142', '2025-04-05', 'practical', 'present'),
-    ('TO0004', 'TG1347', 'ict2142', '2025-04-05', 'practical', 'present'),
+    ('TO0004', 'TG1347', 'ict2142', '2025-04-05', 'practical', 'medical'),
     ('TO0005', 'TG1348', 'ict2142', '2025-04-05', 'practical', 'absent'),
     ('TO0001', 'TG1349', 'ict2142', '2025-04-05', 'practical', 'present'),
     ('TO0002', 'TG1350', 'ict2142', '2025-04-05', 'practical', 'present'),
@@ -555,6 +574,23 @@ INSERT INTO attendance (to_id, ug_id, course_id, atten_date, session_type, atten
 ('TO0005', 'TG1362', 'ict2142', '2025-04-15', 'practical', 'absent'),
 ('TO0001', 'TG1363', 'ict2142', '2025-04-15', 'practical', 'present'),
 ('TO0002', 'TG1364', 'ict2142', '2025-04-15', 'practical', 'present');
+
+
+INSERT INTO medical (medical_id, ug_id, course_id, session_type, reason, medical_date, to_id, atten_id) VALUES
+(1, 'TG1344', 'ict2122', 'theory', 'Cough', '2025-04-01', 'to0001', 1),
+(2, 'TG1345', 'ict2122', 'theory', 'Fever', '2025-04-01', 'to0001', 2),
+(3, 'TG1348', 'ict2122', 'theory', 'Headache', '2025-04-01', 'to0001', 5),
+(4, 'TG1352', 'ict2122', 'theory', 'Dental', '2025-04-01', 'to0001', 9),
+(5, 'TG1362', 'ict2122', 'theory', 'Fever', '2025-04-01', 'to0001', 19),
+(6, 'TG1345', 'ict2152', 'theory', 'Stomachache', '2025-04-02', 'to0001', 23),
+(7, 'TG1345', 'ict2113', 'theory', 'Leg Broke', '2025-04-03', 'to0001', 45),
+(8, 'TG1347', 'ict2113', 'practical', 'Hand broken', '2025-04-03', 'to0001', 50),
+(9, 'TG1353', 'ict2113', 'theory', 'Nose broken', '2025-04-03', 'to0001', 61),
+(10, 'TG1360', 'ict2113', 'theory', 'Fever', '2025-04-03', 'to0001', 75),
+(11, 'TG1345', 'ict2133', 'theory', 'Accident', '2025-04-04', 'to0001', 87),
+(12, 'TG1347', 'ict2133', 'practical', 'Accident Again', '2025-04-04', 'to0001', 92),
+(13, 'TG1347', 'ict2142', 'practical', 'Virus Fever', '2025-04-05', 'to0001', 130),
+(14, 'TG1345', 'ict2142', 'practical', 'Bus Accident', '2025-04-05', 'to0001', 128);
 
 
 INSERT INTO time_table (
