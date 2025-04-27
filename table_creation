@@ -79,8 +79,7 @@ course_id char(7) primary key,
 course_name varchar(50),
 lec_id char(6),
 credit INT,
-course_type ENUM('theory','practical','both'),
-course_content varchar(200)
+course_type ENUM('theory','practical','both')
 );
 
 CREATE TABLE lecture_materials (
